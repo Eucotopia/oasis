@@ -1,5 +1,11 @@
 import {SVGProps} from "react";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
-  size?: number;
+    size?: number;
 };
+
+export type ResultResponse<T> = {
+    code: string
+    data: T
+    message: string
+}

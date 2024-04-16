@@ -2,6 +2,10 @@ import {combineReducers, configureStore,} from '@reduxjs/toolkit'
 import {persistReducer, persistStore} from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 import thunk from "redux-thunk";
+import authReducer from "@/feature/auth/authSlice";
+import {postApi} from "@/feature/api/postApi";
+import {setupListeners} from "@reduxjs/toolkit/query";
+
 
 // 定义配置信息
 const persistConfig = {
@@ -11,7 +15,8 @@ const persistConfig = {
     blacklist: []
 }
 const rootReducer = combineReducers({
-
+    auth: authReducer,
+    [postApi.reducerPath]: postApi.reducer,
 })
 // 创建持久化的配置persist的信息
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -21,7 +26,7 @@ export const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false,
-    }).concat(thunk)
+    }).concat(thunk).concat(postApi.middleware)
 })
 
 export const persistor = persistStore(store)
@@ -29,3 +34,6 @@ export const persistor = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
+// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
+// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
+setupListeners(store.dispatch)
