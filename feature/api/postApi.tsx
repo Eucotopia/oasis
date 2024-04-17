@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query'
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
 
@@ -9,7 +9,7 @@ type Post = {
 }
 export const postApi = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/',
+        baseUrl: 'http://localhost:8080/post/',
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const authorization = (getState() as RootState).auth.currentUser?.authorization
@@ -25,7 +25,7 @@ export const postApi = createApi({
         // The query accepts a number and returns a ResultResponse<Post> type
         getPost: build.query<ResultResponse<Post>, number>({
             // note: an optional `queryFn` may be used in place of `query`
-            query: (id) => ({url: `post/${id}`}),
+            query: (id) => ({url: `${id}`}),
             // Pick out data and prevent nested properties in a hook or selector
             transformResponse: (response: { data: ResultResponse<Post> }, meta, arg) => response.data,
             // Pick out errors and prevent nested properties in a hook or selector
