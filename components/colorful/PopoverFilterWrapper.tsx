@@ -23,10 +23,7 @@ const PopoverFilterWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapp
         const {isOpen, onClose, onOpenChange} = useDisclosure();
 
         return (
-            <Popover ref={ref} isOpen={isOpen} onOpenChange={onOpenChange} {...props}
-                     shouldCloseOnInteractOutside={() => {
-                         return false;
-                     }}>
+            <Popover ref={ref} isOpen={isOpen} onOpenChange={onOpenChange} {...props}>
                 <PopoverTrigger>
                     <Button
                         className="border-default-200 text-default-500"

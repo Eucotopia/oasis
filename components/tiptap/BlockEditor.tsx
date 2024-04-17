@@ -33,15 +33,15 @@ export const BlockEditor = ({height, editor}: {
                     Strike
                 </button>
                 <PopoverFilterWrapper title="Theme" className={"flex flex-col items-center"}>
-                    <section className={"w-full"}>
-                        <HexColorPicker className={"mx-auto w-full"}
-                                        color={editor.getAttributes('textStyle').color}
-                                        onChange={(color: string) => {
-                                            editor.chain().focus().setColor(color).run()
-                                        }}
-                        />
-                    </section>
-                    <Divider className={"my-4"}/>
+                    {/*<section className={"w-full"}>*/}
+                    {/*    <HexColorPicker className={"mx-auto w-full"}*/}
+                    {/*                    color={editor.getAttributes('textStyle').color}*/}
+                    {/*                    onChange={(color: string) => {*/}
+                    {/*                        editor.chain().focus().setColor(color).run()*/}
+                    {/*                    }}*/}
+                    {/*    />*/}
+                    {/*</section>*/}
+                    {/*<Divider className={"my-4"}/>*/}
                     <RadioGroup
                         aria-label="Color"
                         classNames={{
@@ -55,6 +55,12 @@ export const BlockEditor = ({height, editor}: {
                         <ColorRadioItem color="#17C964" tooltip="Green" value="green" editor={editor}/>
                         <ColorRadioItem color="#F5A524" tooltip="Yellow" value="yellow" editor={editor}/>
                         <ColorRadioItem color="#222222" tooltip="Black" value="black" editor={editor}/>
+                        <ColorRadioItem color="#ffffff" tooltip="White" value="white" editor={editor}/>
+                        <ColorRadioItem color="#ffffff" tooltip="White" value="white" editor={editor}/>
+                        <ColorRadioItem color="#ffffff" tooltip="White" value="white" editor={editor}/>
+                        <ColorRadioItem color="#ffffff" tooltip="White" value="white" editor={editor}/>
+                        <ColorRadioItem color="#ffffff" tooltip="White" value="white" editor={editor}/>
+                        <ColorRadioItem color="#ffffff" tooltip="White" value="white" editor={editor}/>
                         <ColorRadioItem color="#ffffff" tooltip="White" value="white" editor={editor}/>
                     </RadioGroup>
                 </PopoverFilterWrapper>
