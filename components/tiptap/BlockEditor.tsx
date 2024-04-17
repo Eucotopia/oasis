@@ -36,152 +36,152 @@ export const BlockEditor = ({height, editor}: {
             {editor &&
                 <BubbleMenu tippyOptions={{duration: 100}} editor={editor}
                             className={"flex flex-row border rounded-lg bg-content1 p-2 shadow-medium outline-none gap-2 w-[590px]"}>
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Link
-                                size={"sm"}
-                                color={"foreground"}
-                                onClick={() => editor.chain().focus().toggleBold().run()}
-                                className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                    "hover:bg-gray-50",
-                                    {
-                                        "bg-gray-200": editor.isActive("bold")
-                                    })}
-                            >
-                                AI Tool
-                                {/*<Icon icon={"fa6-solid:paragraph"} width={18} height={18}/>*/}
-                            </Link>
-                        </DropdownTrigger>
-                        <DropdownMenu variant="faded" aria-label="Dropdown menu with description">
-                            <DropdownSection title="Actions" showDivider>
-                                <DropdownItem
-                                    key="new"
-                                    shortcut="⌘N"
-                                    description="Create a new file"
-                                    // startContent={<AddNoteIcon className={iconClasses} />}
-                                >
-                                    New file
-                                </DropdownItem>
-                                <DropdownItem
-                                    key="copy"
-                                    shortcut="⌘C"
-                                    description="Copy the file link"
-                                    // startContent={<CopyDocumentIcon className={iconClasses} />}
-                                >
-                                    Copy link
-                                </DropdownItem>
-                                <DropdownItem
-                                    key="edit"
-                                    shortcut="⌘⇧E"
-                                    description="Allows you to edit the file"
-                                    // startContent={<EditDocumentIcon className={iconClasses} />}
-                                >
-                                    Edit file
-                                </DropdownItem>
-                            </DropdownSection>
-                            <DropdownSection title="Danger zone">
-                                <DropdownItem
-                                    key="delete"
-                                    className="text-danger"
-                                    color="danger"
-                                    shortcut="⌘⇧D"
-                                    description="Permanently delete the file"
-                                    // startContent={<DeleteDocumentIcon className={cn(iconClasses, "text-danger")} />}
-                                >
-                                    Delete file
-                                </DropdownItem>
-                            </DropdownSection>
-                        </DropdownMenu>
-                    </Dropdown>
+                    {/*<Dropdown>*/}
+                    {/*    <DropdownTrigger>*/}
+                    {/*        <Link*/}
+                    {/*            size={"sm"}*/}
+                    {/*            color={"foreground"}*/}
+                    {/*            onClick={() => editor.chain().focus().toggleBold().run()}*/}
+                    {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
+                    {/*                "hover:bg-gray-50",*/}
+                    {/*                {*/}
+                    {/*                    "bg-gray-200": editor.isActive("bold")*/}
+                    {/*                })}*/}
+                    {/*        >*/}
+                    {/*            AI Tool*/}
+                    {/*            /!*<Icon icon={"fa6-solid:paragraph"} width={18} height={18}/>*!/*/}
+                    {/*        </Link>*/}
+                    {/*    </DropdownTrigger>*/}
+                    {/*    <DropdownMenu variant="faded" aria-label="Dropdown menu with description">*/}
+                    {/*        <DropdownSection title="Actions" showDivider>*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="new"*/}
+                    {/*                shortcut="⌘N"*/}
+                    {/*                description="Create a new file"*/}
+                    {/*                // startContent={<AddNoteIcon className={iconClasses} />}*/}
+                    {/*            >*/}
+                    {/*                New file*/}
+                    {/*            </DropdownItem>*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="copy"*/}
+                    {/*                shortcut="⌘C"*/}
+                    {/*                description="Copy the file link"*/}
+                    {/*                // startContent={<CopyDocumentIcon className={iconClasses} />}*/}
+                    {/*            >*/}
+                    {/*                Copy link*/}
+                    {/*            </DropdownItem>*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="edit"*/}
+                    {/*                shortcut="⌘⇧E"*/}
+                    {/*                description="Allows you to edit the file"*/}
+                    {/*                // startContent={<EditDocumentIcon className={iconClasses} />}*/}
+                    {/*            >*/}
+                    {/*                Edit file*/}
+                    {/*            </DropdownItem>*/}
+                    {/*        </DropdownSection>*/}
+                    {/*        <DropdownSection title="Danger zone">*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="delete"*/}
+                    {/*                className="text-danger"*/}
+                    {/*                color="danger"*/}
+                    {/*                shortcut="⌘⇧D"*/}
+                    {/*                description="Permanently delete the file"*/}
+                    {/*                // startContent={<DeleteDocumentIcon className={cn(iconClasses, "text-danger")} />}*/}
+                    {/*            >*/}
+                    {/*                Delete file*/}
+                    {/*            </DropdownItem>*/}
+                    {/*        </DropdownSection>*/}
+                    {/*    </DropdownMenu>*/}
+                    {/*</Dropdown>*/}
                     <div className="flex h-5 items-center self-center  text-small">
                         <Divider orientation="vertical"/>
                     </div>
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Link
-                                size={"sm"}
-                                color={"foreground"}
-                                onClick={() => editor.chain().focus().toggleBold().run()}
-                                className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                    "hover:bg-gray-50",
-                                    {
-                                        "bg-gray-200": editor.isActive("bold")
-                                    })}
-                            >
-                                <Icon icon={"fa6-solid:paragraph"} width={18} height={18}/>
-                            </Link>
-                        </DropdownTrigger>
-                        <DropdownMenu variant="faded" aria-label="Dropdown menu with description">
-                            <DropdownSection title="Actions" showDivider>
-                                <DropdownItem
-                                    key="new"
-                                    shortcut="⌘N"
-                                    description="Create a new file"
-                                    // startContent={<AddNoteIcon className={iconClasses} />}
-                                >
-                                    New file
-                                </DropdownItem>
-                                <DropdownItem
-                                    key="copy"
-                                    shortcut="⌘C"
-                                    description="Copy the file link"
-                                    // startContent={<CopyDocumentIcon className={iconClasses} />}
-                                >
-                                    Copy link
-                                </DropdownItem>
-                                <DropdownItem
-                                    key="edit"
-                                    shortcut="⌘⇧E"
-                                    description="Allows you to edit the file"
-                                    // startContent={<EditDocumentIcon className={iconClasses} />}
-                                >
-                                    Edit file
-                                </DropdownItem>
-                            </DropdownSection>
-                            <DropdownSection title="Danger zone">
-                                <DropdownItem
-                                    key="delete"
-                                    className="text-danger"
-                                    color="danger"
-                                    shortcut="⌘⇧D"
-                                    description="Permanently delete the file"
-                                    // startContent={<DeleteDocumentIcon className={cn(iconClasses, "text-danger")} />}
-                                >
-                                    Delete file
-                                </DropdownItem>
-                            </DropdownSection>
-                        </DropdownMenu>
-                    </Dropdown>
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Link
-                                size={"sm"}
-                                color={"foreground"}
-                                className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                    "hover:bg-gray-50",
-                                    {
-                                        "bg-gray-200": editor.isActive("bold")
-                                    })}
-                            >
-                                {selectedValue}
-                            </Link>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            aria-label="Single selection example"
-                            variant="flat"
-                            disallowEmptySelection
-                            selectionMode="single"
-                            selectedKeys={selectedKeys}
-                            onSelectionChange={setSelectedKeys as any}
-                        >
-                            <DropdownItem key="inter"
-                                          onClick={() => editor.chain().focus().setFontFamily('Inter').run()}>Inter</DropdownItem>
-                            <DropdownItem key="comic_sans" onClick={() => editor.chain().focus().setFontFamily('Comic Sans MS, Comic Sans').run()}>Comic Sans</DropdownItem>
-                            <DropdownItem key="date">Date</DropdownItem>
-                            <DropdownItem key="single_date">{editor.getAttributes('textStyle')?.fontFamily}</DropdownItem>
-                            <DropdownItem key="iteration">Iteration</DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
+                    {/*<Dropdown>*/}
+                    {/*    <DropdownTrigger>*/}
+                    {/*        <Link*/}
+                    {/*            size={"sm"}*/}
+                    {/*            color={"foreground"}*/}
+                    {/*            onClick={() => editor.chain().focus().toggleBold().run()}*/}
+                    {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
+                    {/*                "hover:bg-gray-50",*/}
+                    {/*                {*/}
+                    {/*                    "bg-gray-200": editor.isActive("bold")*/}
+                    {/*                })}*/}
+                    {/*        >*/}
+                    {/*            <Icon icon={"fa6-solid:paragraph"} width={18} height={18}/>*/}
+                    {/*        </Link>*/}
+                    {/*    </DropdownTrigger>*/}
+                    {/*    <DropdownMenu variant="faded" aria-label="Dropdown menu with description">*/}
+                    {/*        <DropdownSection title="Actions" showDivider>*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="new"*/}
+                    {/*                shortcut="⌘N"*/}
+                    {/*                description="Create a new file"*/}
+                    {/*                // startContent={<AddNoteIcon className={iconClasses} />}*/}
+                    {/*            >*/}
+                    {/*                New file*/}
+                    {/*            </DropdownItem>*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="copy"*/}
+                    {/*                shortcut="⌘C"*/}
+                    {/*                description="Copy the file link"*/}
+                    {/*                // startContent={<CopyDocumentIcon className={iconClasses} />}*/}
+                    {/*            >*/}
+                    {/*                Copy link*/}
+                    {/*            </DropdownItem>*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="edit"*/}
+                    {/*                shortcut="⌘⇧E"*/}
+                    {/*                description="Allows you to edit the file"*/}
+                    {/*                // startContent={<EditDocumentIcon className={iconClasses} />}*/}
+                    {/*            >*/}
+                    {/*                Edit file*/}
+                    {/*            </DropdownItem>*/}
+                    {/*        </DropdownSection>*/}
+                    {/*        <DropdownSection title="Danger zone">*/}
+                    {/*            <DropdownItem*/}
+                    {/*                key="delete"*/}
+                    {/*                className="text-danger"*/}
+                    {/*                color="danger"*/}
+                    {/*                shortcut="⌘⇧D"*/}
+                    {/*                description="Permanently delete the file"*/}
+                    {/*                // startContent={<DeleteDocumentIcon className={cn(iconClasses, "text-danger")} />}*/}
+                    {/*            >*/}
+                    {/*                Delete file*/}
+                    {/*            </DropdownItem>*/}
+                    {/*        </DropdownSection>*/}
+                    {/*    </DropdownMenu>*/}
+                    {/*</Dropdown>*/}
+                    {/*<Dropdown>*/}
+                    {/*    <DropdownTrigger>*/}
+                    {/*        <Link*/}
+                    {/*            size={"sm"}*/}
+                    {/*            color={"foreground"}*/}
+                    {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
+                    {/*                "hover:bg-gray-50",*/}
+                    {/*                {*/}
+                    {/*                    "bg-gray-200": editor.isActive("bold")*/}
+                    {/*                })}*/}
+                    {/*        >*/}
+                    {/*            {selectedValue}*/}
+                    {/*        </Link>*/}
+                    {/*    </DropdownTrigger>*/}
+                    {/*    <DropdownMenu*/}
+                    {/*        aria-label="Single selection example"*/}
+                    {/*        variant="flat"*/}
+                    {/*        disallowEmptySelection*/}
+                    {/*        selectionMode="single"*/}
+                    {/*        selectedKeys={selectedKeys}*/}
+                    {/*        onSelectionChange={setSelectedKeys as any}*/}
+                    {/*    >*/}
+                    {/*        <DropdownItem key="inter"*/}
+                    {/*                      onClick={() => editor.chain().focus().setFontFamily('Inter').run()}>Inter</DropdownItem>*/}
+                    {/*        <DropdownItem key="comic_sans" onClick={() => editor.chain().focus().setFontFamily('Comic Sans MS, Comic Sans').run()}>Comic Sans</DropdownItem>*/}
+                    {/*        <DropdownItem key="date">Date</DropdownItem>*/}
+                    {/*        <DropdownItem key="single_date">{editor.getAttributes('textStyle')?.fontFamily}</DropdownItem>*/}
+                    {/*        <DropdownItem key="iteration">Iteration</DropdownItem>*/}
+                    {/*    </DropdownMenu>*/}
+                    {/*</Dropdown>*/}
                     <div className="flex h-5 items-center self-center  text-small">
                         <Divider orientation="vertical"/>
                     </div>
@@ -195,7 +195,7 @@ export const BlockEditor = ({height, editor}: {
                             color={"foreground"}
                             onClick={() => editor.chain().focus().toggleBold().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-50",
+                                "hover:bg-gray-200",
                                 {
                                     "bg-gray-200": editor.isActive("bold")
                                 })}
@@ -295,43 +295,41 @@ export const BlockEditor = ({height, editor}: {
                     {/* TODO: bug:无法实现 open a new tab 切换*/}
                     <PopoverLinkWrapper icon="fa6-solid:link" className={"flex flex-col items-center"}
                                         editor={editor} title={"Set Link"}>
-                        <div className={"flex flex-col"}>
-                            <div className={"flex flex-row"}>
-                                <Input placeholder={"https://"} value={link} onValueChange={(value) => setLink(value)}
-                                       className={"w-full"}/>
-                                <Button
-                                    onClick={() => {
-                                        const previousUrl = editor.getAttributes('link').href
-                                        if (previousUrl === undefined) {
-                                            if (editor.isActive('link')) {
-                                                editor.chain().focus().extendMarkRange('link').unsetLink()
-                                                    .run()
-                                                return
-                                            }
-                                            if (link === "") return
-                                            if (isSelected) {
-                                                editor.chain().focus().extendMarkRange('link',).setLink({
-                                                    href: link,
-                                                    target: '_blank'
-                                                }).run()
-                                            } else {
-                                                editor.chain().focus().extendMarkRange('link',).setLink({
-                                                    href: link
-                                                }).run()
-                                            }
-                                        } else {
+                        <div className={"flex flex-row items-center justify-center mb-2 gap-2"}>
+                            <Input placeholder={"https://"} size={"sm"} value={link}
+                                   onValueChange={(value) => setLink(value)}
+                                   radius={"sm"}
+                                   className={"w-full"}/>
+                            <Button
+                                size={"sm"}
+                                radius={"sm"}
+                                onClick={() => {
+                                    const previousUrl = editor.getAttributes('link').href
+                                    if (previousUrl === undefined) {
+                                        if (editor.isActive('link')) {
                                             editor.chain().focus().extendMarkRange('link').unsetLink()
                                                 .run()
+                                            return
                                         }
-                                        setLink("")
+                                        if (link === "") return
+                                        if (isSelected) {
+                                            editor.chain().focus().extendMarkRange('link',).setLink({
+                                                href: link,
+                                                target: '_blank'
+                                            }).run()
+                                        } else {
+                                            editor.chain().focus().extendMarkRange('link',).setLink({
+                                                href: link
+                                            }).run()
+                                        }
+                                    } else {
+                                        editor.chain().focus().extendMarkRange('link').unsetLink()
+                                            .run()
                                     }
-                                    }>
-                                    Set Link</Button>
-                            </div>
-                            <Switch isSelected={isSelected} onValueChange={setIsSelected}>
-                                Open in new tab
-                            </Switch>
-                            <p>{isSelected ? "Open in new tab" : "Open in same tab"}</p>
+                                    setLink("")
+                                }
+                                }>
+                                Set Link</Button>
                         </div>
                     </PopoverLinkWrapper>
                     <PopoverHighlightWrapper icon="fa6-solid:palette" className={"flex flex-col items-center "}
