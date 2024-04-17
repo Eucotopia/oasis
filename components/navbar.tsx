@@ -1,12 +1,12 @@
 'use client'
 import {
     Navbar as NextUINavbar,
-    NavbarContent,
-    NavbarMenu,
-    NavbarMenuToggle,
     NavbarBrand,
+    NavbarContent,
     NavbarItem,
+    NavbarMenu,
     NavbarMenuItem,
+    NavbarMenuToggle,
 } from "@nextui-org/navbar";
 import {Button} from "@nextui-org/button";
 import {Kbd} from "@nextui-org/kbd";
@@ -20,14 +20,7 @@ import NextLink from "next/link";
 import clsx from "clsx";
 
 import {ThemeSwitch} from "@/components/theme-switch";
-import {
-    TwitterIcon,
-    GithubIcon,
-    DiscordIcon,
-    SearchIcon,
-} from "@/components/icons";
-
-import {Logo} from "@/components/icons";
+import {DiscordIcon, GithubIcon, Logo, SearchIcon, TwitterIcon,} from "@/components/icons";
 import {useAuth} from "@/hook/useAuth";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
 import {Avatar} from "@nextui-org/avatar";
@@ -37,12 +30,13 @@ import {Icon} from "@iconify/react";
 import {Checkbox} from "@nextui-org/checkbox";
 import {useAppDispatch} from "@/hook/store";
 import React, {ChangeEvent, useMemo, useState} from "react";
-import {currentUserType, removeCredentials, setCredentials} from "@/feature/auth/authSlice";
-import {ResultResponse} from "@/types";
+import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
+import {usePathname} from "next/navigation";
 
 export const Navbar = () => {
     const [userLogin, {isLoading}] = useUserLoginMutation()
-
+    // get current path
+    const pathname = usePathname();
     const toggleVisibility = () => setIsVisible(!isVisible);
     const [isVisible, setIsVisible] = React.useState(false);
     // get current user
@@ -129,11 +123,11 @@ export const Navbar = () => {
                     </NavbarBrand>
                     <ul className="hidden lg:flex gap-4 justify-start ml-2">
                         {siteConfig.navItems.map((item) => (
-                            <NavbarItem key={item.href}>
+                            <NavbarItem key={item.href} isActive={pathname === item.href}>
                                 <NextLink
                                     className={clsx(
-                                        linkStyles({color: "foreground"}),
-                                        "data-[active=true]:text-primary data-[active=true]:font-medium"
+                                        linkStyles({color: "foreground", isBlock: true}),
+                                        "data-[active=true]:text-primary data-[active=true]:font-bold"
                                     )}
                                     color="foreground"
                                     href={item.href}
