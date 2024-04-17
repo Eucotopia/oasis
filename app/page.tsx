@@ -2,6 +2,7 @@
 import React from "react";
 import {BlockEditor} from "@/components/tiptap/BlockEditor";
 import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
+import {Divider} from "@nextui-org/divider";
 
 export default function Home() {
     const {editor} = useBlockEditor()
