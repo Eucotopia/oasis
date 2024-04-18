@@ -4,7 +4,10 @@ import {RadioGroup, useRadio, VisuallyHidden, RadioProps, cn, Button} from "@nex
 import PopoverThemeSwitchWrapper from "@/components/popover/PopoverThemeSwitchWrapper";
 import {useTheme} from "next-themes";
 
-export const ThemeRadio = (props: RadioProps) => {
+type ThemeRadioProps = RadioProps & {
+    background: string
+}
+export const ThemeRadio = (props: ThemeRadioProps) => {
     const {
         Component,
         children,
@@ -17,27 +20,21 @@ export const ThemeRadio = (props: RadioProps) => {
         getLabelWrapperProps,
         getControlProps,
     } = useRadio(props);
-
     return (
         <Component
             {...getBaseProps()}
             className={cn(
-                "group inline-flex items-center justify-between hover:bg-content2 flex-row-reverse",
-                "max-w-[300px] cursor-pointer border-2 border-default rounded-lg gap-4 p-4",
+                "group inline-flex items-center justify-between hover:bg-content2 flex-row-reverse w-28 h-28 ",
+                "cursor-pointer border-2 border-default rounded-lg gap-4 p-4",
                 "data-[selected=true]:border-primary",
+                `${props.background}`
             )}
         >
             <VisuallyHidden>
                 <input {...getInputProps()} />
             </VisuallyHidden>
-            {/*      <span {...getWrapperProps()}>*/}
-            {/*  <span {...getControlProps()} />*/}
-            {/*</span>*/}
             <div {...getLabelWrapperProps()}>
                 {children && <span {...getLabelProps()}>{children}</span>}
-                {/*{description && (*/}
-                {/*    <span className="text-small text-foreground opacity-70">{description}</span>*/}
-                {/*)}*/}
             </div>
         </Component>
     );
@@ -67,23 +64,23 @@ export default function App() {
                 value={selected}
                 aria-label="ThemeSwitch"
                 classNames={{
-                    wrapper: "gap-2 ",
+                    wrapper: "gap-2",
                 }}
                 orientation={"horizontal"}
                 onValueChange={setSelected}
             >
-                <ThemeRadio description="Up to 20 items" value="light">
-                    <Button color={"warning"} isIconOnly>purple-dark</Button>
-                </ThemeRadio>
-                <ThemeRadio description="Unlimited items. $10 per month." value="dark">
-                    <Button color={"warning"} isIconOnly>purple-dark</Button>
-                </ThemeRadio>
+                <ThemeRadio description="Up to 20 items" value="light" background={"bg-[#FFFFFF]"}/>
+                <ThemeRadio description="Unlimited items. $10 per month." value="dark" background={"bg-[#121212]"}/>
                 <ThemeRadio
                     description="24/7 support. Contact us for pricing."
-                    value="purple-dark"
-                >
-                    <Button color={"warning"} isIconOnly>purple-dark</Button>
-                </ThemeRadio>
+                    value="posthog"
+                    background={"bg-[#1C1E26]"}
+                />
+                <ThemeRadio
+                    description="24/7 support. Contact us for pricing."
+                    value="political"
+                    background={"bg-[#F0ECD8]"}
+                />
             </RadioGroup>
         </PopoverThemeSwitchWrapper>
     );

@@ -6,6 +6,9 @@ import {Providers} from "./providers";
 import {Navbar} from "@/components/navbar";
 import {Link} from "@nextui-org/link";
 import clsx from "clsx";
+import ScrollToTop from "react-scroll-to-top";
+import {Icon} from "@iconify/react";
+import React from "react";
 
 export const metadata: Metadata = {
     title: {
@@ -39,7 +42,11 @@ export default function RootLayout({
             )}
         >
         <Providers
-            themeProps={{attribute: "class", defaultTheme: "dark", themes: ["light", "dark", "purple-dark"]}}>
+            themeProps={{
+                attribute: "class",
+                defaultTheme: "posthog",
+                themes: ["light", "dark", "posthog", "political"]
+            }}>
             <div className="relative flex flex-col h-screen">
                 <Navbar/>
                 <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
@@ -57,6 +64,7 @@ export default function RootLayout({
                     </Link>
                 </footer>
             </div>
+
         </Providers>
         </body>
         </html>

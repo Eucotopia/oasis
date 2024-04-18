@@ -1,6 +1,5 @@
 "use client";
 
-import type {PopoverProps} from "@nextui-org/react/dist";
 
 import React from "react";
 import {
@@ -12,15 +11,9 @@ import {
 } from "@nextui-org/react";
 import {Icon} from "@iconify/react";
 import {Link} from "@nextui-org/link";
-import {Editor} from "@tiptap/react";
 import {Tooltip} from "@nextui-org/tooltip";
+import {PopoverFilterWrapperProps} from "@/components/popover/PopoverColorWrapper";
 
-export type PopoverFilterWrapperProps = Omit<PopoverProps, "children"> & {
-    icon: string;
-    title: string;
-    children: React.ReactNode;
-    editor: Editor,
-};
 
 const PopoverHighlightWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapperProps>(
     ({icon, title, children, editor, ...props}, ref) => {
@@ -31,14 +24,35 @@ const PopoverHighlightWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWr
                     <Link
                         color={"foreground"}
                         className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                            "hover:bg-gray-200",
+                            "hover:bg-content4",
                             {
-                                "bg-gray-200": editor.isActive('highlight')
+                                "bg-content4": editor?.isActive('highlight')
                             })}
                     >
-                        <Tooltip delay={1000} content={
-                            <p className={"text-[12px]"}>{title}</p>
-                        }>
+                        <Tooltip
+                            delay={0}
+                            closeDelay={0}
+                            motionProps={{
+                                variants: {
+                                    exit: {
+                                        opacity: 0,
+                                        transition: {
+                                            duration: 0.1,
+                                            ease: "easeIn",
+                                        }
+                                    },
+                                    enter: {
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: "easeOut",
+                                        }
+                                    },
+                                },
+                            }}
+                            content={
+                                <p className={"text-[12px]"}>{title}</p>
+                            }>
                             <Icon icon={icon} width={18} height={18}/>
                         </Tooltip>
                     </Link>

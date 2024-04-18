@@ -13,7 +13,7 @@ import {Link} from "@nextui-org/link";
 import {Tooltip} from "@nextui-org/tooltip";
 import {PopoverFilterWrapperProps} from "@/components/popover/PopoverColorWrapper";
 
-const PopoverLinkWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapperProps>(
+const PopoverYoutubeLinkWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapperProps>(
     ({icon, title, children, editor, ...props}, ref) => {
         const {isOpen, onClose, onOpenChange} = useDisclosure();
         return (
@@ -21,16 +21,8 @@ const PopoverLinkWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapper
                 <PopoverTrigger>
                     <Link
                         color={"foreground"}
-                        onClick={() => {
-                            if (editor?.isActive('link')) {
-                                editor?.chain().focus().unsetLink().run()
-                            }
-                        }}
                         className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                            "hover:bg-content4",
-                            {
-                                "bg-content4": editor?.isActive('link', {href: editor.getAttributes('link').href})
-                            })}
+                            "hover:bg-content4")}
                     >
                         <Tooltip
                             delay={0}
@@ -69,6 +61,6 @@ const PopoverLinkWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapper
     },
 );
 
-PopoverLinkWrapper.displayName = "PopoverLinkWrapper";
+PopoverYoutubeLinkWrapper.displayName = "PopoverYoutubeLinkWrapper";
 
-export default PopoverLinkWrapper;
+export default PopoverYoutubeLinkWrapper;

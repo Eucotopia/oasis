@@ -96,13 +96,13 @@ export const Navbar = () => {
     const searchInput = (
         <Button
             aria-label={"Quick Search"}
-            color={"default"}
             size={"md"}
+            variant={"flat"}
             startContent={
                 <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0"/>
             }
             endContent={
-                <Kbd className="hidden lg:inline-block" keys={["command"]}>
+                <Kbd className="hidden lg:inline-block " keys={["command"]}>
                     K
                 </Kbd>
             }
@@ -141,23 +141,17 @@ export const Navbar = () => {
                 </NavbarContent>
                 <NavbarContent
                     className="hidden sm:flex basis-1/5 sm:basis-full"
-                    justify="center"
-                >
-                    <Chip color="primary" variant="dot">Introducing Tiptap 🎉</Chip>
-                </NavbarContent>
-                <NavbarContent
-                    className="hidden sm:flex basis-1/5 sm:basis-full"
                     justify="end"
                 >
                     <NavbarItem className="hidden sm:flex gap-2">
                         <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-                            <TwitterIcon className="text-default-500"/>
+                            <TwitterIcon className="text-content4-foreground"/>
                         </Link>
                         <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-                            <DiscordIcon className="text-default-500"/>
+                            <DiscordIcon className="text-content4-foreground"/>
                         </Link>
                         <Link isExternal href={siteConfig.links.github} aria-label="Github">
-                            <GithubIcon className="text-default-500"/>
+                            <GithubIcon className="text-content4-foreground"/>
                         </Link>
                         <ThemeSwitch/>
                     </NavbarItem>

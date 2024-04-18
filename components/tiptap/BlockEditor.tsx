@@ -1,21 +1,22 @@
 import {BubbleMenu, Editor, EditorContent, FloatingMenu} from "@tiptap/react";
-import './styles/index.css'
+
 import {RadioGroup} from "@nextui-org/radio";
 import React from "react";
 import {Link} from "@nextui-org/link";
 import {COLOR_GROUP} from "@/components/tiptap/ColorGroup";
 import {Icon} from "@iconify/react";
 import {Button, cn} from "@nextui-org/react";
-import ColorRadioItem from "../colorful/ColorRadioItem";
 import {Divider} from "@nextui-org/divider";
 import {Tooltip} from "@nextui-org/tooltip";
 import {Kbd} from "@nextui-org/kbd";
-import HighlightRadioItem from "@/components/colorful/HighlightRadioItem";
 import {Input} from "@nextui-org/input";
 import PopoverLinkWrapper from "@/components/popover/PopoverLinkWrapper";
 import PopoverHighlightWrapper from "@/components/popover/PopoverHighlightWrapper";
 import PopoverColorWrapper from "@/components/popover/PopoverColorWrapper";
 import PopoverMoreOptionWrapper from "@/components/popover/PopoverMoreOptionWrapper";
+import HighlightRadioItem from "@/components/radio/HighlightRadioItem";
+import ColorRadioItem from "@/components/radio/ColorRadioItem";
+import PopoverYoutubeLinkWrapper from "@/components/popover/PopoverYoutubeLinkWrapper";
 
 
 export const BlockEditor = ({height, editor}: {
@@ -25,7 +26,7 @@ export const BlockEditor = ({height, editor}: {
     const [link, setLink] = React.useState("");
     const [isSelected, setIsSelected] = React.useState(false);
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["inter"]));
-
+    const [youtubeLink, setYoutubeLink] = React.useState("");
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
         [selectedKeys]
@@ -45,7 +46,7 @@ export const BlockEditor = ({height, editor}: {
                     {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
                     {/*                "hover:bg-gray-50",*/}
                     {/*                {*/}
-                    {/*                    "bg-gray-200": editor.isActive("bold")*/}
+                    {/*                    "bg-content4": editor.isActive("bold")*/}
                     {/*                })}*/}
                     {/*        >*/}
                     {/*            AI Tool*/}
@@ -105,7 +106,7 @@ export const BlockEditor = ({height, editor}: {
                     {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
                     {/*                "hover:bg-gray-50",*/}
                     {/*                {*/}
-                    {/*                    "bg-gray-200": editor.isActive("bold")*/}
+                    {/*                    "bg-content4": editor.isActive("bold")*/}
                     {/*                })}*/}
                     {/*        >*/}
                     {/*            <Icon icon={"fa6-solid:paragraph"} width={18} height={18}/>*/}
@@ -160,7 +161,7 @@ export const BlockEditor = ({height, editor}: {
                     {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
                     {/*                "hover:bg-gray-50",*/}
                     {/*                {*/}
-                    {/*                    "bg-gray-200": editor.isActive("bold")*/}
+                    {/*                    "bg-content4": editor.isActive("bold")*/}
                     {/*                })}*/}
                     {/*        >*/}
                     {/*            {selectedValue}*/}
@@ -185,110 +186,237 @@ export const BlockEditor = ({height, editor}: {
                     <div className="flex h-5 items-center self-center  text-small">
                         <Divider orientation="vertical"/>
                     </div>
-                    <Tooltip content={
-                        <div className="flex flex-row items-center justify-between gap-4 ">
-                            <p className={"text-[12px]"}>Italic</p>
-                            <Kbd className={"text-[10px]"} keys={["command"]}>B</Kbd>
-                        </div>
-                    }>
+                    <Tooltip
+                        delay={0}
+                        closeDelay={0}
+                        motionProps={{
+                            variants: {
+                                exit: {
+                                    opacity: 0,
+                                    transition: {
+                                        duration: 0.1,
+                                        ease: "easeIn",
+                                    }
+                                },
+                                enter: {
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 0.15,
+                                        ease: "easeOut",
+                                    }
+                                },
+                            },
+                        }}
+                        content={
+                            <div className="flex flex-row items-center justify-between gap-4 ">
+                                <p className={"text-[12px]"}>Italic</p>
+                                <Kbd className={"text-[10px]"} keys={["command"]}>B</Kbd>
+                            </div>
+                        }>
                         <Link
                             color={"foreground"}
                             onClick={() => editor.chain().focus().toggleBold().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-200 dark:hover:bg-white",
+                                "hover:bg-content4",
                                 {
-                                    "bg-gray-200": editor.isActive("bold")
-                                }, {
-                                    "dark:bg-pink-500": editor.isActive("bold")
+                                    "bg-content4": editor.isActive("bold")
                                 })}
                         >
                             <Icon icon={"fa6-solid:bold"} width={18} height={18}/>
                         </Link>
                     </Tooltip>
-                    <Tooltip content={
-                        <div className="flex flex-row items-center justify-between gap-4 ">
-                            <p className={"text-[12px]"}>Italic</p>
-                            <Kbd className={"text-[10px]"} keys={["command"]}>I</Kbd>
-                        </div>
-                    }>
+                    <Tooltip
+                        delay={0}
+                        closeDelay={0}
+                        motionProps={{
+                            variants: {
+                                exit: {
+                                    opacity: 0,
+                                    transition: {
+                                        duration: 0.1,
+                                        ease: "easeIn",
+                                    }
+                                },
+                                enter: {
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 0.15,
+                                        ease: "easeOut",
+                                    }
+                                },
+                            },
+                        }}
+                        content={
+                            <div className="flex flex-row items-center justify-between gap-4 ">
+                                <p className={"text-[12px]"}>Italic</p>
+                                <Kbd className={"text-[10px]"} keys={["command"]}>I</Kbd>
+                            </div>
+                        }>
                         <Link
                             color={"foreground"}
                             onClick={() => editor.chain().focus().toggleItalic().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-200",
+                                "hover:bg-content4",
                                 {
-                                    "bg-gray-200": editor.isActive("italic")
+                                    "bg-content4": editor.isActive("italic")
                                 })}
                         >
                             <Icon icon={"fa6-solid:italic"} width={18} height={18}/>
                         </Link>
                     </Tooltip>
-                    <Tooltip content={
-                        <div className="flex flex-row items-center justify-between gap-4 ">
-                            <p className={"text-[12px]"}>Underline</p>
-                            <Kbd className={"text-[10px]"} keys={["command"]}>U</Kbd>
-                        </div>
-                    }>
+                    <Tooltip
+                        delay={0}
+                        closeDelay={0}
+                        motionProps={{
+                            variants: {
+                                exit: {
+                                    opacity: 0,
+                                    transition: {
+                                        duration: 0.1,
+                                        ease: "easeIn",
+                                    }
+                                },
+                                enter: {
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 0.15,
+                                        ease: "easeOut",
+                                    }
+                                },
+                            },
+                        }}
+                        content={
+                            <div className="flex flex-row items-center justify-between gap-4 ">
+                                <p className={"text-[12px]"}>Underline</p>
+                                <Kbd className={"text-[10px]"} keys={["command"]}>U</Kbd>
+                            </div>
+                        }>
                         <Link
                             color={"foreground"}
                             onClick={() => editor.chain().focus().toggleUnderline().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-200",
+                                "hover:bg-content4",
                                 {
-                                    "bg-gray-200": editor.isActive("underline")
+                                    "bg-content4": editor.isActive("underline")
                                 })}
                         >
                             <Icon icon={"fa6-solid:underline"} width={18} height={18}/>
                         </Link>
                     </Tooltip>
-                    <Tooltip content={
-                        <div className="flex flex-row items-center justify-between gap-4 ">
-                            <p className={"text-[12px]"}>Strikethrough</p>
-                            <Kbd className={"text-[10px]"} keys={["command", "shift"]}>S</Kbd>
-                        </div>
-                    }>
+                    <Tooltip
+                        delay={0}
+                        closeDelay={0}
+                        motionProps={{
+                            variants: {
+                                exit: {
+                                    opacity: 0,
+                                    transition: {
+                                        duration: 0.1,
+                                        ease: "easeIn",
+                                    }
+                                },
+                                enter: {
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 0.15,
+                                        ease: "easeOut",
+                                    }
+                                },
+                            },
+                        }}
+                        content={
+                            <div className="flex flex-row items-center justify-between gap-4 ">
+                                <p className={"text-[12px]"}>Strikethrough</p>
+                                <Kbd className={"text-[10px]"} keys={["command", "shift"]}>S</Kbd>
+                            </div>
+                        }>
                         <Link
                             color={"foreground"}
                             onClick={() => editor.chain().focus().toggleStrike().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-200",
+                                "hover:bg-content4",
                                 {
-                                    "bg-gray-200": editor.isActive("strike")
+                                    "bg-content4": editor.isActive("strike")
                                 })}
                         >
                             <Icon icon={"fa6-solid:strikethrough"} width={18} height={18}/>
                         </Link>
                     </Tooltip>
-                    <Tooltip content={
-                        <div className="flex flex-row items-center justify-between gap-4 ">
-                            <p className={"text-[12px]"}>Code</p>
-                            <Kbd className={"text-[10px]"} keys={["command"]}>E</Kbd>
-                        </div>
-                    }>
+
+                    <Tooltip
+                        delay={0}
+                        closeDelay={0}
+                        motionProps={{
+                            variants: {
+                                exit: {
+                                    opacity: 0,
+                                    transition: {
+                                        duration: 0.1,
+                                        ease: "easeIn",
+                                    }
+                                },
+                                enter: {
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 0.15,
+                                        ease: "easeOut",
+                                    }
+                                },
+                            },
+                        }}
+                        content={
+                            <div className="flex flex-row items-center justify-between gap-4 ">
+                                <p className={"text-[12px]"}>Code</p>
+                                <Kbd className={"text-[10px]"} keys={["command"]}>E</Kbd>
+                            </div>
+                        }
+                    >
                         <Link
                             color={"foreground"}
 
                             onClick={() => editor.chain().focus().toggleCode().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-200",
+                                "hover:bg-content4",
                                 {
-                                    "bg-gray-200": editor.isActive("code")
+                                    "bg-content4": editor.isActive("code")
                                 })}
                         >
                             <Icon icon={"octicon:code-16"} width={18} height={18}/>
                         </Link>
                     </Tooltip>
-                    <Tooltip content={
-                        <p className={"text-[12px]"}>Code block</p>
-                    }>
+
+                    <Tooltip
+                        delay={0}
+                        closeDelay={0}
+                        motionProps={{
+                            variants: {
+                                exit: {
+                                    opacity: 0,
+                                    transition: {
+                                        duration: 0.1,
+                                        ease: "easeIn",
+                                    }
+                                },
+                                enter: {
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 0.15,
+                                        ease: "easeOut",
+                                    }
+                                },
+                            },
+                        }}
+                        content={
+                            <p className={"text-[12px]"}>Code block</p>
+                        }>
                         <Link
                             color={"foreground"}
 
                             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-200",
+                                "hover:bg-content4",
                                 {
-                                    "bg-gray-200": editor.isActive("codeBlock")
+                                    "bg-content4": editor.isActive("codeBlock")
                                 })}
                         >
                             <Icon icon={"fa6-solid:code"} width={18} height={18}/>
@@ -334,6 +462,7 @@ export const BlockEditor = ({height, editor}: {
                                 Set Link</Button>
                         </div>
                     </PopoverLinkWrapper>
+
                     <PopoverHighlightWrapper icon="fa6-solid:palette" className={"flex flex-col items-center"}
                                              editor={editor} title={"Highlight color"}>
                         <RadioGroup
@@ -373,165 +502,360 @@ export const BlockEditor = ({height, editor}: {
                     <PopoverMoreOptionWrapper icon="fa6-solid:ellipsis-vertical"
                                               className={"flex flex-row gap-2 "}
                                               editor={editor} title={"More options"}>
-                        <Tooltip content={
-                            <div className="flex flex-row items-center justify-between gap-4 ">
-                                <p className={"text-[12px]"}>Subscript</p>
-                                <div className={"flex flex-row gap-1"}>
-                                    <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
-                                    <Kbd className={"text-[10px]"}>.</Kbd>
+                        <Tooltip
+                            delay={0}
+                            closeDelay={0}
+                            motionProps={{
+                                variants: {
+                                    exit: {
+                                        opacity: 0,
+                                        transition: {
+                                            duration: 0.1,
+                                            ease: "easeIn",
+                                        }
+                                    },
+                                    enter: {
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: "easeOut",
+                                        }
+                                    },
+                                },
+                            }}
+                            content={
+                                <div className="flex flex-row items-center justify-between gap-4 ">
+                                    <p className={"text-[12px]"}>Subscript</p>
+                                    <div className={"flex flex-row gap-1"}>
+                                        <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
+                                        <Kbd className={"text-[10px]"}>.</Kbd>
+                                    </div>
                                 </div>
-                            </div>
-                        }>
+                            }>
                             <Link
                                 color={"foreground"}
                                 onClick={() => editor.chain().focus().toggleSubscript().run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer p-1",
-                                    "hover:bg-gray-200",
+                                    "hover:bg-content4",
                                     {
-                                        "bg-gray-200": editor.isActive("subscript")
+                                        "bg-content4": editor.isActive("subscript")
                                     })}
                             >
                                 <Icon icon={"fa6-solid:subscript"} width={18} height={18}/>
                             </Link>
                         </Tooltip>
-                        <Tooltip content={
-                            <div className="flex flex-row items-center justify-between gap-4 ">
-                                <p className={"text-[12px]"}>Superscript</p>
-                                <div className={"flex flex-row gap-1"}>
-                                    <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
-                                    <Kbd className={"text-[10px]"}>,</Kbd>
+                        <Tooltip
+                            delay={0}
+                            closeDelay={0}
+                            motionProps={{
+                                variants: {
+                                    exit: {
+                                        opacity: 0,
+                                        transition: {
+                                            duration: 0.1,
+                                            ease: "easeIn",
+                                        }
+                                    },
+                                    enter: {
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: "easeOut",
+                                        }
+                                    },
+                                },
+                            }}
+                            content={
+                                <div className="flex flex-row items-center justify-between gap-4 ">
+                                    <p className={"text-[12px]"}>Superscript</p>
+                                    <div className={"flex flex-row gap-1"}>
+                                        <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
+                                        <Kbd className={"text-[10px]"}>,</Kbd>
+                                    </div>
                                 </div>
-                            </div>
-                        }>
+                            }>
                             <Link
                                 color={"foreground"}
                                 onClick={() => editor.chain().focus().toggleSuperscript().run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
-                                    "hover:bg-gray-200",
+                                    "hover:bg-content4",
                                     {
-                                        "bg-gray-200": editor.isActive("superscript")
+                                        "bg-content4": editor.isActive("superscript")
                                     })}
                             >
                                 <Icon icon={"fa6-solid:superscript"} width={18} height={18}/>
                             </Link>
                         </Tooltip>
+
                         <div className="flex h-5 items-center self-center  text-small">
                             <Divider orientation="vertical"/>
                         </div>
-                        <Tooltip content={
-                            <div className="flex flex-row items-center justify-between gap-4 ">
-                                <p className={"text-[12px]"}>Align center</p>
-                                <div className={"flex flex-row gap-1"}>
-                                    <Kbd keys={["shift"]}></Kbd>
-                                    <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
-                                    <Kbd className={"text-[10px]"}>L</Kbd>
+                        <Tooltip
+                            delay={0}
+                            closeDelay={0}
+                            motionProps={{
+                                variants: {
+                                    exit: {
+                                        opacity: 0,
+                                        transition: {
+                                            duration: 0.1,
+                                            ease: "easeIn",
+                                        }
+                                    },
+                                    enter: {
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: "easeOut",
+                                        }
+                                    },
+                                },
+                            }}
+                            content={
+                                <div className="flex flex-row items-center justify-between gap-4 ">
+                                    <p className={"text-[12px]"}>Align center</p>
+                                    <div className={"flex flex-row gap-1"}>
+                                        <Kbd keys={["shift"]}></Kbd>
+                                        <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
+                                        <Kbd className={"text-[10px]"}>L</Kbd>
+                                    </div>
                                 </div>
-                            </div>
-                        }>
+                            }>
                             <Link
                                 color={"foreground"}
                                 onClick={() => editor.chain().focus().setTextAlign('left').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer p-1",
-                                    "hover:bg-gray-200",
+                                    "hover:bg-content4",
                                     {
-                                        "bg-gray-200": editor.isActive({textAlign: 'left'})
+                                        "bg-content4": editor.isActive({textAlign: 'left'})
                                     })}
                             >
                                 <Icon icon={"fa6-solid:align-left"} width={18} height={18}/>
                             </Link>
                         </Tooltip>
-                        <Tooltip content={
-                            <div className="flex flex-row items-center justify-between gap-4 ">
-                                <p className={"text-[12px]"}>Align center</p>
-                                <div className={"flex flex-row gap-1"}>
-                                    <Kbd keys={["shift"]}></Kbd>
-                                    <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
-                                    <Kbd className={"text-[10px]"}>E</Kbd>
+                        <Tooltip
+                            delay={0}
+                            closeDelay={0}
+                            motionProps={{
+                                variants: {
+                                    exit: {
+                                        opacity: 0,
+                                        transition: {
+                                            duration: 0.1,
+                                            ease: "easeIn",
+                                        }
+                                    },
+                                    enter: {
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: "easeOut",
+                                        }
+                                    },
+                                },
+                            }}
+                            content={
+                                <div className="flex flex-row items-center justify-between gap-4 ">
+                                    <p className={"text-[12px]"}>Align center</p>
+                                    <div className={"flex flex-row gap-1"}>
+                                        <Kbd keys={["shift"]}></Kbd>
+                                        <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
+                                        <Kbd className={"text-[10px]"}>E</Kbd>
+                                    </div>
                                 </div>
-                            </div>
-                        }>
+                            }>
                             <Link
                                 color={"foreground"}
                                 onClick={() => editor.chain().focus().setTextAlign('center').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
-                                    "hover:bg-gray-200",
+                                    "hover:bg-content4",
                                     {
-                                        "bg-gray-200": editor.isActive({textAlign: 'center'})
+                                        "bg-content4": editor.isActive({textAlign: 'center'})
                                     })}
                             >
                                 <Icon icon={"fa6-solid:align-center"} width={18} height={18}/>
                             </Link>
                         </Tooltip>
-                        <Tooltip content={
-                            <div className="flex flex-row items-center justify-between gap-4 ">
-                                <p className={"text-[12px]"}>Align right</p>
-                                <div className={"flex flex-row gap-1"}>
-                                    <Kbd keys={["shift"]}></Kbd>
-                                    <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
-                                    <Kbd className={"text-[10px]"}>R</Kbd>
+                        <Tooltip
+                            delay={0}
+                            closeDelay={0}
+                            motionProps={{
+                                variants: {
+                                    exit: {
+                                        opacity: 0,
+                                        transition: {
+                                            duration: 0.1,
+                                            ease: "easeIn",
+                                        }
+                                    },
+                                    enter: {
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: "easeOut",
+                                        }
+                                    },
+                                },
+                            }}
+                            content={
+                                <div className="flex flex-row items-center justify-between gap-4 ">
+                                    <p className={"text-[12px]"}>Align right</p>
+                                    <div className={"flex flex-row gap-1"}>
+                                        <Kbd keys={["shift"]}></Kbd>
+                                        <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
+                                        <Kbd className={"text-[10px]"}>R</Kbd>
+                                    </div>
                                 </div>
-                            </div>
-                        }>
+                            }>
                             <Link
                                 color={"foreground"}
                                 onClick={() => editor.chain().focus().setTextAlign('right').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
-                                    "hover:bg-gray-200",
+                                    "hover:bg-content4",
                                     {
-                                        "bg-gray-200": editor.isActive({textAlign: 'right'})
+                                        "bg-content4": editor.isActive({textAlign: 'right'})
                                     })}
                             >
                                 <Icon icon={"fa6-solid:align-right"} width={18} height={18}/>
                             </Link>
                         </Tooltip>
-                        <Tooltip content={
-                            <div className="flex flex-row items-center justify-between gap-4 ">
-                                <p className={"text-[12px]"}>Justify</p>
-                                <div className={"flex flex-row gap-1"}>
-                                    <Kbd keys={["shift"]}></Kbd>
-                                    <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
-                                    <Kbd className={"text-[10px]"}>J</Kbd>
+                        <Tooltip
+                            delay={0}
+                            closeDelay={0}
+                            motionProps={{
+                                variants: {
+                                    exit: {
+                                        opacity: 0,
+                                        transition: {
+                                            duration: 0.1,
+                                            ease: "easeIn",
+                                        }
+                                    },
+                                    enter: {
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.15,
+                                            ease: "easeOut",
+                                        }
+                                    },
+                                },
+                            }}
+                            content={
+                                <div className="flex flex-row items-center justify-between gap-4 ">
+                                    <p className={"text-[12px]"}>Justify</p>
+                                    <div className={"flex flex-row gap-1"}>
+                                        <Kbd keys={["shift"]}></Kbd>
+                                        <Kbd className={"text-[10px]"} keys={["command"]}></Kbd>
+                                        <Kbd className={"text-[10px]"}>J</Kbd>
+                                    </div>
                                 </div>
-                            </div>
-                        }>
+                            }>
                             <Link
                                 color={"foreground"}
                                 onClick={() => editor.chain().focus().setTextAlign('justify').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
-                                    "hover:bg-gray-200",
+                                    "hover:bg-content4",
                                     {
-                                        "bg-gray-200": editor.isActive({textAlign: "justify"})
+                                        "bg-content4": editor.isActive({textAlign: "justify"})
                                     })}
                             >
                                 <Icon icon={"fa6-solid:align-justify"} width={18} height={18}/>
                             </Link>
                         </Tooltip>
-
                     </PopoverMoreOptionWrapper>
                 </BubbleMenu>
             }
-
-            {editor && <FloatingMenu className="floating-menu" tippyOptions={{duration: 100}} editor={editor}>
-                <button
-                    onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
-                    className={editor.isActive('heading', {level: 1}) ? 'is-active' : ''}
-                >
-                    H1
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}
-                    className={editor.isActive('heading', {level: 2}) ? 'is-active' : ''}
-                >
-                    H2
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={editor.isActive('bulletList') ? 'is-active' : ''}
-                >
-                    Bullet List
-                </button>
-            </FloatingMenu>}
-            <EditorContent editor={editor} style={{minHeight: height, minWidth: '100vh'}}/>
+            {/*{editor && <FloatingMenu className="floating-menu" tippyOptions={{duration: 100}} editor={editor}>*/}
+            {/*    <Link*/}
+            {/*        color={"foreground"}*/}
+            {/*        onClick={() => editor.chain().focus().setHorizontalRule().run()}*/}
+            {/*        className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>*/}
+            {/*        <Icon icon={"fa6-solid:ruler-horizontal"} width={18} height={18}/>*/}
+            {/*    </Link>*/}
+            {/*    <button*/}
+            {/*        onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}*/}
+            {/*        className={editor.isActive('heading', {level: 2}) ? 'is-active' : ''}*/}
+            {/*    >*/}
+            {/*        H2*/}
+            {/*    </button>*/}
+            {/*    <button*/}
+            {/*        onClick={() => editor.chain().focus().toggleBulletList().run()}*/}
+            {/*        className={editor.isActive('bulletList') ? 'is-active' : ''}*/}
+            {/*    >*/}
+            {/*        Bullet List*/}
+            {/*    </button>*/}
+            {/*</FloatingMenu>}*/}
+            <div className={"flex flex-row p-2 outline-none gap-1 w-full"}>
+                <Link
+                    color={"foreground"}
+                    onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                        "hover:bg-content4",
+                    )}>
+                    <Icon icon={"fa6-solid:text-slash"} width={18} height={18}/>
+                </Link>
+                <Link
+                    color={"foreground"}
+                    onClick={() => editor.chain().focus().undo().run()}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                        "hover:bg-content4",
+                    )}>
+                    <Icon icon={"fa6-solid:arrow-rotate-left"} width={18} height={18}/>
+                </Link>
+                <Link
+                    color={"foreground"}
+                    onClick={() => editor.chain().focus().insertTableOfContent().run()}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                        "hover:bg-content4",
+                    )}>
+                    <Icon icon={"oui:table-of-contents"} width={18} height={18}/>
+                </Link>
+                <Link
+                    color={"foreground"}
+                    onClick={() => editor.chain().focus().redo().run()}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                        "hover:bg-content4",
+                    )}>
+                    <Icon icon={"fa6-solid:arrow-rotate-right"} width={18} height={18}/>
+                </Link>
+                <PopoverYoutubeLinkWrapper icon="bi:youtube" className={"flex flex-col items-center"}
+                                           editor={editor} title={"Youtube"}>
+                    <div className={"flex flex-row items-center justify-center mb-2 gap-2"}>
+                        <Input placeholder={"https://"} size={"sm"} value={youtubeLink}
+                               onValueChange={(youtubeLink) => setYoutubeLink(youtubeLink)}
+                               radius={"sm"}
+                               className={"w-full"}/>
+                        <Button
+                            size={"sm"}
+                            radius={"sm"}
+                            onClick={() => {
+                                if (youtubeLink) {
+                                    editor.commands.setYoutubeVideo({
+                                        src: youtubeLink,
+                                        width: Math.max(320, parseInt("640", 10)) || 640,
+                                        height: Math.max(180, parseInt("480", 10)) || 480,
+                                    })
+                                }
+                                setYoutubeLink("")
+                            }
+                            }>
+                            Set Link</Button>
+                    </div>
+                </PopoverYoutubeLinkWrapper>
+                <Link
+                    color={"foreground"}
+                    onClick={() => editor.chain().focus().setHardBreak().run()}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
+                    <Icon icon={"fa6-solid:grip-lines"} width={18} height={18}/>
+                </Link>
+                <Link
+                    color={"foreground"}
+                    onClick={() => editor.chain().focus().setHorizontalRule().run()}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
+                    <Icon icon={"fa6-solid:ruler-horizontal"} width={18} height={18}/>
+                </Link>
+            </div>
+            <EditorContent editor={editor} style={{minHeight: height, minWidth: '100%'}}/>
         </>
     );
 }

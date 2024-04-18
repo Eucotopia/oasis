@@ -5,7 +5,7 @@ import {VisuallyHidden} from "@react-aria/visually-hidden";
 import {useRadio} from "@nextui-org/radio"
 import {Tooltip} from "@nextui-org/tooltip"
 import {cn} from "@nextui-org/react";
-import {ColorRadioItemProps} from "@/components/colorful/ColorRadioItem";
+import {ColorRadioItemProps} from "@/components/radio/ColorRadioItem";
 
 
 const HighlightRadioItem = React.forwardRef<HTMLInputElement, ColorRadioItemProps>(

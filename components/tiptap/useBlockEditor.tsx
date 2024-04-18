@@ -1,6 +1,8 @@
 import ExtensionKit from "@/components/tiptap/extension-kit";
 import {useEditor} from "@tiptap/react";
 import {useEffect} from "react";
+import './styles/index.css'
+import 'katex/dist/katex.min.css'
 
 export const useBlockEditor = () => {
     const editor = useEditor({
@@ -9,9 +11,9 @@ export const useBlockEditor = () => {
             ...ExtensionKit()
         ],
         content: `
-        <h2>Heading</h2>
-        <p style="text-align: center">first paragraph</p>
-        <p style="text-align: right">second paragraph</p>
+      <ul>
+        <li>$\\\\LaTeX$</li>
+      </ul>
       `,
         editorProps: {
             attributes: {
