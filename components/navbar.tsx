@@ -19,7 +19,6 @@ import {siteConfig} from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-import {ThemeSwitch} from "@/components/theme-switch";
 import {DiscordIcon, GithubIcon, Logo, SearchIcon, TwitterIcon,} from "@/components/icons";
 import {useAuth} from "@/hook/useAuth";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
@@ -32,6 +31,8 @@ import {useAppDispatch} from "@/hook/store";
 import React, {ChangeEvent, useMemo, useState} from "react";
 import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
+import {Chip} from "@nextui-org/chip";
+import ThemeSwitch from "@/components/theme-switch";
 
 export const Navbar = () => {
     const [userLogin, {isLoading}] = useUserLoginMutation()
@@ -138,7 +139,12 @@ export const Navbar = () => {
                         ))}
                     </ul>
                 </NavbarContent>
-
+                <NavbarContent
+                    className="hidden sm:flex basis-1/5 sm:basis-full"
+                    justify="center"
+                >
+                    <Chip color="primary" variant="dot">Introducing Tiptap 🎉</Chip>
+                </NavbarContent>
                 <NavbarContent
                     className="hidden sm:flex basis-1/5 sm:basis-full"
                     justify="end"
@@ -204,7 +210,6 @@ export const Navbar = () => {
                     <Link isExternal href={siteConfig.links.github} aria-label="Github">
                         <GithubIcon className="text-default-500"/>
                     </Link>
-                    <ThemeSwitch/>
                     <NavbarMenuToggle/>
                 </NavbarContent>
 

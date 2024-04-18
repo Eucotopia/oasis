@@ -1,22 +1,22 @@
-import {BubbleMenu, FloatingMenu, Editor, EditorContent} from "@tiptap/react";
+import {BubbleMenu, Editor, EditorContent, FloatingMenu} from "@tiptap/react";
 import './styles/index.css'
 import {RadioGroup} from "@nextui-org/radio";
-import React, {useCallback} from "react";
+import React from "react";
 import {Link} from "@nextui-org/link";
 import {COLOR_GROUP} from "@/components/tiptap/ColorGroup";
 import {Icon} from "@iconify/react";
-import {Button, cn, DropdownSection, Listbox, ListboxItem, ListboxSection, Switch} from "@nextui-org/react";
-import PopoverColorWrapper from "@/components/tiptap/popover/PopoverColorWrapper";
-import PopoverMoreOptionWrapper from "@/components/tiptap/popover/PopoverMoreOptionWrapper";
+import {Button, cn} from "@nextui-org/react";
 import ColorRadioItem from "../colorful/ColorRadioItem";
 import {Divider} from "@nextui-org/divider";
-import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
 import {Tooltip} from "@nextui-org/tooltip";
 import {Kbd} from "@nextui-org/kbd";
 import HighlightRadioItem from "@/components/colorful/HighlightRadioItem";
-import PopoverHighlightWrapper from "@/components/tiptap/popover/PopoverHighlightWrapper";
 import {Input} from "@nextui-org/input";
-import PopoverLinkWrapper from "@/components/tiptap/popover/PopoverLinkWrapper";
+import PopoverLinkWrapper from "@/components/popover/PopoverLinkWrapper";
+import PopoverHighlightWrapper from "@/components/popover/PopoverHighlightWrapper";
+import PopoverColorWrapper from "@/components/popover/PopoverColorWrapper";
+import PopoverMoreOptionWrapper from "@/components/popover/PopoverMoreOptionWrapper";
+
 
 export const BlockEditor = ({height, editor}: {
     height: string,
@@ -195,9 +195,11 @@ export const BlockEditor = ({height, editor}: {
                             color={"foreground"}
                             onClick={() => editor.chain().focus().toggleBold().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                                "hover:bg-gray-200",
+                                "hover:bg-gray-200 dark:hover:bg-white",
                                 {
                                     "bg-gray-200": editor.isActive("bold")
+                                }, {
+                                    "dark:bg-pink-500": editor.isActive("bold")
                                 })}
                         >
                             <Icon icon={"fa6-solid:bold"} width={18} height={18}/>
@@ -332,7 +334,7 @@ export const BlockEditor = ({height, editor}: {
                                 Set Link</Button>
                         </div>
                     </PopoverLinkWrapper>
-                    <PopoverHighlightWrapper icon="fa6-solid:palette" className={"flex flex-col items-center "}
+                    <PopoverHighlightWrapper icon="fa6-solid:palette" className={"flex flex-col items-center"}
                                              editor={editor} title={"Highlight color"}>
                         <RadioGroup
                             aria-label="HighlightColor"

@@ -1,22 +1,20 @@
 .ProseMirror {
-    code {
-        @apply caret-white text-white bg-neutral-900 rounded-sm shadow-lg font-mono;
-        background-color: red;
-        padding: 2px;
-        border-radius: 4px;
+    & code {
+        @apply caret-white text-white rounded-sm shadow-lg font-mono bg-neutral-700 p-1 ;
+
         &::selection {
             @apply bg-white/30;
         }
     }
 
-    pre {
+    & pre {
         @apply caret-white bg-neutral-700 text-white rounded my-6 p-4 border border-black dark:bg-neutral-900 dark:border-neutral-800;
 
         /**::selection {*/
         /*    @apply bg-white/20;*/
         /*}*/
 
-        code {
+        & code {
             @apply bg-inherit text-inherit p-0 shadow-none;
         }
 

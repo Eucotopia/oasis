@@ -14,25 +14,26 @@ const HighlightRadioItem = React.forwardRef<HTMLInputElement, ColorRadioItemProp
         if (!editor) {
             return null
         }
+        console.log(editor.getAttributes('highlight')?.color);
         return (
             <Tooltip content={tooltip} delay={1000} isDisabled={!tooltip} offset={0} placement="top">
                 <Component {...getBaseProps()} ref={ref}>
                     <VisuallyHidden>
                         <input {...getInputProps()}
-                               onChange={() => editor.chain().focus().setHighlight({color: color}).run()}
+                               onChange={() => {editor.chain().focus().toggleHighlight({color: color}).run()}}
                         />
                     </VisuallyHidden>
                     <span
                         className={cn(
                             "pointer-events-none h-8 w-8 rounded-full border border-black border-opacity-10 transition-transform group-data-[pressed=true]:scale-90",
                             {
-                                "ring-2 ring-offset-2 ring-offset-content1": editor.isActive('highlight', {color: "#CCE3FD"}),
+                                "ring-2 ring-offset-2 ring-offset-content1": editor.isActive('highlight', {color: color}),
                             },
                         )}
                         style={{
                             backgroundColor: color,
                             // @ts-ignore
-                            "--tw-ring-color": editor.isActive('highlight', {color: "#CCE3FD"}) || isFocusVisible ? "hsl(var(--nextui-primary))" : "transparent",
+                            "--tw-ring-color": editor.isActive('highlight', {color: color}) || isFocusVisible ? "hsl(var(--nextui-primary))" : "transparent",
                         }}
                     />
                 </Component>

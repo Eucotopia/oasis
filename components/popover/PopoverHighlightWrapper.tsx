@@ -33,7 +33,7 @@ const PopoverHighlightWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWr
                         className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                             "hover:bg-gray-200",
                             {
-                                "bg-gray-200": editor.isActive('highlight', {color: editor.getAttributes('highlight').color})
+                                "bg-gray-200": editor.isActive('highlight')
                             })}
                     >
                         <Tooltip delay={1000} content={

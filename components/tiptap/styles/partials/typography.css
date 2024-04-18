@@ -1,9 +1,9 @@
 .ProseMirror {
-    p {
+    & p {
         @apply leading-relaxed my-3 first:mt-0 last:mb-0;
     }
 
-    a {
+    & a {
         @apply text-blue-500 hover:cursor-pointer;
 
     }
@@ -13,56 +13,56 @@
         @apply my-6 first:mt-0 last:mb-0;
     }
 
-    h1 {
+    & h1 {
         @apply text-3xl ;
     }
 
-    h2 {
+    & h2 {
         @apply text-2xl ;
     }
 
-    h3 {
+    & h3 {
         @apply text-xl ;
     }
 
-    h4 {
+    & h4 {
         @apply text-lg ;
     }
 
-    h5 {
+    & h5 {
         @apply text-base ;
     }
 
-    h6 {
+    & h6 {
         @apply text-sm ;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6 {
         @apply font-bold first:mt-0 last:mb-0;
     }
 
-    h1,
-    h2,
-    h3 {
+    & h1,
+    & h2,
+    & h3 {
         @apply mt-12;
     }
 
-    h4,
-    h5,
-    h6 {
+    & h4,
+    & h5,
+    & h6 {
         @apply mt-8;
     }
 
-    a.link {
+    & a.link {
         @apply text-blue-500 font-extrabold dark:text-blue-400;
     }
 
-    mark {
+    & mark {
         @apply bg-red-500 rounded-sm decoration-clone text-inherit py-1 px-0 dark:bg-red-400;
     }
 
@@ -76,7 +76,7 @@
         &.ProseMirror-selectednode {
             @apply bg-black/5 dark:bg-white/10;
 
-            hr {
+            & hr {
                 @apply border-t-black/30 dark:border-t-white/30;
             }
         }
@@ -86,7 +86,7 @@
             @apply dark:bg-white/10;
         }
 
-        hr {
+        & hr {
             @apply border-0 border-t border-black/20 bg-black/80;
             @apply dark:border-white/20 dark:bg-white/80;
         }

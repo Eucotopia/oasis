@@ -21,11 +21,11 @@
   }
 
   /* Blockquote Placeholder */
-  blockquote .is-empty:not(.is-editor-empty):first-child:last-child::before {
+  & blockquote .is-empty:not(.is-editor-empty):first-child:last-child::before {
     content: 'Enter a quote';
   }
 
-  blockquote + figcaption.is-empty:not(.is-editor-empty)::before {
+  & blockquote + & figcaption.is-empty:not(.is-editor-empty)::before {
     content: 'Author';
   }
 

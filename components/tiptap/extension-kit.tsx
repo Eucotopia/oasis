@@ -5,6 +5,8 @@ import Highlight from '@tiptap/extension-highlight'
 import Typography from '@tiptap/extension-typography'
 import TextStyle from '@tiptap/extension-text-style'
 import Document from '@tiptap/extension-document'
+import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
+import { lowlight } from 'lowlight'
 import Heading from '@tiptap/extension-heading'
 import FontFamily from '@tiptap/extension-font-family'
 import {Color} from '@tiptap/extension-color'
@@ -45,6 +47,10 @@ export const ExtensionKit = () => [
     Document,
     CodeBlock,
     Code,
+    CodeBlockLowlight.configure({
+        lowlight,
+        defaultLanguage: null,
+    }),
     Underline,
     TextStyle,
     Superscript,

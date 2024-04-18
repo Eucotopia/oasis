@@ -1,21 +1,21 @@
 .ProseMirror {
     /* Image Block */
 
-    figure[data-type='imageBlock'] {
+    & figure[data-type='imageBlock'] {
         @apply m-0;
 
-        img {
+        & img {
             @apply rounded block w-full;
         }
     }
 
     /* Block Quote */
-    figure[data-type='blockquoteFigure'] {
+    & figure[data-type='blockquoteFigure'] {
         @apply my-14 text-black dark:text-white bg-primary-100 rounded-xl ;
         position: relative;
     }
 
-    figure[data-type='blockquoteFigure']::before {
+    & figure[data-type='blockquoteFigure']::before {
         content: "'‘"; /* 设置伪元素的内容为左引号 */
         position: absolute; /* 设置伪元素的定位方式为绝对定位 */
         top: 0; /* 将伪元素定位在元素的顶部 */
@@ -25,7 +25,7 @@
 
     & > blockquote,
     [data-type='blockquoteFigure'] {
-        blockquote {
+        & blockquote {
             @apply m-0 ;
 
             & > * {
