@@ -7,9 +7,21 @@ type Post = {
     title: string
     content: string
 }
+export type PostType = {
+    title: string
+    content: string
+    tags: string[]
+    summary: string
+    isTop: boolean,
+    rating: string,
+    cover: string,
+    categoryId: string,
+    isPrivate: boolean,
+    columnId: number
+}
 export const postApi = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/post/',
+        baseUrl: 'http://localhost:8080/post',
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const authorization = (getState() as RootState).auth.currentUser?.authorization
@@ -66,6 +78,13 @@ export const postApi = createApi({
             ) {
             },
         }),
+        addPost: build.mutation<ResultResponse<String>, PostType>({
+            query: (post) => ({
+                url: ``,
+                method: 'POST',
+                body: post
+            }),
+        })
     }),
 })
-export const {useGetPostQuery} = postApi
+export const {useGetPostQuery,useAddPostMutation} = postApi

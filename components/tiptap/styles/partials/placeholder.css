@@ -7,25 +7,30 @@
   &.ProseMirror-focused {
     /* Slashmenu Placeholder */
     > p.has-focus.is-empty::before {
+      @apply text-foreground-200;
       content: 'Type  /  to browse options';
     }
 
     > [data-type='columns'] > [data-type='column'] > p.is-empty.has-focus::before {
+      @apply text-foreground-200;
       content: 'Type  /  to browse options';
     }
   }
 
   /* Default Placeholder */
   & > .is-editor-empty::before {
+    @apply text-foreground-200;
     content: 'Click here to start writing …';
   }
 
   /* Blockquote Placeholder */
   & blockquote .is-empty:not(.is-editor-empty):first-child:last-child::before {
+    @apply text-foreground-200;
     content: 'Enter a quote';
   }
 
   & blockquote + & figcaption.is-empty:not(.is-editor-empty)::before {
+    @apply text-foreground-200;
     content: 'Author';
   }
 

@@ -2,10 +2,8 @@
 import React from "react";
 import ScrollToTop from "react-scroll-to-top";
 import {Icon} from "@iconify/react";
-import {Button, cn} from "@nextui-org/react";
-
+import Discout from "@/components/discount-card/App"
 export default function Home() {
-    const [count, setCount] = React.useState<boolean>(false);
     return (
         <section className="flex flex-col items-center justify-center py-8 md:py-10">
             <ScrollToTop smooth component={<Icon icon={"icon-park-twotone:up-c"} height={50} width={50}/>}

@@ -20,7 +20,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                         "hover:bg-content4",
                     )}>
-                    <Icon icon={"fa6-solid:text-slash"} width={18} height={18}/>
+                    <Icon icon={"fa6-solid:text-slash"} width={20} height={20}/>
                 </Link>
                 <Link
                     color={"foreground"}
@@ -28,7 +28,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                         "hover:bg-content4",
                     )}>
-                    <Icon icon={"fa6-solid:arrow-rotate-left"} width={18} height={18}/>
+                    <Icon icon={"fa6-solid:arrow-rotate-left"} width={20} height={20}/>
                 </Link>
                 <Link
                     color={"foreground"}
@@ -36,7 +36,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                         "hover:bg-content4",
                     )}>
-                    <Icon icon={"fa6-solid:arrow-rotate-right"} width={18} height={18}/>
+                    <Icon icon={"fa6-solid:arrow-rotate-right"} width={20} height={20}/>
                 </Link>
                 <PopoverYoutubeLinkWrapper icon="bi:youtube" className={"flex flex-col items-center"}
                                            editor={editor} title={"Youtube"}>
@@ -66,13 +66,13 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     color={"foreground"}
                     onClick={() => editor.chain().focus().setHardBreak().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
-                    <Icon icon={"fa6-solid:grip-lines"} width={18} height={18}/>
+                    <Icon icon={"fa6-solid:grip-lines"} width={20} height={20}/>
                 </Link>
                 <Link
                     color={"foreground"}
                     onClick={() => editor.chain().focus().setHorizontalRule().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
-                    <Icon icon={"fa6-solid:ruler-horizontal"} width={18} height={18}/>
+                    <Icon icon={"fa6-solid:ruler-horizontal"} width={20} height={20}/>
                 </Link>
             </div>
         </>

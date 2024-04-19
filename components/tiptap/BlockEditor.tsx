@@ -16,12 +16,9 @@ import PopoverColorWrapper from "@/components/popover/PopoverColorWrapper";
 import PopoverMoreOptionWrapper from "@/components/popover/PopoverMoreOptionWrapper";
 import HighlightRadioItem from "@/components/radio/HighlightRadioItem";
 import ColorRadioItem from "@/components/radio/ColorRadioItem";
-import PopoverYoutubeLinkWrapper from "@/components/popover/PopoverYoutubeLinkWrapper";
-import {TableOfContents} from "@/components/tiptap/extensions/TableOfContents/TableOfContents";
 
 
-export const BlockEditor = ({height, editor}: {
-    height: string,
+export const BlockEditor = ({editor}: {
     editor: Editor
 }) => {
     const [isSelected, setIsSelected] = React.useState(false);
@@ -785,7 +782,7 @@ export const BlockEditor = ({height, editor}: {
             {/*        Bullet List*/}
             {/*    </button>*/}
             {/*</FloatingMenu>}*/}
-            <EditorContent editor={editor} style={{minHeight: height, minWidth: '100%'}}/>
+            <EditorContent editor={editor} className={"!h-full"}/>
             {/*<TableOfContents editor={editor}/>*/}
             {/*<TableOfContents onItemClick={handlePotentialClose} editor={editor} />*/}
         </>

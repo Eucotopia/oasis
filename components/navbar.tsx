@@ -170,15 +170,7 @@ export const Navbar = () => {
                                         src={currentUser.cover}
                                     />
                                 </DropdownTrigger>
-                                <DropdownMenu aria-label="Profile Actions" variant="flat"
-                                              // onAction={(key) => {
-                                              //     switch (key) {
-                                              //         case "logout":
-                                              //             Logout()
-                                              //             break
-                                              //     }
-                                              // }}
-                                >
+                                <DropdownMenu aria-label="Profile Actions" variant="flat">
                                     <DropdownItem key="profile" className="h-14 gap-2" textValue={"Profile"}>
                                         <p className="font-semibold">Signed in as</p>
                                         <p className="font-semibold">{currentUser.email}</p>
@@ -193,7 +185,7 @@ export const Navbar = () => {
                                     <DropdownItem key="help_and_feedback" textValue={"Help & Feedback"}>Help &
                                         Feedback</DropdownItem>
                                     <DropdownItem key="logout" textValue={"Log Out"} color="danger"
-                                                  onPress={() => alert("2123")}>
+                                                  onPress={Logout}>
                                         Log Out
                                     </DropdownItem>
                                 </DropdownMenu>

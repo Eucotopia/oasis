@@ -48,7 +48,7 @@ const PopoverYoutubeLinkWrapper = React.forwardRef<HTMLDivElement, PopoverFilter
                             content={
                                 <p className={"text-[12px]"}>{title}</p>
                             }>
-                            <Icon icon={icon} width={18} height={18}/>
+                            <Icon icon={icon} width={20} height={20}/>
                         </Tooltip>
                     </Link>
                 </PopoverTrigger>
