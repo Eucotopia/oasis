@@ -3,7 +3,7 @@ import {BubbleMenu, Editor, EditorContent, FloatingMenu} from "@tiptap/react";
 import {RadioGroup} from "@nextui-org/radio";
 import React from "react";
 import {Link} from "@nextui-org/link";
-import {COLOR_GROUP} from "@/components/tiptap/ColorGroup";
+import {COLOR_GROUP} from "@/components/tiptap/data/ColorGroup";
 import {Icon} from "@iconify/react";
 import {Button, cn} from "@nextui-org/react";
 import {Divider} from "@nextui-org/divider";
@@ -17,16 +17,16 @@ import PopoverMoreOptionWrapper from "@/components/popover/PopoverMoreOptionWrap
 import HighlightRadioItem from "@/components/radio/HighlightRadioItem";
 import ColorRadioItem from "@/components/radio/ColorRadioItem";
 import PopoverYoutubeLinkWrapper from "@/components/popover/PopoverYoutubeLinkWrapper";
+import {TableOfContents} from "@/components/tiptap/extensions/TableOfContents/TableOfContents";
 
 
 export const BlockEditor = ({height, editor}: {
     height: string,
     editor: Editor
 }) => {
-    const [link, setLink] = React.useState("");
     const [isSelected, setIsSelected] = React.useState(false);
+    const [link, setLink] = React.useState("");
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["inter"]));
-    const [youtubeLink, setYoutubeLink] = React.useState("");
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
         [selectedKeys]
@@ -785,77 +785,9 @@ export const BlockEditor = ({height, editor}: {
             {/*        Bullet List*/}
             {/*    </button>*/}
             {/*</FloatingMenu>}*/}
-            <div className={"flex flex-row p-2 outline-none gap-1 w-full"}>
-                <Link
-                    color={"foreground"}
-                    onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                        "hover:bg-content4",
-                    )}>
-                    <Icon icon={"fa6-solid:text-slash"} width={18} height={18}/>
-                </Link>
-                <Link
-                    color={"foreground"}
-                    onClick={() => editor.chain().focus().undo().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                        "hover:bg-content4",
-                    )}>
-                    <Icon icon={"fa6-solid:arrow-rotate-left"} width={18} height={18}/>
-                </Link>
-                <Link
-                    color={"foreground"}
-                    onClick={() => editor.chain().focus().insertTableOfContent().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                        "hover:bg-content4",
-                    )}>
-                    <Icon icon={"oui:table-of-contents"} width={18} height={18}/>
-                </Link>
-                <Link
-                    color={"foreground"}
-                    onClick={() => editor.chain().focus().redo().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                        "hover:bg-content4",
-                    )}>
-                    <Icon icon={"fa6-solid:arrow-rotate-right"} width={18} height={18}/>
-                </Link>
-                <PopoverYoutubeLinkWrapper icon="bi:youtube" className={"flex flex-col items-center"}
-                                           editor={editor} title={"Youtube"}>
-                    <div className={"flex flex-row items-center justify-center mb-2 gap-2"}>
-                        <Input placeholder={"https://"} size={"sm"} value={youtubeLink}
-                               onValueChange={(youtubeLink) => setYoutubeLink(youtubeLink)}
-                               radius={"sm"}
-                               className={"w-full"}/>
-                        <Button
-                            size={"sm"}
-                            radius={"sm"}
-                            onClick={() => {
-                                if (youtubeLink) {
-                                    editor.commands.setYoutubeVideo({
-                                        src: youtubeLink,
-                                        width: Math.max(320, parseInt("640", 10)) || 640,
-                                        height: Math.max(180, parseInt("480", 10)) || 480,
-                                    })
-                                }
-                                setYoutubeLink("")
-                            }
-                            }>
-                            Set Link</Button>
-                    </div>
-                </PopoverYoutubeLinkWrapper>
-                <Link
-                    color={"foreground"}
-                    onClick={() => editor.chain().focus().setHardBreak().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
-                    <Icon icon={"fa6-solid:grip-lines"} width={18} height={18}/>
-                </Link>
-                <Link
-                    color={"foreground"}
-                    onClick={() => editor.chain().focus().setHorizontalRule().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
-                    <Icon icon={"fa6-solid:ruler-horizontal"} width={18} height={18}/>
-                </Link>
-            </div>
             <EditorContent editor={editor} style={{minHeight: height, minWidth: '100%'}}/>
+            {/*<TableOfContents editor={editor}/>*/}
+            {/*<TableOfContents onItemClick={handlePotentialClose} editor={editor} />*/}
         </>
     );
 }

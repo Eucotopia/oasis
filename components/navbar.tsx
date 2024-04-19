@@ -170,13 +170,15 @@ export const Navbar = () => {
                                         src={currentUser.cover}
                                     />
                                 </DropdownTrigger>
-                                <DropdownMenu aria-label="Profile Actions" variant="flat" onAction={(key) => {
-                                    switch (key) {
-                                        case "logout":
-                                            Logout()
-                                            break
-                                    }
-                                }}>
+                                <DropdownMenu aria-label="Profile Actions" variant="flat"
+                                              // onAction={(key) => {
+                                              //     switch (key) {
+                                              //         case "logout":
+                                              //             Logout()
+                                              //             break
+                                              //     }
+                                              // }}
+                                >
                                     <DropdownItem key="profile" className="h-14 gap-2" textValue={"Profile"}>
                                         <p className="font-semibold">Signed in as</p>
                                         <p className="font-semibold">{currentUser.email}</p>
@@ -190,7 +192,8 @@ export const Navbar = () => {
                                                   textValue={"Configurations"}>Configurations</DropdownItem>
                                     <DropdownItem key="help_and_feedback" textValue={"Help & Feedback"}>Help &
                                         Feedback</DropdownItem>
-                                    <DropdownItem key="logout" textValue={"Log Out"} color="danger">
+                                    <DropdownItem key="logout" textValue={"Log Out"} color="danger"
+                                                  onPress={() => alert("2123")}>
                                         Log Out
                                     </DropdownItem>
                                 </DropdownMenu>

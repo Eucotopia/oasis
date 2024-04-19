@@ -10,6 +10,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.17.6",
     "@iconify/react": "^4.1.1",
     "@nextui-org/accordion": "^2.0.29",
     "@nextui-org/autocomplete": "^2.0.11",
@@ -68,6 +69,7 @@
     "@tiptap/extension-highlight": "^2.3.0",
     "@tiptap/extension-image": "^2.3.0",
     "@tiptap/extension-link": "^2.3.0",
+    "@tiptap/extension-placeholder": "^2.3.0",
     "@tiptap/extension-subscript": "^2.3.0",
     "@tiptap/extension-superscript": "^2.3.0",
     "@tiptap/extension-task-item": "^2.3.0",
@@ -93,9 +95,9 @@
     "next": "14.2.1",
     "next-themes": "^0.2.1",
     "postcss": "8.4.38",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-colorful": "^5.6.1",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-scroll-to-top": "^3.0.0",
     "redux-persist": "^6.0.0",

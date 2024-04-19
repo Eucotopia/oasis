@@ -67,7 +67,7 @@
     }
 
     & img {
-        @apply h-auto w-full max-w-full;
+        @apply h-auto  max-w-full rounded-2xl  mx-auto;
     }
 
     [data-type='horizontalRule'] {
@@ -90,5 +90,21 @@
             @apply border-0 border-t border-black/20 bg-black/80;
             @apply dark:border-white/20 dark:bg-white/80;
         }
+    }
+}
+.color {
+    white-space: nowrap;
+    &::before {
+        /*noinspection CssUnresolvedCustomProperty*/
+        background-color: var(--color);
+        border: 1px solid rgba(128, 128, 128, 0.3);
+        border-radius: 4px;
+        content: " ";
+        display: inline-block;
+        height: 1em;
+        margin-bottom: 0.15em;
+        margin-right: 0.1em;
+        vertical-align: middle;
+        width: 1em;
     }
 }
