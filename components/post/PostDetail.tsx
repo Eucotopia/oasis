@@ -5,14 +5,14 @@ export const PostDetail = ({id}: { id: string }) => {
     //     data: post,
     //     isFetching,
     //     isLoading,
-    // } = useGetPostQuery(1)
-    //
+    // } = useGetPostQuery(69)
+
     // if (isLoading) return <div>Loading...</div>
     // if (!post) return <div>Missing post!</div>
 
     return (
         <div>
-            {/*{post.name} {isFetching ? '...refetching' : ''}*/}
+            {/*<h1>{post.content}</h1>*/}
         </div>
     )
 }

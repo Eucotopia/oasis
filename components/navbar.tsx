@@ -31,7 +31,6 @@ import {useAppDispatch} from "@/hook/store";
 import React, {ChangeEvent, useMemo, useState} from "react";
 import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
-import {Chip} from "@nextui-org/chip";
 import ThemeSwitch from "@/components/theme-switch";
 
 export const Navbar = () => {
@@ -63,11 +62,6 @@ export const Navbar = () => {
         [name]: value
     }))
 
-    // const handleRegisterChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setRegisterState((prev) => ({
-    //     ...prev,
-    //     [name]: value
-    // }))
-
     // handle login
     const userLoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -84,15 +78,6 @@ export const Navbar = () => {
             })
         }
     }
-
-    const Logout = () => {
-        dispatch(removeCredentials())
-    }
-
-    // const Register = async () => {
-    //     const user = await register(registerState).unwrap()
-    //     console.log(user.code)
-    // }
     const searchInput = (
         <Button
             aria-label={"Quick Search"}
@@ -185,7 +170,9 @@ export const Navbar = () => {
                                     <DropdownItem key="help_and_feedback" textValue={"Help & Feedback"}>Help &
                                         Feedback</DropdownItem>
                                     <DropdownItem key="logout" textValue={"Log Out"} color="danger"
-                                                  onPress={Logout}>
+                                                  onPress={() => {
+                                                      dispatch(removeCredentials())
+                                                  }}>
                                         Log Out
                                     </DropdownItem>
                                 </DropdownMenu>

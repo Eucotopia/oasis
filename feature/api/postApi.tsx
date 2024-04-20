@@ -84,7 +84,12 @@ export const postApi = createApi({
                 method: 'POST',
                 body: post
             }),
+        }),
+        getPostById: build.query<ResultResponse<Post>, number>({
+            query: (id) => ({url: `/${id}`}),
+            providesTags: (result, error, id) => [{type: 'Post', id}],
+            transformResponse: (response: { data: ResultResponse<Post> }, meta, arg) => response.data
         })
     }),
 })
-export const {useGetPostQuery,useAddPostMutation} = postApi
+export const {useGetPostQuery, useAddPostMutation} = postApi
