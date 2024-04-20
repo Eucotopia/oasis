@@ -9,6 +9,7 @@ module.exports = {
         './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
     ],
     theme: {
+        light: {},
         extend: {
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -20,6 +21,32 @@ module.exports = {
     plugins: [
         nextui({
                 themes: {
+                    light: {
+                        colors: {
+                            background: "#F7EEDD",
+                            foreground: "#000000",
+                            primary: {
+                                '50': '#fffcf7',
+                                '100': '#fff8ed',
+                                '200': '#ffebd4',
+                                '300': '#ffdab8',
+                                '400': '#ffb485',
+                                '500': '#ff7f50',
+                                '600': '#e66a40',
+                                '700': '#bf4e2c',
+                                '800': '#99381d',
+                                '900': '#732410',
+                                '950': '#4a1207',
+                                "DEFAULT": "#FF7F50"
+                            },
+                            secondary:{
+                                "DEFAULT": "#8B4513"
+                            }
+                        },
+                    },
+                    dark: {
+                        colors: {},
+                    },
                     "purple-dark1": {
                         "colors": {
                             "background": {

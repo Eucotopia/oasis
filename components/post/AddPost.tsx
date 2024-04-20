@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Autocomplete,
     AutocompleteItem,
@@ -6,7 +6,7 @@ import {
     cn,
     Modal,
     ModalContent,
-    ModalHeader,
+    ModalHeader, Switch,
     useDisclosure
 } from "@nextui-org/react";
 import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
@@ -20,41 +20,24 @@ import {Input, Textarea} from "@nextui-org/input";
 import {TagType, useAddTagMutation, useGetTagsQuery} from "@/feature/api/tagApi";
 import {PostType, useAddPostMutation} from "@/feature/api/postApi"
 import TagGroupItem from "@/components/radio/TagGroupItem";
-
-export const animals = [
-    {label: "Cat", value: "cat", description: "The second most popular pet in the world"},
-    {label: "Dog", value: "dog", description: "The most popular pet in the world"},
-    {label: "Elephant", value: "elephant", description: "The largest land animal"},
-    {label: "Lion", value: "lion", description: "The king of the jungle"},
-    {label: "Tiger", value: "tiger", description: "The largest cat species"},
-    {label: "Giraffe", value: "giraffe", description: "The tallest land animal"},
-    {
-        label: "Dolphin",
-        value: "dolphin",
-        description: "A widely distributed and diverse group of aquatic mammals",
-    },
-    {label: "Penguin", value: "penguin", description: "A group of aquatic flightless birds"},
-    {label: "Zebra", value: "zebra", description: "A several species of African equids"},
-    {
-        label: "Shark",
-        value: "shark",
-        description: "A group of elasmobranch fish characterized by a cartilaginous skeleton",
-    },
-    {
-        label: "Whale",
-        value: "whale",
-        description: "Diverse group of fully aquatic placental marine mammals",
-    },
-    {label: "Otter", value: "otter", description: "A carnivorous mammal in the subfamily Lutrinae"},
-    {label: "Crocodile", value: "crocodile", description: "A large semiaquatic reptile"},
-];
+import {CategoryType, useGetCategoriesQuery} from "@/feature/api/categoryApi";
+import {ColumnType, useGetColumnsQuery} from "@/feature/api/columnApi";
+import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 
 const AddPost = () => {
+    const [isColumn, setIsColumn] = useState<boolean>(false)
     // add post
     const [addPost] = useAddPostMutation()
+    const {data: columns, isLoading: isLoadingColumns} = useGetColumnsQuery()
+    // get all categories
+    const {data: categories, isLoading: isLoadingCategories} = useGetCategoriesQuery()
     // get all tags
     const {data: tags, isLoading: isLoadingTags} = useGetTagsQuery()
-
+    // set rating
+    const setRating = (value: string) => {
+        // @ts-ignore
+        handleChange({target: {name: 'rating', value: value}})
+    }
     const [isShow, setIsShow] = React.useState(false);
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -69,18 +52,32 @@ const AddPost = () => {
             isPrivate: false,
             isTop: false,
             cover: "1",
-            categoryId: "1",
+            categoryId: "",
             columnId: 0,
             rating: "4",
         }
     );
+    const handeCategoryIdChange = (id: string) => {
+        setPost(prevState => ({
+            ...prevState,
+            categoryId: id
+        }))
+    }
+
+
+    const handeColumnIdChange = (id: number) => {
+        setPost({
+            ...post,
+            columnId: id
+        })
+    }
     const handeTagChange = (value: string[]) => setPost((prev) => ({...prev, tags: value}))
     const handleChange = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => setPost((prev) => ({
         ...prev,
         [name]: value
     }))
 
-    if (!editor) {
+    if (!editor || !categories || !tags || !columns) {
         return null
     }
     const handleSave = async () => {
@@ -158,26 +155,29 @@ const AddPost = () => {
                                                     labelPlacement="outside"
                                                     variant={"faded"}
                                                     maxRows={3}
-                                                    label="summary"
+                                                    label="Summary"
                                                     placeholder="Enter post summary "
                                                 />
-                                                <div className={"flex flex-row gap-4"}>
+                                                <div className={"flex flex-row gap-8"}>
                                                     <Autocomplete
                                                         isRequired
                                                         labelPlacement={"outside"}
                                                         size={"lg"}
                                                         label="Chose a category"
-                                                        defaultItems={animals}
-                                                        placeholder="Search an animal"
-                                                        defaultSelectedKey="cat"
+                                                        // @ts-ignore
+                                                        defaultItems={categories as CategoryType[]}
+                                                        placeholder="Chose a category"
                                                         className="w-1/3"
+                                                        onSelectionChange={handeCategoryIdChange as any}
                                                     >
                                                         {(item) => <AutocompleteItem
-                                                            key={item.value}>{item.label}</AutocompleteItem>}
+                                                            key={item.id}>{item.name}</AutocompleteItem>}
                                                     </Autocomplete>
                                                     <div
-                                                        className="flex flex-row items-center justify-between gap-2 w-2/3">
-                                                        <CheckboxGroup aria-label="Select amenities" className="gap-1"
+                                                        className="flex flex-col items-start gap-2 w-2/3 ">
+                                                        <div className={"text-lg"}>Chose some tags</div>
+                                                        <CheckboxGroup aria-label="Select amenities "
+                                                                       className="flex flex-row  overflow-x-scroll gap-1 "
                                                                        orientation="horizontal"
                                                                        value={post.tags}
                                                                        onChange={handeTagChange as any}>
@@ -211,7 +211,50 @@ const AddPost = () => {
                                                         {/*/>*/}
                                                     </div>
                                                 </div>
-                                                <Button onClick={handleSave}>onClick</Button>
+                                                <div className={"flex flex-row mt-5 gap-4"}>
+                                                    <Switch isSelected={post.isTop} onValueChange={() => {
+                                                        setPost(prevState => ({
+                                                            ...prevState,
+                                                            isTop: !prevState.isTop
+                                                        }))
+                                                    }}
+                                                            name={"isTop"}>
+                                                        isTop
+                                                    </Switch>
+                                                    <Switch isSelected={post.isPrivate}
+                                                            onValueChange={() => {
+                                                                setPost(prevState => ({
+                                                                    ...prevState,
+                                                                    isPrivate: !prevState.isPrivate
+                                                                }))
+                                                            }}
+                                                            name={"isPrivate"}>
+                                                        isPrivate
+                                                    </Switch>
+                                                    <Switch isSelected={isColumn} onValueChange={setIsColumn}>
+                                                        isColumn
+                                                    </Switch>
+                                                    {
+                                                        isColumn && <Autocomplete
+                                                            isRequired
+                                                            labelPlacement={"outside"}
+                                                            size={"lg"}
+                                                            label="Chose a column"
+                                                            // @ts-ignore
+                                                            defaultItems={columns as ColumnType[]}
+                                                            placeholder="Chose a category"
+                                                            className="w-1/3"
+                                                            onSelectionChange={handeColumnIdChange as any}
+                                                        >
+                                                            {(item) => <AutocompleteItem
+                                                                key={item.id}>{item.name}</AutocompleteItem>}
+                                                        </Autocomplete>
+                                                    }
+                                                </div>
+                                                <div>
+                                                    <RatingRadioGroup className="mt-2 w-72" value={post.rating}
+                                                                      setValue={setRating}/>
+                                                </div>
                                             </div>
                                             <Divider className={"w-full border-default-100"}/>
                                             <div
@@ -219,7 +262,7 @@ const AddPost = () => {
                                                 <Button color="danger" variant="light" onPress={onClose}>
                                                     Close
                                                 </Button>
-                                                <Button color="primary" onPress={onClose}>
+                                                <Button color="primary" onPress={onClose} onClick={handleSave}>
                                                     Publish
                                                 </Button>
                                             </div>

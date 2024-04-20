@@ -6,6 +6,8 @@ import authReducer from "@/feature/auth/authSlice";
 import {postApi} from "@/feature/api/postApi";
 import {authApi} from "@/feature/api/authApi";
 import {tagApi} from "@/feature/api/tagApi";
+import {columnApi} from "@/feature/api/columnApi";
+import {categoryApi} from "@/feature/api/categoryApi";
 import {setupListeners} from "@reduxjs/toolkit/query";
 
 // 定义配置信息
@@ -15,12 +17,14 @@ const persistConfig = {
     // 如果不想将部分state持久化，可以将其放入黑名单(blacklist)中.黑名单是设置
     blacklist: ["auth"]
 }
-const middleware = [thunk, postApi.middleware, authApi.middleware,tagApi.middleware]
+const middleware = [thunk, postApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware,columnApi.middleware]
 const rootReducer = combineReducers({
     auth: authReducer,
     [postApi.reducerPath]: postApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    [tagApi.reducerPath]: tagApi.reducer
+    [tagApi.reducerPath]: tagApi.reducer,
+    [columnApi.reducerPath]: columnApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer
 })
 // 创建持久化的配置persist的信息
 const persistedReducer = persistReducer(persistConfig, rootReducer)

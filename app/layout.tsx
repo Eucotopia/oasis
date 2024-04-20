@@ -64,7 +64,6 @@ export default function RootLayout({
                     </Link>
                 </footer>
             </div>
-
         </Providers>
         </body>
         </html>
