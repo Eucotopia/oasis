@@ -24,6 +24,7 @@ import {CategoryType, useGetCategoriesQuery} from "@/feature/api/categoryApi";
 import {ColumnType, useGetColumnsQuery} from "@/feature/api/columnApi";
 import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {useUploadMutation} from "@/feature/api/fileApi";
+
 const AddPost = () => {
     const [isColumn, setIsColumn] = useState<boolean>(false)
     // add post
@@ -108,7 +109,7 @@ const AddPost = () => {
                 onOpenChange={onOpenChange}
                 backdrop={"blur"}
                 size={"5xl"}
-                radius={"lg"}
+                radius={"sm"}
                 classNames={{
                     body: "scrollbar-hide overflow-scroll rounded-lg mb-20",
                     backdrop: "bg-gradient-to-br from-[#292f46]/50 to-secondary-500  backdrop-opacity-40",
@@ -143,8 +144,8 @@ const AddPost = () => {
                             <ModalFooter>
                                 {
                                     isShow ? (
-                                        <section className={"w-full pt-10 pl-4"}>
-                                            <div className={"h-full flex flex-col gap-4"}
+                                        <section className={"w-full pt-10 pl-4 "}>
+                                            <div className={"h-full flex flex-col gap-4 overflow-scroll scrollbar-hide"}
                                                  style={{height: 'calc(100% - 60px)'}}>
                                                 <Input
                                                     variant={"faded"}
@@ -189,7 +190,7 @@ const AddPost = () => {
                                                         className="flex flex-col items-start gap-2 w-2/3 ">
                                                         <div className={"text-lg"}>Chose some tags</div>
                                                         <CheckboxGroup aria-label="Select amenities "
-                                                                       className="flex flex-row  overflow-x-scroll gap-1 "
+                                                                       className="flex flex-row  overflow-x-scroll gap-1 scrollbar-hide"
                                                                        orientation="horizontal"
                                                                        value={post.tags}
                                                                        onChange={handeTagChange as any}>
@@ -272,10 +273,9 @@ const AddPost = () => {
                                                     setSelectedFile(e.target.files[0]);
                                                 }}
                                                        name="image"
-                                                       // className="hidden"
+                                                       className="hidden"
                                                        id="upload-input"/>
                                                 <button onClick={handleUpload}>上传图片</button>
-
                                             </div>
                                             <Divider className={"w-full border-default-100"}/>
                                             <div
@@ -287,6 +287,7 @@ const AddPost = () => {
                                                     Publish
                                                 </Button>
                                             </div>
+
                                         </section>
                                     ) : (
                                         <div className={"flex flex-row justify-between w-full rounded-lg "}>
