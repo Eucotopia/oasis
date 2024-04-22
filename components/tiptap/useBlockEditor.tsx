@@ -3,6 +3,7 @@ import {useEditor} from "@tiptap/react";
 import {useEffect} from "react";
 import './styles/index.css'
 import 'katex/dist/katex.min.css'
+import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
 
 export const useBlockEditor = () => {
     const editor = useEditor({
@@ -23,6 +24,10 @@ export const useBlockEditor = () => {
                 class: 'min-h-full',
             },
         },
+        onUpdate: () => {
+            saveCurrentPostContent(editor?.getHTML() || "")
+        },
+
     }, [])
     useEffect(() => {
         if (!editor) {

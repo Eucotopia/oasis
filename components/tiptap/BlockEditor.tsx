@@ -17,7 +17,6 @@ import PopoverMoreOptionWrapper from "@/components/popover/PopoverMoreOptionWrap
 import HighlightRadioItem from "@/components/radio/HighlightRadioItem";
 import ColorRadioItem from "@/components/radio/ColorRadioItem";
 
-
 export const BlockEditor = ({editor}: {
     editor: Editor
 }) => {
