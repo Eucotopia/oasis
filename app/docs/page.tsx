@@ -6,6 +6,7 @@ export default function DocsPage() {
 
     return (
         <>
-            sad</>
+            sad
+        </>
     )
 }

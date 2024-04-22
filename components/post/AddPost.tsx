@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
     Autocomplete,
     AutocompleteItem,
-    Button, CheckboxGroup,
+    Button,
+    CheckboxGroup,
     cn,
     Modal,
     ModalContent,
-    ModalHeader, Switch,
+    ModalHeader,
+    Switch,
     useDisclosure
 } from "@nextui-org/react";
 import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
@@ -24,8 +26,12 @@ import {CategoryType, useGetCategoriesQuery} from "@/feature/api/categoryApi";
 import {ColumnType, useGetColumnsQuery} from "@/feature/api/columnApi";
 import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {useUploadMutation} from "@/feature/api/fileApi";
+import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
+import {useCurrentPost} from "@/hook/useCurrentPost";
 
 const AddPost = () => {
+    const currentPostRef = useRef(null);
+    const useCurrentPostContent = useCurrentPost();
     const [isColumn, setIsColumn] = useState<boolean>(false)
     // add post
     const [addPost] = useAddPostMutation()
@@ -40,12 +46,34 @@ const AddPost = () => {
         // @ts-ignore
         handleChange({target: {name: 'rating', value: value}})
     }
+
+
+// useEffect(() => {
+//     // 键盘输入事件监听器
+//     const handleKeyDown = (event: KeyboardEvent) => {
+//         if (!event.key) {
+//             // 如果没有键盘输入，执行你的函数
+//             console.log("1232132")
+//         }
+//     };
+//
+//     // 将监听器添加到全局键盘事件队列中
+//     document.addEventListener('keydown', handleKeyDown);
+//
+//     // 清理函数，确保在组件卸载时清除事件监听器
+//     return () => {
+//         document.removeEventListener('keydown', handleKeyDown);
+//     };
+// }, []); // 在此处依赖数组中填空
+
     const [isShow, setIsShow] = React.useState(false);
+
     const [uploadFile] = useUploadMutation();
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     const {characterCount, editor} = useBlockEditor()
+
     const [post, setPost] = React.useState<PostType>(
         {
             title: "",
@@ -60,6 +88,11 @@ const AddPost = () => {
             rating: "",
         }
     );
+    // useEffect(() => {
+    //     setInterval(() => {
+    //         saveCurrentPostContent(editor?.getHTML().toString() as string)
+    //     }, 1000)
+    // })
     const handeCategoryIdChange = (id: string) => {
         setPost(prevState => ({
             ...prevState,
@@ -103,6 +136,9 @@ const AddPost = () => {
 
     return (
         <>
+            {
+                useCurrentPostContent.currentPostContent&&<p>{useCurrentPostContent.currentPostContent}</p>
+            }
             <Button onPress={onOpen}>Add new</Button>
             <Modal
                 isOpen={isOpen}
@@ -186,43 +222,46 @@ const AddPost = () => {
                                                         {(item) => <AutocompleteItem
                                                             key={item.id}>{item.name}</AutocompleteItem>}
                                                     </Autocomplete>
+                                                </div>
+                                                <div
+                                                    className="flex flex-col items-start gap-2 w-2/3">
                                                     <div
-                                                        className="flex flex-col items-start gap-2 w-2/3 ">
-                                                        <div className={"text-lg"}>Chose some tags</div>
-                                                        <CheckboxGroup aria-label="Select amenities "
-                                                                       className="flex flex-row  overflow-x-scroll gap-1 scrollbar-hide"
-                                                                       orientation="horizontal"
-                                                                       value={post.tags}
-                                                                       onChange={handeTagChange as any}>
-                                                            {
-                                                                // @ts-ignore
-                                                                tags?.map((item, index) => {
-                                                                    return (
-                                                                        <TagGroupItem icon="ic:baseline-apple"
-                                                                                      value={String(item.id)}
-                                                                                      key={item.id}>
-                                                                            {item.name}
-                                                                        </TagGroupItem>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </CheckboxGroup>
-                                                        {/*TODO add tag*/}
-                                                        {/*<Input*/}
-                                                        {/*    className={"w-3/12"}*/}
-                                                        {/*    variant={"underlined"}*/}
-                                                        {/*    placeholder={"add tag"}*/}
-                                                        {/*    onKeyDown={(e) => {*/}
-                                                        {/*        if (e.key === "Enter") {*/}
-                                                        {/*            // setTags([...tags, {*/}
-                                                        {/*            //     id: tags.length + 1,*/}
-                                                        {/*            //     name: e.currentTarget.value*/}
-                                                        {/*            // }])*/}
-                                                        {/*            e.currentTarget.value = ""*/}
-                                                        {/*        }*/}
-                                                        {/*    }}*/}
-                                                        {/*/>*/}
+                                                        className={"text-medium after:content-['*'] after:text-danger"}>Chose
+                                                        some tags
                                                     </div>
+                                                    <CheckboxGroup
+                                                        aria-label="Select tags"
+                                                        orientation="horizontal"
+                                                        value={post.tags}
+                                                        onChange={handeTagChange as any}>
+                                                        {
+                                                            // @ts-ignore
+                                                            tags?.map((item, index) => {
+                                                                return (
+                                                                    <TagGroupItem icon="ic:baseline-apple"
+                                                                                  value={String(item.id)}
+                                                                                  key={item.id}>
+                                                                        {item.name}
+                                                                    </TagGroupItem>
+                                                                )
+                                                            })
+                                                        }
+                                                    </CheckboxGroup>
+                                                    {/*TODO add tag*/}
+                                                    {/*<Input*/}
+                                                    {/*    className={"w-3/12"}*/}
+                                                    {/*    variant={"underlined"}*/}
+                                                    {/*    placeholder={"add tag"}*/}
+                                                    {/*    onKeyDown={(e) => {*/}
+                                                    {/*        if (e.key === "Enter") {*/}
+                                                    {/*            // setTags([...tags, {*/}
+                                                    {/*            //     id: tags.length + 1,*/}
+                                                    {/*            //     name: e.currentTarget.value*/}
+                                                    {/*            // }])*/}
+                                                    {/*            e.currentTarget.value = ""*/}
+                                                    {/*        }*/}
+                                                    {/*    }}*/}
+                                                    {/*/>*/}
                                                 </div>
                                                 <div className={"flex flex-row mt-5 gap-4"}>
                                                     <Switch isSelected={post.isTop} onValueChange={() => {

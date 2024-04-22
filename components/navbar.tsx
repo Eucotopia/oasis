@@ -23,7 +23,7 @@ import {DiscordIcon, GithubIcon, Logo, SearchIcon, TwitterIcon,} from "@/compone
 import {useAuth} from "@/hook/useAuth";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
 import {Avatar} from "@nextui-org/avatar";
-import {Modal, ModalContent, useDisclosure} from "@nextui-org/modal";
+import {Modal, ModalBody, ModalContent, ModalFooter, useDisclosure} from "@nextui-org/modal";
 import {Divider} from "@nextui-org/divider";
 import {Icon} from "@iconify/react";
 import {Checkbox} from "@nextui-org/checkbox";
@@ -32,8 +32,11 @@ import React, {ChangeEvent, useMemo, useState} from "react";
 import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
 import ThemeSwitch from "@/components/theme-switch";
+import {ModalHeader} from "@nextui-org/react";
 
 export const Navbar = () => {
+    const {isOpen: isSearchOpen, onOpen: onSearchOpen, onOpenChange: onSearchOpenChange} = useDisclosure();
+
     const [userLogin, {isLoading}] = useUserLoginMutation()
     // get current path
     const pathname = usePathname();
@@ -80,6 +83,7 @@ export const Navbar = () => {
     }
     const searchInput = (
         <Button
+            onPress={onSearchOpen}
             aria-label={"Quick Search"}
             size={"md"}
             variant={"flat"}
@@ -303,6 +307,53 @@ export const Navbar = () => {
                                     </p>
                                 </div>
                             </div>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+            <Modal
+                isOpen={isSearchOpen}
+                onOpenChange={onSearchOpenChange}
+                hideCloseButton
+                classNames={{
+                    // body: "scrollbar-hide overflow-scroll rounded-lg mb-20",
+                    // backdrop: "bg-gradient-to-br from-[#292f46]/50 to-secondary-500  backdrop-opacity-40",
+                    base: "border-none bg-content1 shadow-none",
+                    header: "flex flex-row items-center border-b border-default-400/50 py-2 px-2",
+                    // footer: cn("absolute bottom-0 h-20 rounded-b-lg z-10 overflow-visible bg-content1 px-6 duration-300 ease-in-out transition-height w-full ", {
+                    //     "h-full rounded-t-lg": isShow,
+                    //     "border-t-1 border-default-100 ": !isShow,
+                    // })
+                }}
+            >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader>
+                                <Input
+                                    variant={"bordered"}
+                                    placeholder={"Search documentation"}
+                                    radius={"none"}
+                                    classNames={{
+                                        inputWrapper: "border-none text-default-500",
+                                        input: "w-full text-lg dark:placeholder:text-default-300 placeholder:text-default-500"
+                                    }}
+                                    startContent={
+                                        <Icon icon={"iconamoon:search-light"} height={24}
+                                              className={"text-default-500"}/>
+                                    }
+                                    endContent={
+                                        <Kbd className="hidden lg:inline-block ">
+                                            esc
+                                        </Kbd>
+                                    }/>
+                            </ModalHeader>
+                            <ModalBody>
+                                <p>
+                                    待开发
+                                </p>
+
+                            </ModalBody>
                         </>
                     )}
                 </ModalContent>

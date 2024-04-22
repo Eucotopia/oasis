@@ -3,6 +3,7 @@ import {persistReducer, persistStore} from "redux-persist";
 import storage from 'redux-persist/lib/storage'
 import thunk from "redux-thunk";
 import authReducer from "@/feature/auth/authSlice";
+import currentPostContentReducer from "@/feature/post/currentPostContentSlice";
 import {postApi} from "@/feature/api/postApi";
 import {authApi} from "@/feature/api/authApi";
 import {tagApi} from "@/feature/api/tagApi";
@@ -18,9 +19,10 @@ const persistConfig = {
     // don't persist this state
     blacklist: ["auth"]
 }
-const middleware = [thunk, postApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware,fileApi.middleware]
+const middleware = [thunk, postApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware]
 const rootReducer = combineReducers({
     auth: authReducer,
+    currentPost: currentPostContentReducer,
     [postApi.reducerPath]: postApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,

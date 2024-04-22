@@ -38,7 +38,7 @@ module.exports = {
                                 '900': '#732410',
                                 "DEFAULT": "#FF7F50"
                             },
-                            secondary:{
+                            secondary: {
                                 "DEFAULT": "#8B4513"
                             }
                         },
