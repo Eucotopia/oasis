@@ -4,8 +4,11 @@ import {useEffect} from "react";
 import './styles/index.css'
 import 'katex/dist/katex.min.css'
 import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
+import {setCredentials} from "@/feature/auth/authSlice";
+import {useAppDispatch} from "@/hook/store";
 
 export const useBlockEditor = () => {
+    const dispatch = useAppDispatch()
     const editor = useEditor({
         autofocus: true,
         extensions: [
@@ -25,7 +28,7 @@ export const useBlockEditor = () => {
             },
         },
         onUpdate: () => {
-            saveCurrentPostContent(editor?.getHTML() || "")
+            dispatch(saveCurrentPostContent(editor?.getHTML() || ""))
         },
 
     }, [])
