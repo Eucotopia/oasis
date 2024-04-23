@@ -1,18 +1,22 @@
-import {useGetPostQuery} from "@/feature/api/postApi";
+import {useGetPostsQuery} from "@/feature/api/postApi";
+import {PageType} from "@/types";
 
-export const PostDetail = ({id}: { id: string }) => {
-    // const {
-    //     data: post,
-    //     isFetching,
-    //     isLoading,
-    // } = useGetPostQuery(69)
+export const PostDetail = ({id, page}: { id: number, page: PageType }) => {
+    const {post} = useGetPostsQuery(page, {
+        selectFromResult: ({data}) => ({
+            post: data?.data.find((post) => post.id === id)
+        })
+    })
 
     // if (isLoading) return <div>Loading...</div>
     // if (!post) return <div>Missing post!</div>
-
     return (
-        <div>
-            {/*<h1>{post.content}</h1>*/}
-        </div>
+        <ul>
+            <li>{post?.title}</li>
+            <li>{post?.content}</li>
+            <li>{post?.summary}</li>
+            <li>{post?.tags[0]?.name}</li>
+            <li>{post?.cover}</li>
+        </ul>
     )
 }

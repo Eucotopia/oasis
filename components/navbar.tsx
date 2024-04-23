@@ -318,7 +318,7 @@ export const Navbar = () => {
                 classNames={{
                     // body: "scrollbar-hide overflow-scroll rounded-lg mb-20",
                     // backdrop: "bg-gradient-to-br from-[#292f46]/50 to-secondary-500  backdrop-opacity-40",
-                    base: "border-none bg-content1 shadow-none",
+                    base: "border-none bg-content1 shadow-2xl backdrop-blur-3xl",
                     header: "flex flex-row items-center border-b border-default-400/50 py-2 px-2",
                     // footer: cn("absolute bottom-0 h-20 rounded-b-lg z-10 overflow-visible bg-content1 px-6 duration-300 ease-in-out transition-height w-full ", {
                     //     "h-full rounded-t-lg": isShow,

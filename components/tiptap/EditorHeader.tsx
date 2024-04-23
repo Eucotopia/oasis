@@ -16,7 +16,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
             <div className={"flex flex-row p-2 outline-none gap-1 w-full"}>
                 <Link
                     color={"foreground"}
-                    onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
+                    onPress={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                         "hover:bg-content4",
                     )}>
@@ -24,7 +24,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                 </Link>
                 <Link
                     color={"foreground"}
-                    onClick={() => editor.chain().focus().undo().run()}
+                    onPress={() => editor.chain().focus().undo().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                         "hover:bg-content4",
                     )}>
@@ -32,7 +32,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                 </Link>
                 <Link
                     color={"foreground"}
-                    onClick={() => editor.chain().focus().redo().run()}
+                    onPress={() => editor.chain().focus().redo().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                         "hover:bg-content4",
                     )}>

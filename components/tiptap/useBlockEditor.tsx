@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css'
 import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
 import {useAppDispatch} from "@/hook/store";
 import {useCurrentPost} from "@/hook/useCurrentPost";
+import {debounce} from 'lodash';
 
 export const useBlockEditor = () => {
     const dispatch = useAppDispatch()
@@ -24,16 +25,24 @@ export const useBlockEditor = () => {
                 class: 'min-h-full',
             },
         },
-        onUpdate: () => {
-            dispatch(saveCurrentPostContent(editor?.getHTML() || ""))
-        },
 
     }, [])
+    const debouncedSave = debounce(() => {
+        dispatch(saveCurrentPostContent(editor?.getHTML() || ""))
+    }, 3000)
     useEffect(() => {
         if (!editor) {
             return undefined
         }
-    })
+        editor.on("update", () => {
+            debouncedSave()
+        })
+        return () => {
+            editor.off("update", () => {
+                debouncedSave()
+            })
+        }
+    }, [editor, debouncedSave])
     const characterCount = editor?.storage.characterCount || {characters: () => 0, words: () => 0}
     return {editor, characterCount}
 }

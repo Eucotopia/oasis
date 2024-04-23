@@ -1,22 +1,22 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
-import {ResultResponse} from "@/types";
+import {PageType, ResultResponse} from "@/types";
+import {TagType} from "@/feature/api/tagApi";
 
-type Post = {
-    id: number
-    title: string
-    content: string
-}
+
 export type PostType = {
+    id?: number
+    userId?: number
     title: string
     content: string
-    tags: string[]
+    tags: TagType[]
     summary: string
-    isTop: boolean,
-    rating: string,
-    cover: string,
-    categoryId: string,
-    isPrivate: boolean,
+    isTop: boolean
+    rating: string
+    cover: string
+    categoryId: string
+    isPrivate: boolean
+    createTime?: Date
     columnId: number
 }
 export const postApi = createApi({
@@ -32,21 +32,21 @@ export const postApi = createApi({
         },
     }),
     reducerPath: 'postApi',
-    tagTypes: ['Post'],
+    tagTypes: ['Posts'],
     endpoints: (build) => ({
         // The query accepts a number and returns a ResultResponse<Post> type
-        getPost: build.query<ResultResponse<Post>, number>({
+        getPost: build.query<ResultResponse<PostType>, number>({
             // note: an optional `queryFn` may be used in place of `query`
             query: (id) => ({url: `${id}`}),
             // Pick out data and prevent nested properties in a hook or selector
-            transformResponse: (response: { data: ResultResponse<Post> }, meta, arg) => response.data,
+            transformResponse: (response: { data: ResultResponse<PostType> }, meta, arg) => response.data,
             // Pick out errors and prevent nested properties in a hook or selector
             transformErrorResponse: (
                 response: { status: string | number },
                 meta,
                 arg
             ) => response.status,
-            providesTags: (result, error, id) => [{type: 'Post', id}],
+            providesTags: (result, error, id) => [{type: 'Posts', id}],
             // The 2nd parameter is the destructured `QueryLifecycleApi`
             async onQueryStarted(
                 arg,
@@ -84,12 +84,35 @@ export const postApi = createApi({
                 method: 'POST',
                 body: post
             }),
+            invalidatesTags: [{type: 'Posts', id: 'LIST'}],
         }),
-        getPostById: build.query<ResultResponse<Post>, number>({
-            query: (id) => ({url: `/${id}`}),
-            providesTags: (result, error, id) => [{type: 'Post', id}],
-            transformResponse: (response: { data: ResultResponse<Post> }, meta, arg) => response.data
+        getPosts: build.query<ResultResponse<PostType[]>, PageType>({
+            query: (page) => `/${page.current}/${page.pageSize}`,
+            providesTags: (result) =>
+                result ? [...result.data.map(({id}) => ({type: "Posts", id} as const)), {
+                    type: "Posts",
+                    id: "LIST"
+                }] : [{type: "Posts", id: "LIST"}],
+        }),
+        updatePost: build.mutation<ResultResponse<String>, PostType>({
+            query: (post) => ({
+                url: `${post.id}`,
+                method: 'PUT',
+                body: post
+            }),
+            invalidatesTags: (result, error, {id}) => [{type: "Posts", id}]
+        }),
+        deletePost: build.mutation<ResultResponse<String>, number>({
+            query: (id) => ({
+                url: `${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: (result, error, id) => [{type: "Posts", id}]
+        }),
+        getHostPosts: build.query<ResultResponse<PostType[]>, void>({
+            query: () => ({url: "/hot"}),
+            transformResponse: (response: { data: ResultResponse<PostType[]> }, meta, arg) => response.data,
         })
     }),
 })
-export const {useGetPostQuery, useAddPostMutation} = postApi
+export const {useGetPostQuery, useAddPostMutation, useGetPostsQuery, useGetHostPostsQuery} = postApi

@@ -46,23 +46,6 @@ const AddPost = () => {
         // @ts-ignore
         handleChange({target: {name: 'rating', value: value}})
     }
-// useEffect(() => {
-//     // 键盘输入事件监听器
-//     const handleKeyDown = (event: KeyboardEvent) => {
-//         if (!event.key) {
-//             // 如果没有键盘输入，执行你的函数
-//             console.log("1232132")
-//         }
-//     };
-//
-//     // 将监听器添加到全局键盘事件队列中
-//     document.addEventListener('keydown', handleKeyDown);
-//
-//     // 清理函数，确保在组件卸载时清除事件监听器
-//     return () => {
-//         document.removeEventListener('keydown', handleKeyDown);
-//     };
-// }, []); // 在此处依赖数组中填空
 
     const [isShow, setIsShow] = React.useState(false);
 

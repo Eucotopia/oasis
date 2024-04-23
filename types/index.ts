@@ -9,3 +9,8 @@ export type ResultResponse<T> = {
     data: T
     message: string
 }
+
+export type PageType = {
+    current: number
+    pageSize: number
+}

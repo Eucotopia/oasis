@@ -21,7 +21,7 @@ const PopoverLinkWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapper
                 <PopoverTrigger>
                     <Link
                         color={"foreground"}
-                        onClick={() => {
+                        onPress={() => {
                             if (editor?.isActive('link')) {
                                 editor?.chain().focus().unsetLink().run()
                             }
@@ -32,32 +32,7 @@ const PopoverLinkWrapper = React.forwardRef<HTMLDivElement, PopoverFilterWrapper
                                 "bg-content4": editor?.isActive('link', {href: editor.getAttributes('link').href})
                             })}
                     >
-                        <Tooltip
-                            delay={0}
-                            closeDelay={0}
-                            motionProps={{
-                                variants: {
-                                    exit: {
-                                        opacity: 0,
-                                        transition: {
-                                            duration: 0.1,
-                                            ease: "easeIn",
-                                        }
-                                    },
-                                    enter: {
-                                        opacity: 1,
-                                        transition: {
-                                            duration: 0.15,
-                                            ease: "easeOut",
-                                        }
-                                    },
-                                },
-                            }}
-                            content={
-                                <p className={"text-[12px]"}>{title}</p>
-                            }>
-                            <Icon icon={icon} width={18} height={18}/>
-                        </Tooltip>
+                        <Icon icon={icon} width={20} height={20}/>
                     </Link>
                 </PopoverTrigger>
                 <PopoverContent className="flex w-full flex-col items-start gap-2 px-4 pt-4 ">

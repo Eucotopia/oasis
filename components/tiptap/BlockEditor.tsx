@@ -32,13 +32,13 @@ export const BlockEditor = ({editor}: {
         <>
             {editor &&
                 <BubbleMenu tippyOptions={{duration: 100}} editor={editor}
-                            className={"flex flex-row border rounded-lg bg-content1 p-2 shadow-medium outline-none gap-2 w-[590px]"}>
+                            className={"flex flex-row border rounded-lg bg-content1 p-1 shadow-medium outline-none gap-2 w-[590px]"}>
                     {/*<Dropdown>*/}
                     {/*    <DropdownTrigger>*/}
                     {/*        <Link*/}
                     {/*            size={"sm"}*/}
                     {/*            color={"foreground"}*/}
-                    {/*            onClick={() => editor.chain().focus().toggleBold().run()}*/}
+                    {/*            onPress={() => editor.chain().focus().toggleBold().run()}*/}
                     {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
                     {/*                "hover:bg-gray-50",*/}
                     {/*                {*/}
@@ -46,7 +46,7 @@ export const BlockEditor = ({editor}: {
                     {/*                })}*/}
                     {/*        >*/}
                     {/*            AI Tool*/}
-                    {/*            /!*<Icon icon={"fa6-solid:paragraph"} width={18} height={18}/>*!/*/}
+                    {/*            /!*<Icon icon={"fa6-solid:paragraph"} width={20} height={20}/>*!/*/}
                     {/*        </Link>*/}
                     {/*    </DropdownTrigger>*/}
                     {/*    <DropdownMenu variant="faded" aria-label="Dropdown menu with description">*/}
@@ -98,14 +98,14 @@ export const BlockEditor = ({editor}: {
                     {/*        <Link*/}
                     {/*            size={"sm"}*/}
                     {/*            color={"foreground"}*/}
-                    {/*            onClick={() => editor.chain().focus().toggleBold().run()}*/}
+                    {/*            onPress={() => editor.chain().focus().toggleBold().run()}*/}
                     {/*            className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",*/}
                     {/*                "hover:bg-gray-50",*/}
                     {/*                {*/}
                     {/*                    "bg-content4": editor.isActive("bold")*/}
                     {/*                })}*/}
                     {/*        >*/}
-                    {/*            <Icon icon={"fa6-solid:paragraph"} width={18} height={18}/>*/}
+                    {/*            <Icon icon={"fa6-solid:paragraph"} width={20} height={20}/>*/}
                     {/*        </Link>*/}
                     {/*    </DropdownTrigger>*/}
                     {/*    <DropdownMenu variant="faded" aria-label="Dropdown menu with description">*/}
@@ -172,8 +172,8 @@ export const BlockEditor = ({editor}: {
                     {/*        onSelectionChange={setSelectedKeys as any}*/}
                     {/*    >*/}
                     {/*        <DropdownItem key="inter"*/}
-                    {/*                      onClick={() => editor.chain().focus().setFontFamily('Inter').run()}>Inter</DropdownItem>*/}
-                    {/*        <DropdownItem key="comic_sans" onClick={() => editor.chain().focus().setFontFamily('Comic Sans MS, Comic Sans').run()}>Comic Sans</DropdownItem>*/}
+                    {/*                      onPress={() => editor.chain().focus().setFontFamily('Inter').run()}>Inter</DropdownItem>*/}
+                    {/*        <DropdownItem key="comic_sans" onPress={() => editor.chain().focus().setFontFamily('Comic Sans MS, Comic Sans').run()}>Comic Sans</DropdownItem>*/}
                     {/*        <DropdownItem key="date">Date</DropdownItem>*/}
                     {/*        <DropdownItem key="single_date">{editor.getAttributes('textStyle')?.fontFamily}</DropdownItem>*/}
                     {/*        <DropdownItem key="iteration">Iteration</DropdownItem>*/}
@@ -211,14 +211,14 @@ export const BlockEditor = ({editor}: {
                         }>
                         <Link
                             color={"foreground"}
-                            onClick={() => editor.chain().focus().toggleBold().run()}
+                            onPress={() => editor.chain().focus().toggleBold().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                                 "hover:bg-content4",
                                 {
                                     "bg-content4": editor.isActive("bold")
                                 })}
                         >
-                            <Icon icon={"fa6-solid:bold"} width={18} height={18}/>
+                            <Icon icon={"fa6-solid:bold"} width={20} height={20}/>
                         </Link>
                     </Tooltip>
                     <Tooltip
@@ -250,14 +250,14 @@ export const BlockEditor = ({editor}: {
                         }>
                         <Link
                             color={"foreground"}
-                            onClick={() => editor.chain().focus().toggleItalic().run()}
+                            onPress={() => editor.chain().focus().toggleItalic().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                                 "hover:bg-content4",
                                 {
                                     "bg-content4": editor.isActive("italic")
                                 })}
                         >
-                            <Icon icon={"fa6-solid:italic"} width={18} height={18}/>
+                            <Icon icon={"fa6-solid:italic"} width={20} height={20}/>
                         </Link>
                     </Tooltip>
                     <Tooltip
@@ -289,14 +289,14 @@ export const BlockEditor = ({editor}: {
                         }>
                         <Link
                             color={"foreground"}
-                            onClick={() => editor.chain().focus().toggleUnderline().run()}
+                            onPress={() => editor.chain().focus().toggleUnderline().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                                 "hover:bg-content4",
                                 {
                                     "bg-content4": editor.isActive("underline")
                                 })}
                         >
-                            <Icon icon={"fa6-solid:underline"} width={18} height={18}/>
+                            <Icon icon={"fa6-solid:underline"} width={20} height={20}/>
                         </Link>
                     </Tooltip>
                     <Tooltip
@@ -328,14 +328,14 @@ export const BlockEditor = ({editor}: {
                         }>
                         <Link
                             color={"foreground"}
-                            onClick={() => editor.chain().focus().toggleStrike().run()}
+                            onPress={() => editor.chain().focus().toggleStrike().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                                 "hover:bg-content4",
                                 {
                                     "bg-content4": editor.isActive("strike")
                                 })}
                         >
-                            <Icon icon={"fa6-solid:strikethrough"} width={18} height={18}/>
+                            <Icon icon={"fa6-solid:strikethrough"} width={20} height={20}/>
                         </Link>
                     </Tooltip>
 
@@ -370,14 +370,14 @@ export const BlockEditor = ({editor}: {
                         <Link
                             color={"foreground"}
 
-                            onClick={() => editor.chain().focus().toggleCode().run()}
+                            onPress={() => editor.chain().focus().toggleCode().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                                 "hover:bg-content4",
                                 {
                                     "bg-content4": editor.isActive("code")
                                 })}
                         >
-                            <Icon icon={"octicon:code-16"} width={18} height={18}/>
+                            <Icon icon={"octicon:code-16"} width={20} height={20}/>
                         </Link>
                     </Tooltip>
 
@@ -408,14 +408,14 @@ export const BlockEditor = ({editor}: {
                         <Link
                             color={"foreground"}
 
-                            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                            onPress={() => editor.chain().focus().toggleCodeBlock().run()}
                             className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                                 "hover:bg-content4",
                                 {
                                     "bg-content4": editor.isActive("codeBlock")
                                 })}
                         >
-                            <Icon icon={"fa6-solid:code"} width={18} height={18}/>
+                            <Icon icon={"fa6-solid:code"} width={20} height={20}/>
                         </Link>
                     </Tooltip>
                     {/* TODO: bug:无法实现 open a new tab 切换*/}
@@ -429,7 +429,7 @@ export const BlockEditor = ({editor}: {
                             <Button
                                 size={"sm"}
                                 radius={"sm"}
-                                onClick={() => {
+                                onPress={() => {
                                     const previousUrl = editor.getAttributes('link').href
                                     if (previousUrl === undefined) {
                                         if (editor.isActive('link')) {
@@ -530,14 +530,14 @@ export const BlockEditor = ({editor}: {
                             }>
                             <Link
                                 color={"foreground"}
-                                onClick={() => editor.chain().focus().toggleSubscript().run()}
+                                onPress={() => editor.chain().focus().toggleSubscript().run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer p-1",
                                     "hover:bg-content4",
                                     {
                                         "bg-content4": editor.isActive("subscript")
                                     })}
                             >
-                                <Icon icon={"fa6-solid:subscript"} width={18} height={18}/>
+                                <Icon icon={"fa6-solid:subscript"} width={20} height={20}/>
                             </Link>
                         </Tooltip>
                         <Tooltip
@@ -572,14 +572,14 @@ export const BlockEditor = ({editor}: {
                             }>
                             <Link
                                 color={"foreground"}
-                                onClick={() => editor.chain().focus().toggleSuperscript().run()}
+                                onPress={() => editor.chain().focus().toggleSuperscript().run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
                                     "hover:bg-content4",
                                     {
                                         "bg-content4": editor.isActive("superscript")
                                     })}
                             >
-                                <Icon icon={"fa6-solid:superscript"} width={18} height={18}/>
+                                <Icon icon={"fa6-solid:superscript"} width={20} height={20}/>
                             </Link>
                         </Tooltip>
 
@@ -619,14 +619,14 @@ export const BlockEditor = ({editor}: {
                             }>
                             <Link
                                 color={"foreground"}
-                                onClick={() => editor.chain().focus().setTextAlign('left').run()}
+                                onPress={() => editor.chain().focus().setTextAlign('left').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer p-1",
                                     "hover:bg-content4",
                                     {
                                         "bg-content4": editor.isActive({textAlign: 'left'})
                                     })}
                             >
-                                <Icon icon={"fa6-solid:align-left"} width={18} height={18}/>
+                                <Icon icon={"fa6-solid:align-left"} width={20} height={20}/>
                             </Link>
                         </Tooltip>
                         <Tooltip
@@ -662,14 +662,14 @@ export const BlockEditor = ({editor}: {
                             }>
                             <Link
                                 color={"foreground"}
-                                onClick={() => editor.chain().focus().setTextAlign('center').run()}
+                                onPress={() => editor.chain().focus().setTextAlign('center').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
                                     "hover:bg-content4",
                                     {
                                         "bg-content4": editor.isActive({textAlign: 'center'})
                                     })}
                             >
-                                <Icon icon={"fa6-solid:align-center"} width={18} height={18}/>
+                                <Icon icon={"fa6-solid:align-center"} width={20} height={20}/>
                             </Link>
                         </Tooltip>
                         <Tooltip
@@ -705,14 +705,14 @@ export const BlockEditor = ({editor}: {
                             }>
                             <Link
                                 color={"foreground"}
-                                onClick={() => editor.chain().focus().setTextAlign('right').run()}
+                                onPress={() => editor.chain().focus().setTextAlign('right').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
                                     "hover:bg-content4",
                                     {
                                         "bg-content4": editor.isActive({textAlign: 'right'})
                                     })}
                             >
-                                <Icon icon={"fa6-solid:align-right"} width={18} height={18}/>
+                                <Icon icon={"fa6-solid:align-right"} width={20} height={20}/>
                             </Link>
                         </Tooltip>
                         <Tooltip
@@ -748,14 +748,14 @@ export const BlockEditor = ({editor}: {
                             }>
                             <Link
                                 color={"foreground"}
-                                onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+                                onPress={() => editor.chain().focus().setTextAlign('justify').run()}
                                 className={cn("bg-transparent border-none rounded-md cursor-pointer  p-1",
                                     "hover:bg-content4",
                                     {
                                         "bg-content4": editor.isActive({textAlign: "justify"})
                                     })}
                             >
-                                <Icon icon={"fa6-solid:align-justify"} width={18} height={18}/>
+                                <Icon icon={"fa6-solid:align-justify"} width={20} height={20}/>
                             </Link>
                         </Tooltip>
                     </PopoverMoreOptionWrapper>
@@ -764,18 +764,18 @@ export const BlockEditor = ({editor}: {
             {/*{editor && <FloatingMenu className="floating-menu" tippyOptions={{duration: 100}} editor={editor}>*/}
             {/*    <Link*/}
             {/*        color={"foreground"}*/}
-            {/*        onClick={() => editor.chain().focus().setHorizontalRule().run()}*/}
+            {/*        onPress={() => editor.chain().focus().setHorizontalRule().run()}*/}
             {/*        className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>*/}
-            {/*        <Icon icon={"fa6-solid:ruler-horizontal"} width={18} height={18}/>*/}
+            {/*        <Icon icon={"fa6-solid:ruler-horizontal"} width={20} height={20}/>*/}
             {/*    </Link>*/}
             {/*    <button*/}
-            {/*        onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}*/}
+            {/*        onPress={() => editor.chain().focus().toggleHeading({level: 2}).run()}*/}
             {/*        className={editor.isActive('heading', {level: 2}) ? 'is-active' : ''}*/}
             {/*    >*/}
             {/*        H2*/}
             {/*    </button>*/}
             {/*    <button*/}
-            {/*        onClick={() => editor.chain().focus().toggleBulletList().run()}*/}
+            {/*        onPress={() => editor.chain().focus().toggleBulletList().run()}*/}
             {/*        className={editor.isActive('bulletList') ? 'is-active' : ''}*/}
             {/*    >*/}
             {/*        Bullet List*/}

@@ -1,11 +1,11 @@
 'use client'
-import AddPost from "@/components/post/AddPost";
-import {PostDetail} from "@/components/post/PostDetail";
+import HotPosts from "@/components/post/HotPosts";
 
 export default function BlogPage() {
     return (
         <div>
-            <AddPost/>
+            <HotPosts/>
+            {/*<AddPost/>*/}
         </div>
     );
 }
