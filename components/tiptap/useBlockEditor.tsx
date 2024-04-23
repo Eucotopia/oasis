@@ -4,21 +4,18 @@ import {useEffect} from "react";
 import './styles/index.css'
 import 'katex/dist/katex.min.css'
 import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
-import {setCredentials} from "@/feature/auth/authSlice";
 import {useAppDispatch} from "@/hook/store";
+import {useCurrentPost} from "@/hook/useCurrentPost";
 
 export const useBlockEditor = () => {
     const dispatch = useAppDispatch()
+    const currentPost = useCurrentPost()
     const editor = useEditor({
         autofocus: true,
         extensions: [
             ...ExtensionKit()
         ],
-        content: `
-      <ul>
-        <li>$\\\\LaTeX$</li>
-      </ul>
-      `,
+        content: currentPost === null ? "" : currentPost.currentPostContent,
         editorProps: {
             attributes: {
                 autocomplete: 'off',

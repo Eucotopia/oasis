@@ -46,8 +46,6 @@ const AddPost = () => {
         // @ts-ignore
         handleChange({target: {name: 'rating', value: value}})
     }
-
-
 // useEffect(() => {
 //     // 键盘输入事件监听器
 //     const handleKeyDown = (event: KeyboardEvent) => {
@@ -136,9 +134,6 @@ const AddPost = () => {
 
     return (
         <>
-            {
-                useCurrentPostContent.currentPostContent&&<p>{useCurrentPostContent.currentPostContent}</p>
-            }
             <Button onPress={onOpen}>Add new</Button>
             <Modal
                 isOpen={isOpen}
