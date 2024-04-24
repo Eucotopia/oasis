@@ -9,7 +9,7 @@ export type ColumnType = {
     description: string,
     avatar: string,
     rating: number,
-    posts: PostType[],
+    posts?: PostType[],
 }
 export const columnApi = createApi({
     reducerPath: 'columnApi',
