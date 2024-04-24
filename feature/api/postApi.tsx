@@ -90,15 +90,17 @@ export const postApi = createApi({
             }),
             invalidatesTags: [{type: 'Posts', id: 'LIST'}],
         }),
+        // The query accepts a number and returns a ResultResponse<Post> type ✔
         getPosts: build.query<PostType[], PageType>({
             query: (page) => `/${page.current}/${page.pageSize}`,
             transformResponse: (response: ResultResponse<PostType[]>) => response.data,
             providesTags: (result , error, arg) =>
-                result ? [...result?.map((post) => ({type: "Posts", id: String(post.id)} as const))] : [{
+                result ? [...result.map((post) => ({type: "Posts", id: String(post.id)} as const))] : [{
                     type: "Posts",
                     id: "LIST"
                 }],
         }),
+        // The query accepts a number and returns a ResultResponse<Post> type ✔
         updatePost: build.mutation<ResultResponse<String>, PostType>({
             query: (post) => ({
                 url: ``,
@@ -109,10 +111,13 @@ export const postApi = createApi({
         }),
         deletePost: build.mutation<ResultResponse<String>, number>({
             query: (id) => ({
-                url: `${id}`,
+                url: `/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (result, error, id) => [{type: "Posts", id}]
+            invalidatesTags: (result, error, id) => {
+                console.log("id"+id)
+                return [{type: "Posts", id}]
+            }
         }),
         getHostPosts: build.query<PostType[], void>({
             query: () => ({url: "/hot"}),
@@ -130,5 +135,6 @@ export const {
     useAddPostMutation,
     useGetPostsQuery,
     useGetHostPostsQuery,
-    useUpdatePostMutation
+    useUpdatePostMutation,
+    useDeletePostMutation
 } = postApi
