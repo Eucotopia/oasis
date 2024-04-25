@@ -17,9 +17,11 @@ const persistConfig = {
     key: "root",
     storage: storage,
     // don't persist this state
-    blacklist: ["auth"]
+    blacklist: []
 }
+
 const middleware = [thunk, postApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware]
+
 const rootReducer = combineReducers({
     auth: authReducer,
     currentPost: currentPostContentReducer,

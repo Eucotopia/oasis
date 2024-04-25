@@ -1,5 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "@/app/store";
+import {useSelector} from "react-redux";
+import {useMemo} from "react";
 
 export const currentPostContentSlice = createSlice({
     name: 'currentPostContent',
@@ -15,6 +17,6 @@ export const currentPostContentSlice = createSlice({
         }
     }
 })
-export const {saveCurrentPostContent} = currentPostContentSlice.actions
+export const {saveCurrentPostContent,removeCurrentPostContent} = currentPostContentSlice.actions
 export default currentPostContentSlice.reducer
 export const selectCurrentPostContent = (state: RootState) => state.currentPost.currentPostContent

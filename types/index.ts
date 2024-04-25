@@ -5,7 +5,7 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 };
 
 export type ResultResponse<T> = {
-    code: string
+    code: number
     data: T
     message: string
 }

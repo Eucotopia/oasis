@@ -27,6 +27,9 @@ import {useGetColumnsQuery} from "@/feature/api/columnApi";
 import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {useUploadMutation} from "@/feature/api/fileApi";
 import {useCurrentPost} from "@/hook/useCurrentPost";
+import {useAppDispatch} from "@/hook/store";
+import {removeCredentials} from "@/feature/auth/authSlice";
+import {removeCurrentPostContent} from "@/feature/post/currentPostContentSlice";
 
 const AddPost = () => {
     const [post, setPost] = React.useState<PostType>(
@@ -44,6 +47,7 @@ const AddPost = () => {
         }
     );
     const [isShow, setIsShow] = React.useState(false);
+    const dispatch = useAppDispatch()
 
     const [uploadFile] = useUploadMutation();
 
@@ -103,14 +107,18 @@ const AddPost = () => {
         return null
     }
     const handleSave = async () => {
-        console.log(post.categories)
         setPost({
                 ...post,
                 content: editor?.getHTML()
             }
         )
         const unwrap = await addPost(post).unwrap();
+        if (unwrap.code === 200) {
+            dispatch(removeCurrentPostContent())
+            editor.commands.clearContent()
+        }
     }
+
     return (
         <>
             <Button onPress={onOpen}>Add new</Button>

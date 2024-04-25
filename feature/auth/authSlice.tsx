@@ -16,9 +16,11 @@ export const authSlice = createSlice({
     },
     reducers: {
         setCredentials: (state, action: PayloadAction<currentUserType>) => {
+            console.log("setCredentials", action.payload)
             state.currentUser = action.payload
         },
         removeCredentials: (state) => {
+            console.log("removeCredentials")
             state.currentUser = null
         }
     }
