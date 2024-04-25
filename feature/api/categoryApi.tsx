@@ -1,11 +1,12 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {ResultResponse} from '@/types'
 import {RootState} from "@/app/store";
+import {PostType} from "@/feature/api/postApi";
 
 export type CategoryType = {
     id: number
     name: string
-    parentId: string
+    parentId: number
 }
 
 export const categoryApi = createApi({
@@ -26,9 +27,15 @@ export const categoryApi = createApi({
         getCount: builder.query<ResultResponse<number>, void>({
             query: () => ({url: '/count'}),
         }),
-        getCategories: builder.query<ResultResponse<CategoryType[]>, void>({
+        getCategories: builder.query<CategoryType[], void>({
             query: () => ({url: ''}),
-            transformResponse: (response: { data: ResultResponse<CategoryType[]> }, meta, arg) => response.data,
+            transformResponse: (response: ResultResponse<CategoryType[]>) => response.data,
+            transformErrorResponse: (response: { status: string | number }) => response.status,
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((post) => ({type: "Category" as const, id: post.id}))] : [{
+                    type: "Category",
+                    id: "LIST"
+                }],
         }),
         getRootCategories: builder.query<ResultResponse<CategoryType[]>, void>({
             query: () => ({url: '/root'}),

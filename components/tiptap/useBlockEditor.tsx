@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css'
 import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
 import {useAppDispatch} from "@/hook/store";
 import {useCurrentPost} from "@/hook/useCurrentPost";
-import {debounce} from 'lodash';
+import debounce from 'lodash.debounce'
 
 export const useBlockEditor = () => {
     const dispatch = useAppDispatch()

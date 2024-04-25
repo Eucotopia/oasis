@@ -11,7 +11,7 @@ export type PostType = {
     userId?: number
     title: string
     content: string
-    tags: TagType[]
+    tags?: TagType[]
     summary: string
     isTop: boolean
     rating: string
@@ -21,7 +21,7 @@ export type PostType = {
     categories: CategoryType[]
     isPrivate: boolean
     createTime?: Date
-    columns: ColumnType[]
+    columns?: ColumnType[]
 }
 export const postApi = createApi({
     baseQuery: fetchBaseQuery({
@@ -36,21 +36,24 @@ export const postApi = createApi({
         },
     }),
     reducerPath: 'postApi',
-    tagTypes: ['Posts'],
+    tagTypes: ['Post'],
     endpoints: (build) => ({
-        // The query accepts a number and returns a ResultResponse<Post> type
+        // The query accepts a number and returns a ResultResponse<Post> type ✔
         getPost: build.query<PostType, number>({
             // note: an optional `queryFn` may be used in place of `query`
             query: (id) => ({url: `${id}`}),
             // Pick out data and prevent nested properties in a hook or selector
-            transformResponse: (response: ResultResponse<PostType> , meta, arg) => response.data,
+            transformResponse: (response: ResultResponse<PostType>, meta, arg) => response.data,
             // Pick out errors and prevent nested properties in a hook or selector
             transformErrorResponse: (
                 response: { status: string | number },
                 meta,
                 arg
             ) => response.status,
-            providesTags: (result, error, id) => [{type: 'Posts', id}],
+            providesTags: (result, error, id) => {
+                console.log("getPost",id)
+
+                return [{type: 'Post', id: String(id)}]},
             // The 2nd parameter is the destructured `QueryLifecycleApi`
             async onQueryStarted(
                 arg,
@@ -88,15 +91,15 @@ export const postApi = createApi({
                 method: 'POST',
                 body: post
             }),
-            invalidatesTags: [{type: 'Posts', id: 'LIST'}],
+            invalidatesTags: [{type: 'Post', id: 'LIST'}],
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
         getPosts: build.query<PostType[], PageType>({
             query: (page) => `/${page.current}/${page.pageSize}`,
             transformResponse: (response: ResultResponse<PostType[]>) => response.data,
-            providesTags: (result , error, arg) =>
-                result ? [...result.map((post) => ({type: "Posts", id: String(post.id)} as const))] : [{
-                    type: "Posts",
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)}))] : [{
+                    type: "Post",
                     id: "LIST"
                 }],
         }),
@@ -107,24 +110,23 @@ export const postApi = createApi({
                 method: 'PUT',
                 body: post
             }),
-            invalidatesTags: (result, error, {id}) => [{type: "Posts", id}]
+            invalidatesTags: (result, error, {id}) => [{type: "Post", id}]
         }),
+        // The query accepts a number and returns a ResultResponse<Post> type ✔
         deletePost: build.mutation<ResultResponse<String>, number>({
             query: (id) => ({
                 url: `/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (result, error, id) => {
-                console.log("id"+id)
-                return [{type: "Posts", id}]
-            }
+            invalidatesTags: (result, error, id) => { console.log("deletePost",id); return [{type: "Post", id: String(id)}]}
         }),
+        // The query accepts a number and returns a ResultResponse<Post> type ✔
         getHostPosts: build.query<PostType[], void>({
             query: () => ({url: "/hot"}),
-            transformResponse: (response:  ResultResponse<PostType[]> , meta, arg) => response.data,
-            providesTags: (result , error, arg) =>
-                result ? [...result?.map((post) => ({type: "Posts", id: String(post.id)} as const))] : [{
-                    type: "Posts",
+            transformResponse: (response: ResultResponse<PostType[]>, meta, arg) => response.data,
+            providesTags: (result, error, arg) =>
+                result ? [...result?.map((post) => ({type: "Post" as const, id: String(post.id)}))] : [{
+                    type: "Post",
                     id: "LIST"
                 }],
         })

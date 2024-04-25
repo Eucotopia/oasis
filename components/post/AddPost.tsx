@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {
     Autocomplete,
     AutocompleteItem,
@@ -22,14 +22,34 @@ import {Input, Textarea} from "@nextui-org/input";
 import {useGetTagsQuery} from "@/feature/api/tagApi";
 import {PostType, useAddPostMutation} from "@/feature/api/postApi"
 import TagGroupItem from "@/components/radio/TagGroupItem";
-import {CategoryType, useGetCategoriesQuery} from "@/feature/api/categoryApi";
-import {ColumnType, useGetColumnsQuery} from "@/feature/api/columnApi";
+import {useGetCategoriesQuery} from "@/feature/api/categoryApi";
+import {useGetColumnsQuery} from "@/feature/api/columnApi";
 import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {useUploadMutation} from "@/feature/api/fileApi";
-import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
 import {useCurrentPost} from "@/hook/useCurrentPost";
 
 const AddPost = () => {
+    const [post, setPost] = React.useState<PostType>(
+        {
+            title: "",
+            content: "",
+            tags: [],
+            summary: "",
+            isPrivate: false,
+            isTop: false,
+            cover: "",
+            rating: "",
+            categories: [],
+            columns: [],
+        }
+    );
+    const [isShow, setIsShow] = React.useState(false);
+
+    const [uploadFile] = useUploadMutation();
+
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
+    const {characterCount, editor} = useBlockEditor()
     const currentPostRef = useRef(null);
     const useCurrentPostContent = useCurrentPost();
     const [isColumn, setIsColumn] = useState<boolean>(false)
@@ -46,48 +66,19 @@ const AddPost = () => {
         // @ts-ignore
         handleChange({target: {name: 'rating', value: value}})
     }
-
-    const [isShow, setIsShow] = React.useState(false);
-
-    const [uploadFile] = useUploadMutation();
-
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
-    const {characterCount, editor} = useBlockEditor()
-
-    const [post, setPost] = React.useState<PostType>(
-        {
-            title: "",
-            content: "",
-            tags: [],
-            summary: "",
-            isPrivate: false,
-            isTop: false,
-            cover: "1",
-            categoryId: "",
-            columnId: 0,
-            rating: "",
-        }
-    );
-    // useEffect(() => {
-    //     setInterval(() => {
-    //         saveCurrentPostContent(editor?.getHTML().toString() as string)
-    //     }, 1000)
-    // })
-    const handeCategoryIdChange = (id: string) => {
-        setPost(prevState => ({
-            ...prevState,
-            categoryId: id
-        }))
-    }
-    const [selectedFile, setSelectedFile] = useState(null);
-
-    const handeColumnIdChange = (id: number) => {
+    const handeCategoryChange = (id: string) => {
         setPost({
             ...post,
-            columnId: id
+            categories: categories?.filter(c => c.id === Number(id)) ?? []
         })
     }
+    const handeColumnIdChange = (id: string) => {
+        setPost({
+            ...post,
+            columns: columns?.filter(c => c.id === Number(id)) ?? []
+        })
+    }
+    const [selectedFile, setSelectedFile] = useState(null);
     const handleUpload = async () => {
         if (selectedFile) {
             const formData = new FormData();
@@ -98,23 +89,28 @@ const AddPost = () => {
             handleChange({target: {name: 'cover', value: imageUrl.data}})
         }
     };
-    const handeTagChange = (value: string[]) => setPost((prev) => ({...prev, tags: value}))
+    const handeTagChange = (value: string[]) => {
+        setPost({
+            ...post,
+            tags: tags?.filter(t => value.includes(t.id.toString())) ?? []
+        })
+    }
     const handleChange = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => setPost((prev) => ({
         ...prev,
         [name]: value
     }))
-
     if (!editor || !categories || !tags || !columns) {
         return null
     }
     const handleSave = async () => {
-        const updatedPostState = {
-            ...post,
-            content: editor?.getHTML()
-        };
-        const unwrap = await addPost(updatedPostState).unwrap();
+        console.log(post.categories)
+        setPost({
+                ...post,
+                content: editor?.getHTML()
+            }
+        )
+        const unwrap = await addPost(post).unwrap();
     }
-
     return (
         <>
             <Button onPress={onOpen}>Add new</Button>
@@ -126,7 +122,7 @@ const AddPost = () => {
                 radius={"sm"}
                 classNames={{
                     body: "scrollbar-hide overflow-scroll rounded-lg mb-20",
-                    backdrop: "bg-gradient-to-br from-[#292f46]/50 to-secondary-500  backdrop-opacity-40",
+                    // backdrop: "bg-gradient-to-br from-[#292f46]/50 to-secondary-500  backdrop-opacity-40",
                     base: "h-full",
                     header: "relative flex flex-row items-center",
                     footer: cn("absolute bottom-0 h-20 rounded-b-lg z-10 overflow-visible bg-content1 px-6 duration-300 ease-in-out transition-height w-full ", {
@@ -191,11 +187,10 @@ const AddPost = () => {
                                                         labelPlacement={"outside"}
                                                         size={"lg"}
                                                         label="Chose a category"
-                                                        // @ts-ignore
-                                                        defaultItems={categories as CategoryType[]}
+                                                        defaultItems={categories}
                                                         placeholder="Chose a category"
                                                         className="w-1/3"
-                                                        onSelectionChange={handeCategoryIdChange as any}
+                                                        onSelectionChange={handeCategoryChange as any}
                                                     >
                                                         {(item) => <AutocompleteItem
                                                             key={item.id}>{item.name}</AutocompleteItem>}
@@ -210,10 +205,8 @@ const AddPost = () => {
                                                     <CheckboxGroup
                                                         aria-label="Select tags"
                                                         orientation="horizontal"
-                                                        value={post.tags}
                                                         onChange={handeTagChange as any}>
                                                         {
-                                                            // @ts-ignore
                                                             tags?.map((item, index) => {
                                                                 return (
                                                                     <TagGroupItem icon="ic:baseline-apple"
@@ -225,21 +218,6 @@ const AddPost = () => {
                                                             })
                                                         }
                                                     </CheckboxGroup>
-                                                    {/*TODO add tag*/}
-                                                    {/*<Input*/}
-                                                    {/*    className={"w-3/12"}*/}
-                                                    {/*    variant={"underlined"}*/}
-                                                    {/*    placeholder={"add tag"}*/}
-                                                    {/*    onKeyDown={(e) => {*/}
-                                                    {/*        if (e.key === "Enter") {*/}
-                                                    {/*            // setTags([...tags, {*/}
-                                                    {/*            //     id: tags.length + 1,*/}
-                                                    {/*            //     name: e.currentTarget.value*/}
-                                                    {/*            // }])*/}
-                                                    {/*            e.currentTarget.value = ""*/}
-                                                    {/*        }*/}
-                                                    {/*    }}*/}
-                                                    {/*/>*/}
                                                 </div>
                                                 <div className={"flex flex-row mt-5 gap-4"}>
                                                     <Switch isSelected={post.isTop} onValueChange={() => {
@@ -270,9 +248,8 @@ const AddPost = () => {
                                                             labelPlacement={"outside"}
                                                             size={"lg"}
                                                             label="Chose a column"
-                                                            // @ts-ignore
-                                                            defaultItems={columns as ColumnType[]}
-                                                            placeholder="Chose a category"
+                                                            defaultItems={columns}
+                                                            placeholder="Chose a column"
                                                             className="w-1/3"
                                                             onSelectionChange={handeColumnIdChange as any}
                                                         >

@@ -22,11 +22,13 @@ export const tagApi = createApi({
     }),
     endpoints: (builder) => ({
         // get all tags
-        getTags: builder.query<ResultResponse<TagType[]>, void>({
+        getTags: builder.query<TagType[], void>({
             query: () => ``,
-            transformResponse: (response: { data: ResultResponse<TagType[]> }, meta, arg) => response.data,
+            transformResponse: (response: ResultResponse<TagType[]>, meta, arg) => response.data,
             transformErrorResponse: (
-                response: { status: string | number },
+                response: {
+                    status: string | number
+                },
                 meta,
                 arg
             ) => response.status,
