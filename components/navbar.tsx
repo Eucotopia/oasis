@@ -70,7 +70,6 @@ export const Navbar = () => {
         e.preventDefault()
         try {
             const auth = await userLogin(userState).unwrap()
-            // @ts-ignore
             dispatch(setCredentials(auth))
         } catch (err: any) {
             console.error(err)

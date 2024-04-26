@@ -15,7 +15,6 @@ export default function Home() {
     const {data: posts} = useGetPostsQuery(page)
     const {data: hostPosts} = useGetHostPostsQuery()
     const [deletePost] = useDeletePostMutation()
-    console.log(hostPosts)
     const {post} = useGetPostsQuery(page, {
         selectFromResult: ({data}) => ({post: data?.find((post) => post.id === 1)})
     });

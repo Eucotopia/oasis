@@ -1,9 +1,12 @@
-import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { selectCurrentUser } from '@/feature/auth/authSlice'
+import {useMemo} from 'react'
+import {useAppSelector} from "@/hook/store";
 
+/**
+ * get current user ✔
+ */
 export const useAuth = () => {
-    const currentUser = useSelector(selectCurrentUser)
 
-    return useMemo(() => ({ currentUser }), [currentUser])
+    const currentUser = useAppSelector(state => state.auth.currentUser);
+
+    return useMemo(() => ({currentUser}), [currentUser])
 }

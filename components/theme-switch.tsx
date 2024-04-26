@@ -1,12 +1,23 @@
 'use client'
 import React, {useEffect} from "react";
-import {RadioGroup, useRadio, VisuallyHidden, RadioProps, cn, Button} from "@nextui-org/react";
+import {cn, RadioGroup, RadioProps, useRadio, VisuallyHidden} from "@nextui-org/react";
 import PopoverThemeSwitchWrapper from "@/components/popover/PopoverThemeSwitchWrapper";
 import {useTheme} from "next-themes";
 
 type ThemeRadioProps = RadioProps & {
     background: string
 }
+/**
+ * design:  dropdown
+ *       ------------
+ *       | theme-1  |
+ *       | theme-2  |
+ *       | theme-3  |
+ *       ------------
+ *       hover:display demo
+ * @param props
+ * @constructor
+ */
 export const ThemeRadio = (props: ThemeRadioProps) => {
     const {
         Component,

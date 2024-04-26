@@ -1,7 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {ResultResponse} from '@/types'
 import {RootState} from "@/app/store";
-import {PostType} from "@/feature/api/postApi";
 
 export type CategoryType = {
     id: number

@@ -50,40 +50,7 @@ export const postApi = createApi({
                 meta,
                 arg
             ) => response.status,
-            providesTags: (result, error, id) => {
-                console.log("getPost",id)
-
-                return [{type: 'Post', id: String(id)}]},
-            // The 2nd parameter is the destructured `QueryLifecycleApi`
-            async onQueryStarted(
-                arg,
-                {
-                    dispatch,
-                    getState,
-                    extra,
-                    requestId,
-                    queryFulfilled,
-                    getCacheEntry,
-                    updateCachedData,
-                }
-            ) {
-
-            },
-            // The 2nd parameter is the destructured `QueryCacheLifecycleApi`
-            async onCacheEntryAdded(
-                arg,
-                {
-                    dispatch,
-                    getState,
-                    extra,
-                    requestId,
-                    cacheEntryRemoved,
-                    cacheDataLoaded,
-                    getCacheEntry,
-                    updateCachedData,
-                }
-            ) {
-            },
+            providesTags: (result, error, id) => [{type: 'Post', id: String(id)}]
         }),
         addPost: build.mutation<ResultResponse<String>, PostType>({
             query: (post) => ({
@@ -118,7 +85,10 @@ export const postApi = createApi({
                 url: `/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (result, error, id) => { console.log("deletePost",id); return [{type: "Post", id: String(id)}]}
+            invalidatesTags: (result, error, id) => {
+                console.log("deletePost", id);
+                return [{type: "Post", id: String(id)}]
+            }
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
         getHostPosts: build.query<PostType[], void>({

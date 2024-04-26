@@ -26,10 +26,9 @@ import {useGetCategoriesQuery} from "@/feature/api/categoryApi";
 import {useGetColumnsQuery} from "@/feature/api/columnApi";
 import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {useUploadMutation} from "@/feature/api/fileApi";
-import {useCurrentPost} from "@/hook/useCurrentPost";
+import {useLastPost} from "@/hook/useLastPost";
 import {useAppDispatch} from "@/hook/store";
-import {removeCredentials} from "@/feature/auth/authSlice";
-import {removeCurrentPostContent} from "@/feature/post/currentPostContentSlice";
+import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
 
 const AddPost = () => {
     const [post, setPost] = React.useState<PostType>(
@@ -53,9 +52,9 @@ const AddPost = () => {
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
-    const {characterCount, editor} = useBlockEditor()
+    const {characterCount, editor} = useBlockEditor({isEditor: true})
     const currentPostRef = useRef(null);
-    const useCurrentPostContent = useCurrentPost();
+    const useCurrentPostContent = useLastPost();
     const [isColumn, setIsColumn] = useState<boolean>(false)
     // add post
     const [addPost] = useAddPostMutation()
@@ -114,7 +113,7 @@ const AddPost = () => {
         )
         const unwrap = await addPost(post).unwrap();
         if (unwrap.code === 200) {
-            dispatch(removeCurrentPostContent())
+            dispatch(removeLastPostContent())
             editor.commands.clearContent()
         }
     }

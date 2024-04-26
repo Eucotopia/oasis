@@ -1,6 +1,5 @@
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {createSlice} from '@reduxjs/toolkit'
-import {RootState} from "@/app/store";
 
 export type currentUserType = {
     username: string,
@@ -8,7 +7,10 @@ export type currentUserType = {
     authorization: string,
     cover: string
 }
-
+/**
+ * setCredentials:set current user when successful login ✔
+ * removeCredentials:remove current user when logout ✔
+ */
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {currentUser: null} as {
@@ -27,4 +29,3 @@ export const authSlice = createSlice({
 })
 export const {setCredentials, removeCredentials} = authSlice.actions
 export default authSlice.reducer
-export const selectCurrentUser = (state: RootState) => state.auth.currentUser

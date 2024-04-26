@@ -3,20 +3,27 @@ import {useEditor} from "@tiptap/react";
 import {useEffect} from "react";
 import './styles/index.css'
 import 'katex/dist/katex.min.css'
-import {saveCurrentPostContent} from "@/feature/post/currentPostContentSlice";
+import {saveLastPostContent} from "@/feature/post/lastPostContentSlice";
 import {useAppDispatch} from "@/hook/store";
-import {useCurrentPost} from "@/hook/useCurrentPost";
+import {useLastPost} from "@/hook/useLastPost";
 import debounce from 'lodash.debounce'
 
-export const useBlockEditor = () => {
+type BlockEditorProps = {
+    content?: string,
+    isEditor?: boolean
+}
+
+export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
     const dispatch = useAppDispatch()
-    const currentPost = useCurrentPost()
+    console.log("useBlockEditor", blockEditorProps?.content || "")
+    const currentPost = useLastPost()
     const editor = useEditor({
         autofocus: true,
         extensions: [
             ...ExtensionKit()
         ],
-        content: currentPost === null ? "" : currentPost.currentPostContent,
+        // content: blockEditorProps.isEditor ? (currentPost?.lastPostContent || "") : (blockEditorProps?.content || ""),
+        content: blockEditorProps.content || "123213",
         editorProps: {
             attributes: {
                 autocomplete: 'off',
@@ -25,10 +32,10 @@ export const useBlockEditor = () => {
                 class: 'min-h-full',
             },
         },
-
-    }, [])
+        editable: !!blockEditorProps.isEditor
+    }, [blockEditorProps.content])
     const debouncedSave = debounce(() => {
-        dispatch(saveCurrentPostContent(editor?.getHTML() || ""))
+        dispatch(saveLastPostContent(editor?.getHTML() || ""))
     }, 3000)
     useEffect(() => {
         if (!editor) {

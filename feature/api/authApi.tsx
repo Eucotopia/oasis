@@ -22,15 +22,13 @@ export const authApi = createApi({
         },
     }),
     endpoints: (build) => ({
-        userLogin: build.mutation<ResultResponse<currentUserType>, UserLoginType>({
+        userLogin: build.mutation<currentUserType, UserLoginType>({
             query: (credentials) => ({
                 url: '/login',
                 method: 'POST',
                 body: credentials,
             }),
-            transformResponse: (response: {
-                data: ResultResponse<currentUserType>,
-            }, meta, arg) => response.data,
+            transformResponse: (response: ResultResponse<currentUserType>, meta, arg) => response.data,
             transformErrorResponse: (
                 response: {
                     status: string | number
