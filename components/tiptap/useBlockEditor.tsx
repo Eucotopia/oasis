@@ -22,8 +22,7 @@ export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
         extensions: [
             ...ExtensionKit()
         ],
-        // content: blockEditorProps.isEditor ? (currentPost?.lastPostContent || "") : (blockEditorProps?.content || ""),
-        content: blockEditorProps.content || "",
+        content: blockEditorProps.isEditor ? (currentPost?.lastPostContent || "") : (blockEditorProps?.content || ""),
         editorProps: {
             attributes: {
                 autocomplete: 'off',
@@ -33,7 +32,7 @@ export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
             },
         },
         editable: !!blockEditorProps.isEditor
-    }, [blockEditorProps.content])
+    }, [blockEditorProps?.content])
     const debouncedSave = debounce(() => {
         dispatch(saveLastPostContent(editor?.getHTML() || ""))
     }, 3000)

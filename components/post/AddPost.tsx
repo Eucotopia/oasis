@@ -40,7 +40,7 @@ const AddPost = () => {
             isPrivate: false,
             isTop: false,
             cover: "",
-            rating: "",
+            rating: "1",
             categories: [],
             columns: [],
         }
@@ -106,11 +106,13 @@ const AddPost = () => {
         return null
     }
     const handleSave = async () => {
+        console.log("editor",editor.getHTML())
         setPost({
                 ...post,
-                content: editor?.getHTML()
+                content: editor.getHTML()
             }
         )
+        console.log('post',post.content)
         const unwrap = await addPost(post).unwrap();
         if (unwrap.code === 200) {
             dispatch(removeLastPostContent())

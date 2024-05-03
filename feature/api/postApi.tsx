@@ -20,7 +20,7 @@ export type PostType = {
     cover: string
     categories: CategoryType[]
     isPrivate: boolean
-    createTime?: Date
+    createTime?: string
     columns?: ColumnType[]
 }
 export const postApi = createApi({
