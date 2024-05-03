@@ -13,9 +13,9 @@ type BlockEditorProps = {
     isEditor?: boolean
 }
 
+//TODO 这里获取 BlockEditorProps 会出现多次获取，并且第一次总是为空，这里需要优化；会造成页面闪烁一次
 export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
     const dispatch = useAppDispatch()
-    console.log("useBlockEditor", blockEditorProps?.content || "")
     const currentPost = useLastPost()
     const editor = useEditor({
         autofocus: true,
@@ -23,7 +23,7 @@ export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
             ...ExtensionKit()
         ],
         // content: blockEditorProps.isEditor ? (currentPost?.lastPostContent || "") : (blockEditorProps?.content || ""),
-        content: blockEditorProps.content || "123213",
+        content: blockEditorProps.content || "",
         editorProps: {
             attributes: {
                 autocomplete: 'off',

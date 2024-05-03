@@ -69,10 +69,10 @@ export const Navbar = () => {
     const userLoginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
+            // 登录
             const auth = await userLogin(userState).unwrap()
             dispatch(setCredentials(auth))
-        } catch (err: any) {
-            console.error(err)
+        } catch (error: any) {
         } finally {
             setUserState({
                 email: '',

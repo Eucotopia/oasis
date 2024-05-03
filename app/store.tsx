@@ -1,12 +1,13 @@
 import {combineReducers, configureStore,} from '@reduxjs/toolkit'
 import {persistReducer, persistStore} from "redux-persist";
 import thunk from "redux-thunk";
+import storage from "redux-persist/lib/storage";
 import authReducer from "@/feature/auth/authSlice";
 import lastPostContentReducer from "@/feature/post/lastPostContentSlice";
 import {postApi} from "@/feature/api/postApi";
 import {authApi} from "@/feature/api/authApi";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {tagApi} from "@/feature/api/tagApi";
+import {faqApi} from "@/feature/api/faqApi";
 import {fileApi} from "@/feature/api/fileApi";
 import {columnApi} from "@/feature/api/columnApi";
 import {categoryApi} from "@/feature/api/categoryApi";
@@ -15,17 +16,18 @@ import {setupListeners} from "@reduxjs/toolkit/query";
 // define persist config
 const persistConfig = {
     key: "root",
-    storage: AsyncStorage,
+    storage: storage,
     // don't persist this state
     blacklist: []
 }
 
-const middleware = [thunk, postApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware]
+const middleware = [thunk, postApi.middleware,faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware]
 
 const rootReducer = combineReducers({
     auth: authReducer,
     lastPost: lastPostContentReducer,
     [postApi.reducerPath]: postApi.reducer,
+    [faqApi.reducerPath]: faqApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,
     [fileApi.reducerPath]: fileApi.reducer,

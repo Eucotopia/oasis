@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
 import {currentUserType} from "@/feature/auth/authSlice";
+import {toast} from "sonner";
 
 export type UserLoginType = {
     email: string
@@ -28,14 +29,18 @@ export const authApi = createApi({
                 method: 'POST',
                 body: credentials,
             }),
-            transformResponse: (response: ResultResponse<currentUserType>, meta, arg) => response.data,
+            transformResponse: (response: ResultResponse<currentUserType>, meta, arg) => {
+                return response.data
+            },
             transformErrorResponse: (
                 response: {
-                    status: string | number
+                    status: string | number,
                 },
                 meta,
                 arg
-            ) => response.status,
+            ) => {
+                response.status
+            },
         })
     }),
 })
