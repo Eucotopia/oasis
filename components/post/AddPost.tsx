@@ -106,20 +106,28 @@ const AddPost = () => {
         return null
     }
     const handleSave = async () => {
-        console.log("editor",editor.getHTML())
-        setPost({
-                ...post,
-                content: editor.getHTML()
-            }
-        )
-        console.log('post',post.content)
-        const unwrap = await addPost(post).unwrap();
+        const postState = {
+            ...post,
+            content: editor.getHTML()
+        }
+        const unwrap = await addPost(postState).unwrap();
         if (unwrap.code === 200) {
             dispatch(removeLastPostContent())
             editor.commands.clearContent()
+            setPost({
+                title: "",
+                content: "",
+                tags: [],
+                summary: "",
+                isPrivate: false,
+                isTop: false,
+                cover: "",
+                rating: "1",
+                categories: [],
+                columns: [],
+            })
         }
     }
-
     return (
         <>
             <Button onPress={onOpen}>Add new</Button>

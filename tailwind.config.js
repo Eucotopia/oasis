@@ -9,9 +9,56 @@ module.exports = {
         './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
     ],
     theme: {
-        light: {},
-        extend: {
+        light: {
             backgroundImage: {
+                "test": "radial-gradient(farthest-corner at 30% 50%, #F7EEDD 30%, #F2D7BE 50%, #E9C4A5 70%)",
+            }
+        },
+        extend: {
+            animation: {
+                first: "moveVertical 30s ease infinite",
+                second: "moveInCircle 20s reverse infinite",
+                third: "moveInCircle 40s linear infinite",
+                fourth: "moveHorizontal 40s ease infinite",
+                fifth: "moveInCircle 20s ease infinite",
+            },
+            keyframes: {
+                moveHorizontal: {
+                    "0%": {
+                        transform: "translateX(-50%) translateY(-10%)",
+                    },
+                    "50%": {
+                        transform: "translateX(50%) translateY(10%)",
+                    },
+                    "100%": {
+                        transform: "translateX(-50%) translateY(-10%)",
+                    },
+                },
+                moveInCircle: {
+                    "0%": {
+                        transform: "rotate(0deg)",
+                    },
+                    "50%": {
+                        transform: "rotate(180deg)",
+                    },
+                    "100%": {
+                        transform: "rotate(360deg)",
+                    },
+                },
+                moveVertical: {
+                    "0%": {
+                        transform: "translateY(-50%)",
+                    },
+                    "50%": {
+                        transform: "translateY(50%)",
+                    },
+                    "100%": {
+                        transform: "translateY(-50%)",
+                    },
+                },
+            },
+            backgroundImage: {
+                "test": "linear-gradient(to bottom, #F7EEDD 30%, #F2D7BE 50%, #E9C4A5 70%)",
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
             },
@@ -46,114 +93,40 @@ module.exports = {
                     dark: {
                         colors: {},
                     },
-                    "purple-dark1": {
-                        "colors": {
-                            "background": {
-                                "DEFAULT": "#333333",
-                                "foreground": "#fafafa"
+                    "purple-dark": {
+                        extend: "dark", // <- inherit default values from dark theme
+                        colors: {
+                            background: "#39193b",
+                            foreground: "#ffffff",
+                            primary: {
+                                50: "#3B096C",
+                                100: "#520F83",
+                                200: "#7318A2",
+                                300: "#9823C2",
+                                400: "#c031e2",
+                                500: "#DD62ED",
+                                600: "#F182F6",
+                                700: "#FCADF9",
+                                800: "#FDD5F9",
+                                900: "#FEECFE",
+                                DEFAULT: "#DD62ED",
+                                foreground: "#ffffff",
                             },
-                            "content1": "#141414",
-                            "content2": "#212121",
-                            "content3": "#2e2e2e",
-                            "content4": "#404040",
-                            "danger": {
-                                "50": "#222b29",
-                                "100": "#485b57",
-                                "200": "#698680",
-                                "300": "#98aea9",
-                                "400": "#c0ceca",
-                                "500": "#ccd7d4",
-                                "600": "#d7e0de",
-                                "700": "#e5ebea",
-                                "800": "#f4f6f5",
-                                "900": "#f9fbfa",
-                                "DEFAULT": "#BAD4CE"
-                            },
-                            "default": {
-                                "50": "#262626",
-                                "100": "#525252",
-                                "200": "#787878",
-                                "300": "#a3a3a3",
-                                "400": "#b8b8b8",
-                                "500": "#d1d1d1",
-                                "600": "#dbdbdb",
-                                "700": "#e8e8e8",
-                                "800": "#f5f5f5",
-                                "900": "#fafafa",
-                                "DEFAULT": "#e8e8e8",
-                                "foreground": "#262626"
-                            },
-                            "divider": "#a3a3a3",
-                            "focus": "#679186",
-                            "foreground": {
-                                "50": "#262626",
-                                "100": "#525252",
-                                "200": "#787878",
-                                "300": "#a3a3a3",
-                                "400": "#b8b8b8",
-                                "500": "#d1d1d1",
-                                "600": "#dbdbdb",
-                                "700": "#e8e8e8",
-                                "800": "#f5f5f5",
-                                "900": "#fafafa",
-                                "DEFAULT": "#BFBFBF",
-                                "foreground": "#fafafa"
-                            },
-                            "overlay": "#333333",
-                            "primary": {
-                                "50": "#1b312b",
-                                "100": "#3a695d",
-                                "200": "#559b88",
-                                "300": "#89beb0",
-                                "400": "#b7d7ce",
-                                "500": "#c4ded7",
-                                "600": "#d1e6e0",
-                                "700": "#e1efeb",
-                                "800": "#f2f8f6",
-                                "900": "#f8fbfb",
-                                "DEFAULT": "#679186"
-                            },
-                            "secondary": {
-                                "50": "#0d283f",
-                                "100": "#1c5587",
-                                "200": "#297dc7",
-                                "300": "#67a7e0",
-                                "400": "#a2c9ec",
-                                "500": "#b3d3ef",
-                                "600": "#c4ddf3",
-                                "700": "#d9e9f7",
-                                "800": "#eef5fc",
-                                "900": "#f7fafd",
-                                "DEFAULT": "#264E70"
-                            },
-                            "success": {
-                                "50": "#2d2720",
-                                "100": "#5f5344",
-                                "200": "#8c7b63",
-                                "300": "#b3a594",
-                                "400": "#d0c8bd",
-                                "500": "#d9d2c9",
-                                "600": "#e1dcd5",
-                                "700": "#ece9e4",
-                                "800": "#f7f5f3",
-                                "900": "#fbfaf9",
-                                "DEFAULT": "#FCEAD2"
-                            },
-                            "warning": {
-                                "50": "#321d1a",
-                                "100": "#6b3e38",
-                                "200": "#9d5b53",
-                                "300": "#c08d87",
-                                "400": "#d8bab6",
-                                "500": "#dfc6c3",
-                                "600": "#e6d3d0",
-                                "700": "#efe3e1",
-                                "800": "#f8f2f2",
-                                "900": "#fbf9f8",
-                                "DEFAULT": "#FAB5AC"
-                            }
+                            focus: "#F182F6",
                         },
-                        "extend": "dark"
+                        layout: {
+                            disabledOpacity: "0.3",
+                            radius: {
+                                small: "4px",
+                                medium: "6px",
+                                large: "8px",
+                            },
+                            borderWidth: {
+                                small: "1px",
+                                medium: "2px",
+                                large: "3px",
+                            },
+                        },
                     },
                     political: {
                         "colors": {
