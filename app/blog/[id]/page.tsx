@@ -16,7 +16,7 @@ export default function Page({params}: {
     const {characterCount, editor} = useBlockEditor({isEditor: false, content: post?.content})
     if (editor === null) return null
     return (
-        <>
+        <>d
             <LampContainer>
                 <motion.h1
                     initial={{ opacity: 0.5, y: 100 }}

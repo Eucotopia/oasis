@@ -156,6 +156,7 @@ export const BlockEditor = ({editor}: {
                             <Icon icon={"fa6-solid:underline"} width={20} height={20}/>
                         </Link>
                     </Tooltip>
+
                     <Tooltip
                         delay={0}
                         closeDelay={0}

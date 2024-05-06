@@ -1,4 +1,4 @@
-import ExtensionKit from "@/components/tiptap/extension-kit";
+import ExtensionKit from "@/components/tiptap/extensions/extension-kit";
 import {useEditor} from "@tiptap/react";
 import {useEffect} from "react";
 import './styles/index.css'

@@ -33,6 +33,8 @@ import CodeBlock from '@tiptap/extension-code-block'
 import Text from '@tiptap/extension-text'
 import Link from '@tiptap/extension-link'
 import {Paragraph} from "@tiptap/extension-paragraph";
+import { ImageUpload } from './ImageUpload'
+import {ImageBlock} from "./ImageBlock";
 
 
 export const ExtensionKit = () => [
@@ -106,6 +108,8 @@ export const ExtensionKit = () => [
     ColorHighlighter,
     Code,
     Blockquote,
+    ImageUpload,
+    ImageBlock,
     CodeBlockLowlight.configure({
         lowlight,
         defaultLanguage: null,

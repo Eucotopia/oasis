@@ -2,7 +2,6 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
 import {currentUserType} from "@/feature/auth/authSlice";
-import {toast} from "sonner";
 
 export type UserLoginType = {
     email: string

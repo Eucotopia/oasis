@@ -18,12 +18,16 @@ export const fileApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        upload: builder.mutation<ResultResponse<string>, FormData>({
+        // The query accepts a FormData and returns a ResultResponse<string> type ✔
+        upload: builder.mutation<string, FormData>({
             query: (image) => ({
                 url: 'image/upload',
                 method: 'POST',
                 body: image,
             }),
+            transformResponse: (response: ResultResponse<string>, meta, arg) => {
+                return response.data
+            },
         }),
     }),
 })

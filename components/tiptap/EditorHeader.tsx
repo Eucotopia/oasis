@@ -24,6 +24,17 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                 </Link>
                 <Link
                     color={"foreground"}
+                    onPress={() => editor.chain().focus().setImageUpload().run()}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                        "hover:bg-content4",
+                        {
+                            "bg-content4": editor.isActive("underline")
+                        })}
+                >
+                    <Icon icon={"fa6-solid:upload"} width={20} height={20}/>
+                </Link>
+                <Link
+                    color={"foreground"}
                     onPress={() => editor.chain().focus().undo().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
                         "hover:bg-content4",
