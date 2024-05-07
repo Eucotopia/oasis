@@ -1,52 +1,68 @@
 'use client'
-import StarterKit from '@tiptap/starter-kit'
-import CharacterCount from '@tiptap/extension-character-count'
-import Highlight from '@tiptap/extension-highlight'
-import Typography from '@tiptap/extension-typography'
-import TextStyle from '@tiptap/extension-text-style'
-import HardBreak from '@tiptap/extension-hard-break'
-import {ColorHighlighter} from "@/components/tiptap/extensions/ColorHighlighter/ColorHighlighter";
-import {SmilieReplacer} from "@/components/tiptap/extensions/SmilieReplacer/App";
 import Blockquote from '@tiptap/extension-blockquote'
-import Placeholder from '@tiptap/extension-placeholder'
-import { TableOfContent } from '@tiptap-pro/extension-table-of-content'
 import {TableOfContentNode} from "@/components/tiptap/extensions/TableOfContents/TableOfContentNode";
-import Document from '@tiptap/extension-document'
-import Dropcursor from '@tiptap/extension-dropcursor'
-import FileHandler from '@tiptap-pro/extension-file-handler'
 import Image from '@tiptap/extension-image'
 import {Mathematics} from '@tiptap-pro/extension-mathematics'
 import Youtube from '@tiptap/extension-youtube'
 import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
 import {lowlight} from 'lowlight'
-import Heading from '@tiptap/extension-heading'
-import FontFamily from '@tiptap/extension-font-family'
-import {Color} from '@tiptap/extension-color'
-import Subscript from '@tiptap/extension-subscript'
-import Superscript from '@tiptap/extension-superscript'
-import TextAlign from '@tiptap/extension-text-align'
-import TaskItem from '@tiptap/extension-task-item'
-import TaskList from '@tiptap/extension-task-list'
-import Underline from '@tiptap/extension-underline'
 import Code from '@tiptap/extension-code'
 import CodeBlock from '@tiptap/extension-code-block'
 import Text from '@tiptap/extension-text'
-import Link from '@tiptap/extension-link'
 import {Paragraph} from "@tiptap/extension-paragraph";
 import { ImageUpload } from './ImageUpload'
-import {ImageBlock} from "./ImageBlock";
+import {
+    SmilieReplacer,
+    CharacterCount,
+    ColorHighlighter,
+    Color,
+    BlockquoteFigure,
+    SlashCommand,
+    Dropcursor,
+    Emoji,
+    Figcaption,
+    Document,
+    HorizontalRule,
+    Columns,
+    Column,
+    FileHandler,
+    Focus,
+    FontFamily,
+    Highlight,
+    ImageBlock,
+    Placeholder,
+    StarterKit,
+    Subscript,
+    Link,
+    Superscript,
+    TableOfContent,
+    TextAlign,
+    TextStyle,
+    Typography,
+    Underline,
+    TaskItem,
+    Heading,
+    Selection,
+    TaskList,
+} from '.'
+import {HardBreak} from "@tiptap/extension-hard-break";
 
 
 export const ExtensionKit = () => [
     Paragraph,
     Text,
     StarterKit.configure({
-        // Configure an included extension
-        heading: {
-            levels: [1, 2, 3],
-        },
+        document: false,
+        dropcursor: false,
+        heading: false,
+        horizontalRule: false,
+        blockquote: false,
+        history: false,
+        codeBlock: false,
     }),
     Dropcursor,
+    HorizontalRule,
+    Selection,
     FileHandler.configure({
         allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
         onDrop: (currentEditor, files, pos) => {
@@ -88,27 +104,34 @@ export const ExtensionKit = () => [
         },
     }),
     Image,
+    Heading.configure({
+        levels: [1, 2, 3, 4, 5, 6],
+    }),
     TaskList,
     Link.configure({
-        validate: href => /^https?:\/\//.test(href),
+        openOnClick: false,
     }),
     TaskItem,
     TextAlign.configure({
         types: ['heading', 'paragraph'],
     }),
+    Figcaption,
     FontFamily,
     Youtube,
     SmilieReplacer,
-    Heading,
     Placeholder,
     Document,
     HardBreak,
+    BlockquoteFigure,
     CodeBlock,
     Mathematics,
     ColorHighlighter,
     Code,
     Blockquote,
+    Columns,
+    Column,
     ImageUpload,
+    SlashCommand,
     ImageBlock,
     CodeBlockLowlight.configure({
         lowlight,

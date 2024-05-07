@@ -132,6 +132,7 @@ const AddPost = () => {
         <>
             <Button onPress={onOpen}>Add new</Button>
             <Modal
+                isDismissable={false}
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 backdrop={"blur"}
