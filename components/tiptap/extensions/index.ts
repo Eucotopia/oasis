@@ -29,6 +29,7 @@ export { TaskList } from '@tiptap/extension-task-list'
 export { FileHandler } from '@tiptap-pro/extension-file-handler'
 
 export { Selection } from './Selection'
+export { ColorHighlighter } from './ColorHighlighter'
 export { Table, TableCell, TableHeader, TableRow } from './Table'
 export { HorizontalRule } from './HorizontalRule'
 export { Heading } from './Heading'

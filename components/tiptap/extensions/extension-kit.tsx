@@ -17,6 +17,7 @@ import {
     HorizontalRule,
     ImageBlock,
     Link,
+    ColorHighlighter,
     Placeholder,
     Selection,
     SlashCommand,
@@ -54,6 +55,7 @@ const UploadImageHandle = async (file: File) => {
 export const ExtensionKit = () => [
     Document,
     Columns,
+    ColorHighlighter,
     TaskList,
     TaskItem.configure({
         nested: true,
