@@ -19,8 +19,8 @@ export default function Page({params}: {
         <>d
             <LampContainer>
                 <motion.h1
-                    initial={{ opacity: 0.5, y: 100 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{opacity: 0.5, y: 100}}
+                    whileInView={{opacity: 1, y: 0}}
                     transition={{
                         delay: 0.3,
                         duration: 0.8,
@@ -32,31 +32,10 @@ export default function Page({params}: {
                     {/*Build lamps <br /> the right way*/}
                 </motion.h1>
             </LampContainer>
-            {/*<div*/}
-            {/*    className={"flex flex-col items-center justify-center gap-2 w-screen bg-test h-48 md:h-64 lg:h-80 p-4 md:p-8 lg:p-12"}>*/}
-            {/*    <div className={"flex flex-row gap-2"}>*/}
-            {/*        {*/}
-            {/*            post?.tags?.map((tag, index) => (*/}
-            {/*                <Chip*/}
-            {/*                    color={"primary"}*/}
-            {/*                    variant="dot"*/}
-            {/*                    key={index}*/}
-            {/*                    radius={'sm'}*/}
-            {/*                    className={"text-bold"}*/}
-            {/*                >{tag.name}</Chip>*/}
-            {/*            ))*/}
-            {/*        }*/}
-            {/*    </div>*/}
-            {/*    <p className={"text-5xl"}>{post?.title}</p>*/}
-            {/*    <div>*/}
-            {/*        {post?.createTime}*/}
-            {/*    </div>*/}
-            {/*    <div>*/}
-            {/*        {characterCount.characters()}*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            <div className={"w-[896px] border bg-content1 rounded-2xl mx-auto"}>
-                <BlockEditor editor={editor}/>
+            <div>
+                <div className={"w-[896px]  rounded-xl mx-auto"}>
+                    <BlockEditor editor={editor}/>
+                </div>
             </div>
         </>
     );

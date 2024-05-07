@@ -26,10 +26,10 @@ export const BlockEditor = ({editor}: {
             <div ref={menuContainerRef}>
                 <TextMenu editor={editor}/>
                 <ColumnsMenu editor={editor} appendTo={menuContainerRef}/>
-                <TableRowMenu editor={editor} appendTo={menuContainerRef} />
-                <TableColumnMenu editor={editor} appendTo={menuContainerRef} />
-                <ImageBlockMenu editor={editor} appendTo={menuContainerRef} />
-                <ContentItemMenu editor={editor}/>
+                <TableRowMenu editor={editor} appendTo={menuContainerRef}/>
+                <TableColumnMenu editor={editor} appendTo={menuContainerRef}/>
+                <ImageBlockMenu editor={editor} appendTo={menuContainerRef}/>
+                {editor.isEditable && <ContentItemMenu editor={editor}/>}
                 <LinkMenu editor={editor} appendTo={menuContainerRef}/>
                 <EditorContent editor={editor} className="flex-1 overflow-y-auto"/>
             </div>

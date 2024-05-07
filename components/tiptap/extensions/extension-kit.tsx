@@ -25,6 +25,7 @@ import {
     Subscript,
     Superscript,
     Table,
+    SmilieReplacer,
     TableOfContents,
     TableCell,
     TableHeader,
@@ -40,11 +41,14 @@ import {
     TaskItem,
     TaskList,
 } from '.'
+import Youtube from '@tiptap/extension-youtube'
 import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
 import {ImageUpload} from './ImageUpload'
+import History from '@tiptap/extension-history'
 import {TableOfContentsNode} from './TableOfContentsNode'
 import {lowlight} from 'lowlight'
 import {useUploadMutation} from "@/feature/api/fileApi";
+import {getHierarchicalIndexes} from "@tiptap-pro/extension-table-of-contents";
 
 const UploadImageHandle = async (file: File) => {
     const [uploadImage] = useUploadMutation();
@@ -56,10 +60,12 @@ export const ExtensionKit = () => [
     Document,
     Columns,
     ColorHighlighter,
+    SmilieReplacer,
     TaskList,
     TaskItem.configure({
         nested: true,
     }),
+    History,
     Column,
     TableOfContents,
     TableOfContentsNode,
@@ -67,6 +73,7 @@ export const ExtensionKit = () => [
     Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
     }),
+    Youtube,
     HorizontalRule,
     StarterKit.configure({
         document: false,

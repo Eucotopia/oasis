@@ -136,17 +136,17 @@ export const GROUPS: Group[] = [
                     editor.chain().focus().setHorizontalRule().run()
                 },
             },
-            // {
-            //     name: 'toc',
-            //     label: 'Table of Contents',
-            //     iconName: 'fa6-solid:book',
-            //     aliases: ['outline'],
-            //     description: 'Insert a table of contents',
-            //     shouldBeHidden: editor => editor.isActive('columns'),
-            //     action: editor => {
-            //         editor.chain().focus().insertTableOfContent().run()
-            //     },
-            // },
+            {
+                name: 'toc',
+                label: 'Table of Contents',
+                iconName: 'fa6-solid:book',
+                aliases: ['outline'],
+                description: 'Insert a table of contents',
+                shouldBeHidden: editor => editor.isActive('columns'),
+                action: editor => {
+                    editor.chain().focus().insertTableOfContents().run()
+                },
+            },
         ],
     },
 ]
