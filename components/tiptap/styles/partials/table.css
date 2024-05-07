@@ -3,12 +3,12 @@
     @apply my-12;
   }
 
-  & table {
+  table {
     @apply border-collapse border-black/10 rounded box-border w-full;
     @apply dark:border-white/20;
 
-    & td,
-    & th {
+    td,
+    th {
       @apply border border-black/10 min-w-[100px] p-2 relative text-left align-top;
       @apply dark:border-white/20;
 
@@ -16,7 +16,7 @@
         @apply mt-0;
       }
 
-      & p {
+      p {
         @apply m-0;
 
         & + p {
@@ -25,7 +25,7 @@
       }
     }
 
-    & th {
+    th {
       @apply font-bold;
     }
 

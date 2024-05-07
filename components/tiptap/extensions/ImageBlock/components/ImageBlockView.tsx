@@ -18,7 +18,7 @@ export const ImageBlockView = (props: ImageBlockViewProps) => {
   const { editor, getPos, node } = props
   const imageWrapperRef = useRef<HTMLDivElement>(null)
   const { src } = node.attrs
-
+  console.log("src:",src)
   const wrapperClassName = cn(
     node.attrs.align === 'left' ? 'ml-0' : 'ml-auto',
     node.attrs.align === 'right' ? 'mr-0' : 'mr-auto',

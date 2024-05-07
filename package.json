@@ -63,6 +63,7 @@
     "@tiptap-pro/extension-file-handler": "^2.8.1",
     "@tiptap-pro/extension-mathematics": "^2.8.1",
     "@tiptap-pro/extension-table-of-content": "^2.4.1",
+    "@tiptap-pro/extension-table-of-contents": "^2.8.2",
     "@tiptap/extension-character-count": "^2.3.0",
     "@tiptap/extension-code-block-lowlight": "^2.3.0",
     "@tiptap/extension-collaboration-cursor": "^2.3.1",

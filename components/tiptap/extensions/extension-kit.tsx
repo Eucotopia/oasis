@@ -1,56 +1,71 @@
 'use client'
-import Blockquote from '@tiptap/extension-blockquote'
-import {TableOfContentNode} from "@/components/tiptap/extensions/TableOfContents/TableOfContentNode";
-import Image from '@tiptap/extension-image'
-import {Mathematics} from '@tiptap-pro/extension-mathematics'
-import Youtube from '@tiptap/extension-youtube'
-import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
-import {lowlight} from 'lowlight'
-import Code from '@tiptap/extension-code'
-import CodeBlock from '@tiptap/extension-code-block'
-import Text from '@tiptap/extension-text'
-import {Paragraph} from "@tiptap/extension-paragraph";
-import { ImageUpload } from './ImageUpload'
+
 import {
-    SmilieReplacer,
-    CharacterCount,
-    ColorHighlighter,
-    Color,
     BlockquoteFigure,
-    SlashCommand,
+    CharacterCount,
+    Color,
+    Document,
     Dropcursor,
     Emoji,
     Figcaption,
-    Document,
-    HorizontalRule,
-    Columns,
-    Column,
     FileHandler,
     Focus,
     FontFamily,
+    // FontSize,
+    Heading,
     Highlight,
+    HorizontalRule,
     ImageBlock,
+    Link,
     Placeholder,
+    Selection,
+    SlashCommand,
     StarterKit,
     Subscript,
-    Link,
     Superscript,
-    TableOfContent,
+    Table,
+    TableOfContents,
+    TableCell,
+    TableHeader,
+    TableRow,
     TextAlign,
     TextStyle,
+    TrailingNode,
     Typography,
     Underline,
+    // emojiSuggestion,
+    Columns,
+    Column,
     TaskItem,
-    Heading,
-    Selection,
     TaskList,
 } from '.'
-import {HardBreak} from "@tiptap/extension-hard-break";
+import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
+import {ImageUpload} from './ImageUpload'
+import {TableOfContentsNode} from './TableOfContentsNode'
+import {lowlight} from 'lowlight'
+import {useUploadMutation} from "@/feature/api/fileApi";
 
-
+const UploadImageHandle = async (file: File) => {
+    const [uploadImage] = useUploadMutation();
+    const formData = new FormData();
+    formData.append('image', file);
+    return await uploadImage(formData).unwrap();
+}
 export const ExtensionKit = () => [
-    Paragraph,
-    Text,
+    Document,
+    Columns,
+    TaskList,
+    TaskItem.configure({
+        nested: true,
+    }),
+    Column,
+    TableOfContents,
+    TableOfContentsNode,
+    Selection,
+    Heading.configure({
+        levels: [1, 2, 3, 4, 5, 6],
+    }),
+    HorizontalRule,
     StarterKit.configure({
         document: false,
         dropcursor: false,
@@ -60,93 +75,77 @@ export const ExtensionKit = () => [
         history: false,
         codeBlock: false,
     }),
-    Dropcursor,
-    HorizontalRule,
-    Selection,
-    FileHandler.configure({
-        allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
-        onDrop: (currentEditor, files, pos) => {
-            files.forEach(file => {
-                const fileReader = new FileReader()
-
-                fileReader.readAsDataURL(file)
-                fileReader.onload = () => {
-                    currentEditor.chain().insertContentAt(pos, {
-                        type: 'image',
-                        attrs: {
-                            src: fileReader.result,
-                        },
-                    }).focus().run()
-                }
-            })
-        },
-        onPaste: (currentEditor, files, htmlContent) => {
-            files.forEach(file => {
-                if (htmlContent) {
-                    // if there is htmlContent, stop manual insertion & let other extensions handle insertion via inputRule
-                    // you could extract the pasted file from this url string and upload it to a server for example
-                    console.log(htmlContent) // eslint-disable-line no-console
-                    return false
-                }
-
-                const fileReader = new FileReader()
-
-                fileReader.readAsDataURL(file)
-                fileReader.onload = () => {
-                    currentEditor.chain().insertContentAt(currentEditor.state.selection.anchor, {
-                        type: 'image',
-                        attrs: {
-                            src: fileReader.result,
-                        },
-                    }).focus().run()
-                }
-            })
-        },
-    }),
-    Image,
-    Heading.configure({
-        levels: [1, 2, 3, 4, 5, 6],
-    }),
-    TaskList,
-    Link.configure({
-        openOnClick: false,
-    }),
-    TaskItem,
-    TextAlign.configure({
-        types: ['heading', 'paragraph'],
-    }),
-    Figcaption,
-    FontFamily,
-    Youtube,
-    SmilieReplacer,
-    Placeholder,
-    Document,
-    HardBreak,
-    BlockquoteFigure,
-    CodeBlock,
-    Mathematics,
-    ColorHighlighter,
-    Code,
-    Blockquote,
-    Columns,
-    Column,
-    ImageUpload,
-    SlashCommand,
-    ImageBlock,
     CodeBlockLowlight.configure({
         lowlight,
         defaultLanguage: null,
     }),
-    Underline,
     TextStyle,
-    Superscript,
-    Subscript,
+    // FontSize,
+    FontFamily,
     Color,
-    TableOfContent,
-    TableOfContentNode,
+    TrailingNode,
+    Link.configure({
+        openOnClick: false,
+    }),
+    Highlight.configure({multicolor: true}),
+    Underline,
+    CharacterCount.configure({limit: 50000}),
+    ImageUpload.configure({}),
+    ImageBlock,
+    FileHandler.configure({
+        allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+        onDrop: (currentEditor, files, pos) => {
+            files.forEach(async (file: File) => {
+                const formData = new FormData();
+                formData.append('image', file);
+                const url = await UploadImageHandle(file);
+
+                currentEditor.chain().setImageBlockAt({pos, src: url}).focus().run()
+            })
+        },
+        onPaste: (currentEditor, files) => {
+            files.forEach(async (file: File) => {
+                const url = await UploadImageHandle(file);
+
+                return currentEditor
+                    .chain()
+                    .setImageBlockAt({pos: currentEditor.state.selection.anchor, src: url})
+                    .focus()
+                    .run()
+            })
+        },
+    }),
+    Emoji.configure({
+        enableEmoticons: true,
+        // suggestion: emojiSuggestion,
+    }),
+    TextAlign.extend({
+        addKeyboardShortcuts() {
+            return {}
+        },
+    }).configure({
+        types: ['heading', 'paragraph'],
+    }),
+    Subscript,
+    Superscript,
+    Table,
+    TableCell,
+    TableHeader,
+    TableRow,
     Typography,
-    Highlight,
-    CharacterCount
+    Placeholder.configure({
+        includeChildren: true,
+        showOnlyCurrent: false,
+        placeholder: () => '',
+    }),
+    SlashCommand,
+    Focus,
+    Figcaption,
+    BlockquoteFigure,
+    Dropcursor.configure({
+        width: 2,
+        class: 'ProseMirror-dropcursor border-black',
+    }),
 ]
 
 export default ExtensionKit

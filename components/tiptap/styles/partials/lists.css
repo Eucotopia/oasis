@@ -1,23 +1,23 @@
 .ProseMirror {
-  & ol {
+  ol {
     @apply list-decimal;
   }
 
-  & ul {
+  ul {
     @apply list-disc;
   }
 
-  & ul,
-  & ol {
+  ul,
+  ol {
     @apply py-0 px-8 my-6 first:mt-0 last:mb-0;
 
-    & ul,
-    & ol,
-    & li {
+    ul,
+    ol,
+    li {
       @apply my-1;
     }
 
-    & p {
+    p {
       @apply mt-0 mb-1;
     }
   }
@@ -27,14 +27,14 @@
     @apply my-8 first:mt-0 last:mb-0;
   }
 
-  & ul[data-type='taskList'] {
+  ul[data-type='taskList'] {
     @apply list-none p-0;
 
-    & p {
+    p {
       @apply m-0;
     }
 
-    & li {
+    li {
       @apply flex;
 
       > label {
