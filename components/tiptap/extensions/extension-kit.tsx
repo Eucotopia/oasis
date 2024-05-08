@@ -11,7 +11,7 @@ import {
     FileHandler,
     Focus,
     FontFamily,
-    // FontSize,
+    FontSize,
     Heading,
     Highlight,
     HorizontalRule,
@@ -35,11 +35,11 @@ import {
     TrailingNode,
     Typography,
     Underline,
-    // emojiSuggestion,
     Columns,
     Column,
     TaskItem,
     TaskList,
+    emojiSuggestion,
 } from '.'
 import Youtube from '@tiptap/extension-youtube'
 import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
@@ -48,7 +48,6 @@ import History from '@tiptap/extension-history'
 import {TableOfContentsNode} from './TableOfContentsNode'
 import {lowlight} from 'lowlight'
 import {useUploadMutation} from "@/feature/api/fileApi";
-import {getHierarchicalIndexes} from "@tiptap-pro/extension-table-of-contents";
 
 const UploadImageHandle = async (file: File) => {
     const [uploadImage] = useUploadMutation();
@@ -89,7 +88,7 @@ export const ExtensionKit = () => [
         defaultLanguage: null,
     }),
     TextStyle,
-    // FontSize,
+    FontSize,
     FontFamily,
     Color,
     TrailingNode,
@@ -126,7 +125,7 @@ export const ExtensionKit = () => [
     }),
     Emoji.configure({
         enableEmoticons: true,
-        // suggestion: emojiSuggestion,
+        suggestion: emojiSuggestion,
     }),
     TextAlign.extend({
         addKeyboardShortcuts() {

@@ -41,16 +41,15 @@ export const useTextmenuCommands = (editor: Editor) => {
     },
     [editor],
   )
-  //TODO 待完成
-  // const onSetFontSize = useCallback(
-  //   (fontSize: string) => {
-  //     if (!fontSize || fontSize.length === 0) {
-  //       return editor.chain().focus().unsetFontSize().run()
-  //     }
-  //     return editor.chain().focus().setFontSize(fontSize).run()
-  //   },
-  //   [editor],
-  // )
+  const onSetFontSize = useCallback(
+    (fontSize: string) => {
+      if (!fontSize || fontSize.length === 0) {
+        return editor.chain().focus().unsetFontSize().run()
+      }
+      return editor.chain().focus().setFontSize(fontSize).run()
+    },
+    [editor],
+  )
 
   return {
     onBold,
@@ -70,7 +69,7 @@ export const useTextmenuCommands = (editor: Editor) => {
     onChangeHighlight,
     onClearHighlight,
     onSetFont,
-    // onSetFontSize,
+    onSetFontSize,
     onLink,
   }
 }

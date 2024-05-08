@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "lint": "next lint"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.17.6",

@@ -8,6 +8,8 @@ import {EditLinkPopover} from "@/components/tiptap/menus/TextMenu/components/Edi
 import {memo} from "react";
 import {ColorPicker} from "@/components/tiptap/panels/Colorpicker";
 import {Divider} from "@nextui-org/divider";
+import {FontSizePicker} from "@/components/tiptap/menus/TextMenu/components/FontSizePicker";
+import {FontFamilyPicker} from "@/components/tiptap/menus/TextMenu/components/FontFamilyPicker";
 
 export type TextMenuProps = {
     editor: Editor
@@ -16,6 +18,9 @@ export type TextMenuProps = {
 export const TextMenu = ({editor}: TextMenuProps) => {
     const MemoColorPicker = memo(ColorPicker)
     const commands = useTextmenuCommands(editor)
+    const MemoFontSizePicker = memo(FontSizePicker)
+    const MemoFontFamilyPicker = memo(FontFamilyPicker)
+
     const states = useTextmenuStates(editor)
     const blockOptions = useTextmenuContentTypes(editor)
 
@@ -28,6 +33,13 @@ export const TextMenu = ({editor}: TextMenuProps) => {
             updateDelay={100}
             className={"text-black inline-flex h-full leading-none gap-1 flex-row p-1 items-center bg-content2 rounded-md"}
         >
+            <MemoFontFamilyPicker onChange={commands.onSetFont} value={states.currentFont || ''}/>
+
+            <MemoFontSizePicker onChange={commands.onSetFontSize} value={states.currentSize || ''}/>
+
+            <div className="flex h-6 items-center self-center bg-default-500/20 w-0.5">
+                <Divider orientation="vertical"/>
+            </div>
             <Button
                 isIconOnly
                 size={"sm"}
@@ -40,6 +52,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
             >
                 <Icon icon={"fa6-solid:bold"} width={18} height={18}/>
             </Button>
+
             <Button
                 isIconOnly
                 size={"sm"}

@@ -25,7 +25,7 @@ export const BlockEditor = ({editor}: {
         <>
             <div ref={menuContainerRef}>
                 <TextMenu editor={editor}/>
-                <ColumnsMenu editor={editor} appendTo={menuContainerRef}/>
+                {editor.isEditable && <ColumnsMenu editor={editor} appendTo={menuContainerRef}/>}
                 <TableRowMenu editor={editor} appendTo={menuContainerRef}/>
                 <TableColumnMenu editor={editor} appendTo={menuContainerRef}/>
                 <ImageBlockMenu editor={editor} appendTo={menuContainerRef}/>
