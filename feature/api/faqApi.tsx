@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
+import {baseUrl} from "@/feature/api/authApi";
 
 type FaqType = {
     id?: number,
@@ -11,7 +12,7 @@ export const faqApi = createApi({
     reducerPath: 'faqApi',
     tagTypes: ['Faq'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/faq',
+        baseUrl: `${baseUrl}/faq`,
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const authorization = (getState() as RootState).auth.currentUser?.authorization

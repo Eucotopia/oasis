@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {ResultResponse} from '@/types'
 import {RootState} from "@/app/store";
 import {PostType} from "@/feature/api/postApi";
+import {baseUrl} from "@/feature/api/authApi";
 
 export type ColumnType = {
     id: number,
@@ -15,7 +16,7 @@ export const columnApi = createApi({
     reducerPath: 'columnApi',
     tagTypes: ['ColumnApi'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/column',
+        baseUrl: `${baseUrl}/column`,
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const token = (getState() as RootState).auth.currentUser?.authorization

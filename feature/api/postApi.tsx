@@ -4,6 +4,7 @@ import {PageType, ResultResponse} from "@/types";
 import {TagType} from "@/feature/api/tagApi";
 import {CategoryType} from "@/feature/api/categoryApi";
 import {ColumnType} from "@/feature/api/columnApi";
+import {baseUrl} from "@/feature/api/authApi";
 
 
 export type PostType = {
@@ -25,7 +26,7 @@ export type PostType = {
 }
 export const postApi = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/post',
+        baseUrl: `${baseUrl}/post`,
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const authorization = (getState() as RootState).auth.currentUser?.authorization

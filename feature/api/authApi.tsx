@@ -7,11 +7,12 @@ export type UserLoginType = {
     email: string
     password: string
 }
+export const baseUrl = 'http://localhost:8080';
 export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['Auth'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/user/',
+        baseUrl: `${baseUrl}/user/`,
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const authorization = (getState() as RootState).auth.currentUser?.authorization

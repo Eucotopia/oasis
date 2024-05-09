@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
+import {baseUrl} from "@/feature/api/authApi";
 
 export type TagType = {
     id: number,
@@ -10,7 +11,7 @@ export const tagApi = createApi({
     reducerPath: 'tagApi',
     tagTypes: ['TagApi'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/tag',
+        baseUrl: `${baseUrl}/tag`,
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const authorization = (getState() as RootState).auth.currentUser?.authorization
