@@ -7,7 +7,7 @@ export type UserLoginType = {
     email: string
     password: string
 }
-export const baseUrl = 'http://localhost:8080';
+export const baseUrl = 'http://120.25.191.26/api';
 export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['Auth'],

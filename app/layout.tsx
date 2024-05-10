@@ -43,7 +43,7 @@ export default function RootLayout({
             themeProps={{
                 attribute: "class",
                 defaultTheme: "dark",
-                themes: ["light", "dark", "posthog", "political","purple-dark"]
+                themes: ["light", "dark", "posthog", "political", "purple-dark"]
             }}>
             <div className="relative flex flex-col h-screen">
                 <Navbar/>

@@ -8,6 +8,7 @@ import {getRenderContainer} from "@/components/tiptap/lib/utils";
 import {Button, cn} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
 import {actionAlignHorizontallyCentered} from "@excalidraw/excalidraw/types/actions";
+import {Divider} from "@nextui-org/divider";
 
 export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
     const menuRef = useRef<HTMLDivElement>(null)
@@ -68,8 +69,9 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
             }}
         >
             {shouldShow() && (
-                <div ref={menuRef}>
+                <div ref={menuRef} className={"flex flex-row "}>
                     <Button
+                        aria-label={"Align image left"}
                         isIconOnly
                         size={"sm"}
                         variant={"light"}
@@ -79,36 +81,42 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
                                 "bg-content4": editor.isActive('imageBlock', {align: 'left'})
                             })}
                     >
-                        <Icon icon="icon-park-solid:align-left" width={18} height={18}></Icon>
+                        <Icon icon="f7:sidebar-left" width={18} height={18}></Icon>
                     </Button>
+                    <Button
+                        aria-label={"Align image center"}
+                        isIconOnly
+                        size={"sm"}
+                        variant={"light"}
+                        onPress={onAlignImageCenter}
+                        className={cn("bg-transparent border-none rounded-md cursor-pointer",
+                            {
+                                "bg-content4": editor.isActive('imageBlock', {align: 'center'})
+                            })}
+                    >
+                        <Icon icon="f7:text-aligncenter" width={18} height={18}></Icon>
+                    </Button>
+                    <Button
+                        aria-label={"Align image right"}
+                        isIconOnly
+                        size={"sm"}
+                        variant={"light"}
+                        onPress={onAlignImageRight}
+                        className={cn("bg-transparent border-none rounded-md cursor-pointer",
+                            {
+                                "bg-content4": editor.isActive('imageBlock', {align: 'right'})
+                            })}
+                    >
+                        <Icon icon="f7:sidebar-right" width={18} height={18}></Icon>
+                    </Button>
+                    {/*<div className="flex h-5 items-center self-center  text-small">*/}
+                    {/*    <Divider orientation="vertical"/>*/}
+                    {/*</div>*/}
+                    <ImageBlockWidth onChange={onWidthChange}
+                                     value={parseInt(editor.getAttributes('imageBlock').width)}/>
                 </div>
             )
             }
-            {/*<Toolbar.Wrapper shouldShowContent={shouldShow()} ref={menuRef}>*/}
-            {/*  <Toolbar.Button*/}
-            {/*    tooltip="Align image left"*/}
-            {/*    active={editor.isActive('imageBlock', { align: 'left' })}*/}
-            {/*    onClick={onAlignImageLeft}*/}
-            {/*  >*/}
-            {/*    <Icon name="AlignHorizontalDistributeStart" />*/}
-            {/*  </Toolbar.Button>*/}
-            {/*  <Toolbar.Button*/}
-            {/*    tooltip="Align image center"*/}
-            {/*    active={editor.isActive('imageBlock', { align: 'center' })}*/}
-            {/*    onClick={onAlignImageCenter}*/}
-            {/*  >*/}
-            {/*    <Icon name="AlignHorizontalDistributeCenter" />*/}
-            {/*  </Toolbar.Button>*/}
-            {/*  <Toolbar.Button*/}
-            {/*    tooltip="Align image right"*/}
-            {/*    active={editor.isActive('imageBlock', { align: 'right' })}*/}
-            {/*    onClick={onAlignImageRight}*/}
-            {/*  >*/}
-            {/*    <Icon name="AlignHorizontalDistributeEnd" />*/}
-            {/*  </Toolbar.Button>*/}
-            {/*  <Toolbar.Divider />*/}
-            {/*  <ImageBlockWidth onChange={onWidthChange} value={parseInt(editor.getAttributes('imageBlock').width)} />*/}
-            {/*</Toolbar.Wrapper>*/}
         </BaseBubbleMenu>
     )
 }

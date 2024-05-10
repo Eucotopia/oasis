@@ -65,7 +65,7 @@
     }
 
     [data-type='horizontalRule'] {
-        @apply my-8 py-4 transition-all duration-100 ease-in-out cursor-pointer;
+        @apply my-8 py-4 transition-all duration-100 ease-in-out cursor-pointer pt-0 pb-0;
 
         &.ProseMirror-selectednode {
             @apply bg-black/5 dark:bg-white/10;
