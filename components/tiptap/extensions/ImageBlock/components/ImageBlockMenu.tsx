@@ -109,9 +109,6 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
                     >
                         <Icon icon="f7:sidebar-right" width={18} height={18}></Icon>
                     </Button>
-                    {/*<div className="flex h-5 items-center self-center  text-small">*/}
-                    {/*    <Divider orientation="vertical"/>*/}
-                    {/*</div>*/}
                     <ImageBlockWidth onChange={onWidthChange}
                                      value={parseInt(editor.getAttributes('imageBlock').width)}/>
                 </div>

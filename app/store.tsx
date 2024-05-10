@@ -21,7 +21,7 @@ const persistConfig = {
     blacklist: []
 }
 
-const middleware = [thunk, postApi.middleware,faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware]
+const middleware = [thunk, postApi.middleware, faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware]
 
 const rootReducer = combineReducers({
     auth: authReducer,

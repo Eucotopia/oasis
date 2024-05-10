@@ -50,7 +50,7 @@ export const Navbar = () => {
         password: "",
     })
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const [isSelectRemember, setIsSelectRemember] = useState(false)
+    const [isSelectRemember, setIsSelectRemember] = useState(true)
     // const [register] = useRegisterMutation();
 
     const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
@@ -71,7 +71,7 @@ export const Navbar = () => {
         try {
             // 登录
             const auth = await userLogin(userState).unwrap()
-            dispatch(setCredentials(auth))
+            dispatch(setCredentials({...auth, isSelectRemember: isSelectRemember}))
         } catch (error: any) {
         } finally {
             setUserState({
@@ -266,8 +266,11 @@ export const Navbar = () => {
                                             variant="bordered"
                                         />
                                         <div className="flex items-center justify-between px-1 py-2">
-                                            <Checkbox name="remember" size="sm" isSelected={isSelectRemember}
-                                                      onValueChange={setIsSelectRemember}>
+                                            <Checkbox
+                                                name="remember" size="sm"
+                                                isSelected={isSelectRemember}
+                                                onValueChange={setIsSelectRemember}
+                                            >
                                                 Remember me
                                             </Checkbox>
                                             <Link className="text-default-500" href="#" size="sm">

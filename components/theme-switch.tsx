@@ -69,30 +69,32 @@ export default function App() {
         }
     }
     return (
+        <>
+        </>
         //TODO 后续设计一个对比鲜明的版面，进行比较
-        <PopoverThemeSwitchWrapper icon={changeThemeIcon()}>
-            <RadioGroup
-                value={selected}
-                aria-label="ThemeSwitch"
-                classNames={{
-                    wrapper: "gap-2",
-                }}
-                orientation={"horizontal"}
-                onValueChange={setSelected}
-            >
-                <ThemeRadio description="Up to 20 items" value="light" background={"bg-[#FFFFFF]"}/>
-                <ThemeRadio description="Unlimited items. $10 per month." value="dark" background={"bg-[#121212]"}/>
-                <ThemeRadio
-                    description="24/7 support. Contact us for pricing."
-                    value="posthog"
-                    background={"bg-[#1C1E26]"}
-                />
-                <ThemeRadio
-                    description="24/7 support. Contact us for pricing."
-                    value="political"
-                    background={"bg-[#F0ECD8]"}
-                />
-            </RadioGroup>
-        </PopoverThemeSwitchWrapper>
+        // <PopoverThemeSwitchWrapper icon={changeThemeIcon()}>
+        //     <RadioGroup
+        //         value={selected}
+        //         aria-label="ThemeSwitch"
+        //         classNames={{
+        //             wrapper: "gap-2",
+        //         }}
+        //         orientation={"horizontal"}
+        //         onValueChange={setSelected}
+        //     >
+        //         <ThemeRadio description="Up to 20 items" value="light" background={"bg-[#FFFFFF]"}/>
+        //         <ThemeRadio description="Unlimited items. $10 per month." value="dark" background={"bg-[#121212]"}/>
+        //         <ThemeRadio
+        //             description="24/7 support. Contact us for pricing."
+        //             value="posthog"
+        //             background={"bg-[#1C1E26]"}
+        //         />
+        //         <ThemeRadio
+        //             description="24/7 support. Contact us for pricing."
+        //             value="political"
+        //             background={"bg-[#F0ECD8]"}
+        //         />
+        //     </RadioGroup>
+        // </PopoverThemeSwitchWrapper>
     );
 }

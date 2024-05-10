@@ -5,7 +5,8 @@ export type currentUserType = {
     username: string,
     email: string,
     authorization: string,
-    cover: string
+    cover: string,
+    isSelectRemember: boolean
 }
 /**
  * setCredentials:set current user when successful login ✔
@@ -18,7 +19,6 @@ export const authSlice = createSlice({
     },
     reducers: {
         setCredentials: (state, action: PayloadAction<currentUserType>) => {
-            console.log("setCredentials", action.payload)
             state.currentUser = action.payload
         },
         removeCredentials: (state) => {
