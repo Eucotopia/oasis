@@ -4,7 +4,7 @@
         @apply m-0;
 
         img {
-            @apply rounded block w-full;
+            @apply rounded block w-full ;
         }
     }
 

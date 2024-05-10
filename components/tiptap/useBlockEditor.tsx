@@ -17,6 +17,7 @@ type BlockEditorProps = {
 export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
     const dispatch = useAppDispatch()
     const currentPost = useLastPost()
+    console.log(blockEditorProps?.content)
     const editor = useEditor({
         autofocus: true,
         extensions: [

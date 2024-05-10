@@ -12,11 +12,10 @@ export default function Page({params}: {
     }
 }) {
     const {data: post} = useGetPostQuery(params.id)
-    console.log(post)
     const {characterCount, editor} = useBlockEditor({isEditor: false, content: post?.content})
     if (editor === null) return null
     return (
-        <>d
+        <>
             <LampContainer>
                 <motion.h1
                     initial={{opacity: 0.5, y: 100}}
@@ -29,7 +28,6 @@ export default function Page({params}: {
                     className="mt-4 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
                 >
                     {post?.title}
-                    {/*Build lamps <br /> the right way*/}
                 </motion.h1>
             </LampContainer>
             <div>

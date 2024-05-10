@@ -48,7 +48,7 @@ import History from '@tiptap/extension-history'
 import {TableOfContentsNode} from './TableOfContentsNode'
 import {lowlight} from 'lowlight'
 import {useUploadMutation} from "@/feature/api/fileApi";
-
+import Image from '@tiptap/extension-image'
 const UploadImageHandle = async (file: File) => {
     const [uploadImage] = useUploadMutation();
     const formData = new FormData();
@@ -66,6 +66,7 @@ export const ExtensionKit = () => [
     }),
     History,
     Column,
+    Image,
     TableOfContents,
     TableOfContentsNode,
     Selection,
