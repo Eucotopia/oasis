@@ -8,4 +8,29 @@
       @apply rounded rounded-tl-none text-black text-xs font-semibold -left-[1px] leading-none py-0.5 px-1.5 absolute -top-[1.4em] select-none whitespace-nowrap;
     }
   }
+  .Tiptap-mathematics-editor {
+    background: #202020;
+    color: #fff;
+    font-family: monospace;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .Tiptap-mathematics-render {
+    padding: 0 0.25rem;
+
+    &--editable {
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+
+  .Tiptap-mathematics-editor,
+  .Tiptap-mathematics-render {
+    border-radius: 0.25rem;
+    display: inline-block;
+  }
 }

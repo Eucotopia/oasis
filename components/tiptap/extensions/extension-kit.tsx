@@ -34,6 +34,7 @@ import {
     TextStyle,
     TrailingNode,
     Typography,
+    Mathematics,
     Underline,
     Columns,
     Column,
@@ -57,6 +58,8 @@ const UploadImageHandle = async (file: File) => {
 }
 export const ExtensionKit = () => [
     Document,
+    // TODO:部分样式不可用
+    Mathematics,
     Columns,
     ColorHighlighter,
     SmilieReplacer,

@@ -32,7 +32,7 @@ import React, {ChangeEvent, useMemo, useState} from "react";
 import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
 import ThemeSwitch from "@/components/theme-switch";
-import {ModalHeader} from "@nextui-org/react";
+import {Listbox, ListboxItem, ModalHeader, Tooltip} from "@nextui-org/react";
 
 export const Navbar = () => {
     const {isOpen: isSearchOpen, onOpen: onSearchOpen, onOpenChange: onSearchOpenChange} = useDisclosure();
@@ -125,8 +125,72 @@ export const Navbar = () => {
                                 </NextLink>
                             </NavbarItem>
                         ))}
+                        {/*TODO: Life in Progress*/}
+                        <NavbarItem key={"life in progress"}>
+                            <Tooltip
+                                color="warning"
+                                content={
+                                    <Listbox
+                                        aria-label="Actions"
+                                    >
+                                        <ListboxItem key="game&music" color={"default"}
+                                                     startContent={<Icon icon={"mingcute:music-fill"}/>}
+                                        >
+                                            Game&Music
+                                        </ListboxItem>
+                                        <ListboxItem key="love" color={"success"}>Love</ListboxItem>
+                                        <ListboxItem key="programming" color={"secondary"}>Programming</ListboxItem>
+                                        <ListboxItem key="freesoul" color="primary">
+                                            FreeSoul
+                                        </ListboxItem>
+                                    </Listbox>
+                                }
+                                delay={0}
+                                closeDelay={0}
+                                motionProps={{
+                                    variants: {
+                                        exit: {
+                                            opacity: 0,
+                                            transition: {
+                                                duration: 0.1,
+                                                ease: "easeIn",
+                                            }
+                                        },
+                                        enter: {
+                                            opacity: 1,
+                                            transition: {
+                                                duration: 0.15,
+                                                ease: "easeOut",
+                                            }
+                                        },
+                                    },
+                                }}
+                                classNames={{
+                                    base: [
+                                        // arrow color
+                                        "before:bg-neutral-400 dark:before:bg-white",
+                                    ],
+                                    content: [
+                                        "py-2 px-4 shadow-xl",
+                                        "text-black bg-gradient-to-br from-white to-neutral-400",
+                                    ],
+                                }}
+                            >
+                                <NextLink
+                                    className={clsx(
+                                        linkStyles({color: "foreground", isBlock: true}),
+                                        "data-[active=true]:text-primary data-[active=true]:font-bold"
+                                    )}
+                                    color="foreground"
+                                    href={"#"}
+                                >
+                                    Life in Progress
+                                </NextLink>
+                            </Tooltip>
+                        </NavbarItem>
                     </ul>
                 </NavbarContent>
+                {/*FreeSoul*/}
                 <NavbarContent
                     className="hidden sm:flex basis-1/5 sm:basis-full"
                     justify="end"
