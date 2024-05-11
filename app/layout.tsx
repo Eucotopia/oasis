@@ -6,7 +6,6 @@ import {Providers} from "./providers";
 import {Navbar} from "@/components/navbar";
 import {Link} from "@nextui-org/link";
 import clsx from "clsx";
-import React from "react";
 
 export const metadata: Metadata = {
     title: {
@@ -30,6 +29,7 @@ export default function RootLayout({
                                    }: {
     children: React.ReactNode;
 }) {
+
     return (
         <html lang="en" suppressHydrationWarning>
         <head/>
@@ -51,6 +51,12 @@ export default function RootLayout({
                     {children}
                 </main>
                 <footer className="w-full flex items-center justify-center py-3">
+                    <div>
+                        {/*TODO 运行时间*/}
+                        <p className="text-default-600">
+                            {Math.round((new Date().getTime() - new Date('2024-05-08').getTime()) / (1000 * 60 * 60 * 24))} days
+                        </p>
+                    </div>
                     <Link
                         isExternal
                         className="flex items-center gap-1 text-current"
