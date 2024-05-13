@@ -51,10 +51,10 @@ export const items: SidebarItem[] = [
         ),
     },
     {
-        key: "analytics",
-        href: "#",
+        key: "post-manager",
+        href: "/dashboard/post-manager",
         icon: "solar:chart-outline",
-        title: "Analytics",
+        title: "Post Manager",
     },
     {
         key: "user-manager",

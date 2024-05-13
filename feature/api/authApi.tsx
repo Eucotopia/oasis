@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
 import {currentUserType} from "@/feature/auth/authSlice";
+import {roleType} from "@/feature/api/roleApi";
 
 export type UserLoginType = {
     email: string
@@ -13,14 +14,15 @@ export type UserType = {
     email: string,
     password: string,
     motto: string,
-    createTime: string,
+    views: string,
+    createTime: number,
     avatar: string,
-    role: string,
+    roles: roleType[],
     age: number,
     address: string,
-    status: string
+    status: number
 }
-export const baseUrl = 'http://120.25.191.26/api';
+export const baseUrl = 'http://localhost:8080';
 export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['Auth'],

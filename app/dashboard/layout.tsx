@@ -4,7 +4,7 @@ import React from "react";
 import {useMediaQuery} from "usehooks-ts";
 import {Icon} from "@iconify/react";
 import Sidebar from "@/components/dashboard/sidebar";
-import { items } from "@/components/dashboard/sidebar-items";
+import {items} from "@/components/dashboard/sidebar-items";
 
 export default function DocsLayout({
                                        children,
@@ -22,10 +22,10 @@ export default function DocsLayout({
     }, []);
 
     return (
-        <div className="flex h-dvh w-full">
+        <div className="flex h-screen w-full mt-14 gap-8">
             <div
                 className={cn(
-                    "relative flex h-full flex-col rounded-md bg-content1 p-6 transition-width",
+                    "relative flex h-full flex-col rounded-md bg-content1 p-2 transition-width",
                     {
                         "w-16 items-center px-2 py-6": isCompact,
                     },
@@ -48,9 +48,9 @@ export default function DocsLayout({
                     <Sidebar defaultSelectedKey="home" isCompact={isCompact} items={items}/>
                 </ScrollShadow>
             </div>
-            <div className="w-full flex-1 flex-col p-4">
+            <div className="w-full flex-1 flex-col">
                 <main className="h-full w-full overflow-visible">
-                    <div className="flex h-[90%] w-full flex-col gap-4 rounded-medium border-small border-divider">
+                    <div className="flex h-[90%] w-full flex-col gap-4 rounded-medium">
                         {children}
                     </div>
                 </main>
