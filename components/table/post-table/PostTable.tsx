@@ -14,7 +14,7 @@ import {
     TableHeader,
     TableRow
 } from "@nextui-org/react";
-import {PostType} from "@/feature/api/postApi";
+import {PostType, useDeletePostMutation} from "@/feature/api/postApi";
 import {Dropdown, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
 import {Button} from "@nextui-org/button";
 import {columns, statusOptions} from "./data";
@@ -22,6 +22,7 @@ import {Icon} from "@iconify/react";
 import {SearchIcon} from "@/components/icons";
 import {ChevronDownIcon} from "@nextui-org/shared-icons";
 import {capitalize} from "@nextui-org/shared-utils";
+import AddPost from "@/components/post/AddPost";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
     published: "success",
@@ -29,13 +30,20 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
     deleted: "danger",
 };
 const INITIAL_VISIBLE_COLUMNS = ["id", "title", "status", "actions", "create_time"];
-export default function UserTable({postList}: { postList: PostType[] }) {
+export default function UserTable({postList}: {
+    postList: PostType[]
+}) {
+
+    const [deletePost] = useDeletePostMutation()
+
     const [filterValue, setFilterValue] = React.useState("");
 
     const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
 
     const hasSearchFilter = Boolean(filterValue);
+
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
     const [page, setPage] = React.useState(1);
 
     const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
@@ -108,10 +116,9 @@ export default function UserTable({postList}: { postList: PostType[] }) {
               : `${selectedKeys.size} of ${filteredItems.length} selected`}
         </span>
                 <Pagination
-                    isCompact
                     showControls
                     showShadow
-                    color="primary"
+                    color="success"
                     page={page}
                     total={pages}
                     onChange={setPage}
@@ -127,10 +134,12 @@ export default function UserTable({postList}: { postList: PostType[] }) {
             </div>
         );
     }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+
     const onClear = React.useCallback(() => {
         setFilterValue("")
         setPage(1)
     }, [])
+
     const onSearchChange = React.useCallback((value?: string) => {
         if (value) {
             setFilterValue(value);
@@ -139,10 +148,12 @@ export default function UserTable({postList}: { postList: PostType[] }) {
             setFilterValue("");
         }
     }, []);
+
     const onRowsPerPageChange = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
         setRowsPerPage(Number(e.target.value));
         setPage(1);
     }, []);
+
     const topContent = React.useMemo(() => {
         return (
             <div className="flex flex-col gap-4 ">
@@ -211,11 +222,12 @@ export default function UserTable({postList}: { postList: PostType[] }) {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        <Button color="primary" endContent={
-                            <Icon icon="fa6-solid:plus"></Icon>
-                        }>
-                            Add New
-                        </Button>
+                        {/*<Button color="primary" endContent={*/}
+                        {/*    <Icon icon="fa6-solid:plus"></Icon>*/}
+                        {/*}>*/}
+                        {/*    Add New*/}
+                        {/*</Button>*/}
+                        <AddPost/>
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
@@ -243,6 +255,11 @@ export default function UserTable({postList}: { postList: PostType[] }) {
         postList.length,
         hasSearchFilter,
     ]);
+    const handleDeletePost = (id: number | undefined) => {
+        if (!id) return
+        deletePost(id)
+    }
+
     const renderCell = React.useCallback((post: PostType, columnKey: React.Key) => {
 
         switch (columnKey) {
@@ -281,9 +298,9 @@ export default function UserTable({postList}: { postList: PostType[] }) {
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu>
-                                <DropdownItem>View</DropdownItem>
+                                <DropdownItem href={`/blog/${post.id}`}>View</DropdownItem>
                                 <DropdownItem>Edit</DropdownItem>
-                                <DropdownItem>Delete</DropdownItem>
+                                <DropdownItem onPress={() => handleDeletePost(post.id)}>Delete</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </div>

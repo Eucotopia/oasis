@@ -63,9 +63,18 @@ export const postApi = createApi({
             invalidatesTags: [{type: 'Post', id: 'LIST'}],
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        getPosts: build.query<PostType[], PageType>({
+        getPostsByPage: build.query<PostType[], PageType>({
             query: (page) => `/${page.current}/${page.pageSize}`,
             transformResponse: (response: ResultResponse<PostType[]>) => response.data,
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)}))] : [{
+                    type: "Post",
+                    id: "LIST"
+                }],
+        }),
+        getPosts: build.query<PostType[], void>({
+            query: () => ``,
+            transformResponse: (response: ResultResponse<PostType[]>, meta, arg) => response.data,
             providesTags: (result, error, arg) =>
                 result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)}))] : [{
                     type: "Post",
@@ -107,6 +116,7 @@ export const postApi = createApi({
 export const {
     useGetPostQuery,
     useAddPostMutation,
+    useGetPostsByPageQuery,
     useGetPostsQuery,
     useGetHostPostsQuery,
     useUpdatePostMutation,

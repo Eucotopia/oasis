@@ -43,6 +43,7 @@ const AddPost = () => {
             rating: "1",
             categories: [],
             columns: [],
+            status: 0
         }
     );
     const [isShow, setIsShow] = React.useState(false);
@@ -125,12 +126,21 @@ const AddPost = () => {
                 rating: "1",
                 categories: [],
                 columns: [],
+                status: 0
             })
         }
     }
     return (
         <>
-            <Button onPress={onOpen}>Add new</Button>
+            <Button
+                onPress={onOpen}
+                color={"primary"}
+                endContent={
+                    <Icon icon="fa6-solid:plus"/>
+                }
+            >
+                Add new
+            </Button>
             <Modal
                 isDismissable={false}
                 isOpen={isOpen}
