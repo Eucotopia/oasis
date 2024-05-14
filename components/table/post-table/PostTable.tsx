@@ -300,7 +300,7 @@ export default function UserTable({postList}: {
                 );
             case "actions":
                 return (
-                    <div className="relative flex justify-end items-center gap-2">
+                    <div className="relative flex justify-end items-center gap-2 ">
                         <Dropdown>
                             <DropdownTrigger>
                                 <Button isIconOnly size="sm" variant="light">
@@ -331,7 +331,7 @@ export default function UserTable({postList}: {
                 bottomContent={bottomContent}
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "max-h-[382px]",
+                    wrapper: "max-h-[400px] scrollbar-hide",
                 }}
                 selectedKeys={selectedKeys}
                 selectionMode="multiple"

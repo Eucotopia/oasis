@@ -25,7 +25,7 @@ export default function DocsLayout({
         <div className="flex h-screen w-full mt-14 gap-8">
             <div
                 className={cn(
-                    "relative flex h-full flex-col rounded-md bg-content1 p-2 transition-width",
+                    "relative flex max-h-[560px] flex-col rounded-md bg-content1 p-2 transition-width",
                     {
                         "w-16 items-center px-2 py-6": isCompact,
                     },
