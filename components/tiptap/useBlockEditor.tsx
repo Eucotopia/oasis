@@ -17,13 +17,21 @@ type BlockEditorProps = {
 export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
     const dispatch = useAppDispatch()
     const currentPost = useLastPost()
-    console.log(blockEditorProps?.content)
+    // 如果传入内容，要么显示、要么修改
+    let editContent
+    if (blockEditorProps.content) {
+        editContent = blockEditorProps.content || ""
+    }
+    if (blockEditorProps.isEditor && !blockEditorProps.content) {
+        editContent = currentPost?.lastPostContent || ""
+    }
+
     const editor = useEditor({
         autofocus: true,
         extensions: [
             ...ExtensionKit()
         ],
-        content: blockEditorProps.isEditor ? (currentPost?.lastPostContent || "") : (blockEditorProps?.content || ""),
+        content: editContent,
         editorProps: {
             attributes: {
                 autocomplete: 'off',

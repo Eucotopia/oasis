@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Chip,
     ChipProps,
@@ -23,6 +23,8 @@ import {SearchIcon} from "@/components/icons";
 import {ChevronDownIcon} from "@nextui-org/shared-icons";
 import {capitalize} from "@nextui-org/shared-utils";
 import AddPost from "@/components/post/AddPost";
+import UpdatePost from "@/components/post/UpdatePost";
+import {useDisclosure} from "@nextui-org/modal";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
     published: "success",
@@ -33,7 +35,15 @@ const INITIAL_VISIBLE_COLUMNS = ["id", "title", "status", "actions", "create_tim
 export default function UserTable({postList}: {
     postList: PostType[]
 }) {
+    const [currentPost, setCurrentPost] = useState<PostType>()
 
+
+    const {isOpen: isEditPostOpen, onOpen: onEditPostOpen, onOpenChange: onEditPostOpenChange} = useDisclosure();
+
+    const handleEditPost = (post: PostType) => {
+        setCurrentPost(post);
+        onEditPostOpen()
+    };
     const [deletePost] = useDeletePostMutation()
 
     const [filterValue, setFilterValue] = React.useState("");
@@ -299,7 +309,7 @@ export default function UserTable({postList}: {
                             </DropdownTrigger>
                             <DropdownMenu>
                                 <DropdownItem href={`/blog/${post.id}`}>View</DropdownItem>
-                                <DropdownItem>Edit</DropdownItem>
+                                <DropdownItem onPress={() => handleEditPost(post)}>Edit</DropdownItem>
                                 <DropdownItem onPress={() => handleDeletePost(post.id)}>Delete</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
@@ -311,6 +321,10 @@ export default function UserTable({postList}: {
     }, []);
     return (
         <>
+            {currentPost && (
+                <UpdatePost postParam={currentPost} key={currentPost.id} isEditPostOpen={isEditPostOpen}
+                            onEditPostOpenChange={onEditPostOpenChange}/>
+            )}
             <Table
                 aria-label="Example table with custom cells, pagination and sorting"
                 isHeaderSticky
