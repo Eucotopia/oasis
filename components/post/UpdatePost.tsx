@@ -11,7 +11,7 @@ import TagGroupItem from "@/components/radio/TagGroupItem";
 import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {Divider} from "@nextui-org/divider";
 import {Link} from "@nextui-org/link";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useGetCategoriesQuery} from "@/feature/api/categoryApi";
 import {useGetTagsQuery} from "@/feature/api/tagApi";
 import {useGetColumnsQuery} from "@/feature/api/columnApi";
@@ -26,6 +26,9 @@ type UpdatePostProps = {
 }
 const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePostProps) => {
     const [post, setPost] = React.useState<PostType>(postParam)
+    useEffect(() => {
+        setPost(postParam)
+    }, [postParam]);
     const [isShow, setIsShow] = React.useState(false);
     const handleChange = ({target: {name, value}}: React.ChangeEvent<HTMLInputElement>) => setPost((prev) => ({
         ...prev,
