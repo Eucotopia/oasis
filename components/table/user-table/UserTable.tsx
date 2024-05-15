@@ -144,7 +144,7 @@ export default function UserTable({userList}: { userList: UserType[] }) {
                                     <Icon icon={"fa6-solid:ellipsis-vertical"} width={20} height={20}/>
                                 </Button>
                             </DropdownTrigger>
-                            <DropdownMenu>
+                            <DropdownMenu aria-label="Table Columns3">
                                 <DropdownItem onClick={() => {
                                 }}>View</DropdownItem>
                                 <DropdownItem>Edit</DropdownItem>
@@ -225,7 +225,7 @@ export default function UserTable({userList}: { userList: UserType[] }) {
                             </DropdownTrigger>
                             <DropdownMenu
                                 disallowEmptySelection
-                                aria-label="Table Columns"
+                                aria-label="Table Columns2"
                                 closeOnSelect={false}
                                 selectedKeys={statusFilter}
                                 selectionMode="multiple"
@@ -246,7 +246,7 @@ export default function UserTable({userList}: { userList: UserType[] }) {
                             </DropdownTrigger>
                             <DropdownMenu
                                 disallowEmptySelection
-                                aria-label="Table Columns"
+                                aria-label="Table Columns1"
                                 closeOnSelect={false}
                                 selectedKeys={visibleColumns}
                                 selectionMode="multiple"

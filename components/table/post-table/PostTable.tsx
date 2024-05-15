@@ -32,7 +32,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
     deleted: "danger",
 };
 const INITIAL_VISIBLE_COLUMNS = ["id", "title", "status", "actions", "create_time"];
-export default function UserTable({postList}: {
+export default function PostTable({postList}: {
     postList: PostType[]
 }) {
     const [currentPost, setCurrentPost] = useState<PostType>()
@@ -41,6 +41,7 @@ export default function UserTable({postList}: {
     const {isOpen: isEditPostOpen, onOpen: onEditPostOpen, onOpenChange: onEditPostOpenChange} = useDisclosure();
 
     const handleEditPost = (post: PostType) => {
+        console.log(post.content)
         setCurrentPost(post);
         onEditPostOpen()
     };
@@ -52,7 +53,7 @@ export default function UserTable({postList}: {
 
     const hasSearchFilter = Boolean(filterValue);
 
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const [page, setPage] = React.useState(1);
 
@@ -198,7 +199,7 @@ export default function UserTable({postList}: {
                             </DropdownTrigger>
                             <DropdownMenu
                                 disallowEmptySelection
-                                aria-label="Table Columns"
+                                aria-label="Table Columns3"
                                 closeOnSelect={false}
                                 selectedKeys={statusFilter}
                                 selectionMode="multiple"
@@ -219,7 +220,7 @@ export default function UserTable({postList}: {
                             </DropdownTrigger>
                             <DropdownMenu
                                 disallowEmptySelection
-                                aria-label="Table Columns"
+                                aria-label="Table Columns2"
                                 closeOnSelect={false}
                                 selectedKeys={visibleColumns}
                                 selectionMode="multiple"
@@ -241,10 +242,11 @@ export default function UserTable({postList}: {
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <span className="text-default-400 text-small">Total {postList.length} users</span>
+                    <span className="text-default-400 text-small">Total {postList.length} posts</span>
                     <label className="flex items-center text-default-400 text-small">
                         Rows per page:
                         <select
+                            defaultValue={10}
                             className="bg-transparent outline-none text-default-400 text-small"
                             onChange={onRowsPerPageChange}
                         >
@@ -307,7 +309,7 @@ export default function UserTable({postList}: {
                                     <Icon icon={"fa6-solid:ellipsis-vertical"} width={20} height={20}/>
                                 </Button>
                             </DropdownTrigger>
-                            <DropdownMenu>
+                            <DropdownMenu aria-label="Table Columns1">
                                 <DropdownItem href={`/blog/${post.id}`}>View</DropdownItem>
                                 <DropdownItem onPress={() => handleEditPost(post)}>Edit</DropdownItem>
                                 <DropdownItem onPress={() => handleDeletePost(post.id)}>Delete</DropdownItem>

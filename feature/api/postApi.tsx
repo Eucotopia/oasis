@@ -48,7 +48,9 @@ export const postApi = createApi({
             transformResponse: (response: ResultResponse<PostType>, meta, arg) => response.data,
             // Pick out errors and prevent nested properties in a hook or selector
             transformErrorResponse: (
-                response: { status: string | number },
+                response: {
+                    status: string | number
+                },
                 meta,
                 arg
             ) => response.status,
@@ -67,7 +69,7 @@ export const postApi = createApi({
             query: (page) => `/${page.current}/${page.pageSize}`,
             transformResponse: (response: ResultResponse<PostType[]>) => response.data,
             providesTags: (result, error, arg) =>
-                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)}))] : [{
+                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)})), {type: "Post", id: "LIST"}] : [{
                     type: "Post",
                     id: "LIST"
                 }],
@@ -76,7 +78,7 @@ export const postApi = createApi({
             query: () => ``,
             transformResponse: (response: ResultResponse<PostType[]>, meta, arg) => response.data,
             providesTags: (result, error, arg) =>
-                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)}))] : [{
+                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)})), {type: "Post", id: "LIST"}] : [{
                     type: "Post",
                     id: "LIST"
                 }],
@@ -88,7 +90,9 @@ export const postApi = createApi({
                 method: 'PUT',
                 body: post
             }),
-            invalidatesTags: (result, error, {id}) => [{type: "Post", id}]
+            invalidatesTags: (result, error, {id}) => {
+                return [{type: "Post", id: String(id)}]
+            }
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
         deletePost: build.mutation<ResultResponse<String>, number>({
@@ -97,7 +101,6 @@ export const postApi = createApi({
                 method: 'DELETE',
             }),
             invalidatesTags: (result, error, id) => {
-                console.log("deletePost", id);
                 return [{type: "Post", id: String(id)}]
             }
         }),

@@ -1,4 +1,4 @@
-import {PostType, useAddPostMutation} from "@/feature/api/postApi";
+import {PostType, useUpdatePostMutation} from "@/feature/api/postApi";
 import {Autocomplete, AutocompleteItem, Button, CheckboxGroup, cn, ModalHeader, Switch} from "@nextui-org/react";
 import {Modal, ModalBody, ModalContent, ModalFooter} from "@nextui-org/modal";
 import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
@@ -54,7 +54,7 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
             categories: categories?.filter(c => c.id === Number(id)) ?? []
         })
     }
-    const [addPost] = useAddPostMutation()
+    const [updatePost] = useUpdatePostMutation()
 
     const {data: tags, isLoading: isLoadingTags} = useGetTagsQuery()
     const {data: columns, isLoading: isLoadingColumns} = useGetColumnsQuery()
@@ -87,7 +87,7 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
             ...post,
             content: editor.getHTML()
         }
-        const unwrap = await addPost(postState).unwrap();
+        const unwrap = await updatePost(postState).unwrap();
         if (unwrap.code === 200) {
             dispatch(removeLastPostContent())
             editor.commands.clearContent()
