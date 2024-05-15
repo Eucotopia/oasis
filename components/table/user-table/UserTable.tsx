@@ -38,7 +38,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
     paused: "danger",
     vacation: "warning",
 };
-const INITIAL_VISIBLE_COLUMNS = ["username", "roles", "status", "actions", "id", "age", "email", "address"];
+const INITIAL_VISIBLE_COLUMNS = ["username", "roles", "status", "actions", "id",  "email"];
 export default function UserTable({userList}: { userList: UserType[] }) {
     const {isOpen: isAddNewUserOpen, onOpen: onAddNewUserOpen, onOpenChange: onAddNewUserOpenChange} = useDisclosure();
 
@@ -349,7 +349,7 @@ export default function UserTable({userList}: { userList: UserType[] }) {
                 bottomContent={bottomContent}
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "max-h-[382px]",
+                    wrapper: "max-h-[400px]",
                 }}
                 selectedKeys={selectedKeys}
                 selectionMode="multiple"

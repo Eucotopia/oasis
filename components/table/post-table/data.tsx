@@ -1,12 +1,10 @@
 const columns = [
     {name: "ID", uid: "id", sortable: true},
-    // {name: "USERNAME", uid: "username", sortable: true},
-    // {name: "AGE", uid: "age", sortable: true},
-    // {name: "ROLES", uid: "roles", sortable: true},
-    // {name: "ADDRESS", uid: "address"},
-    {name: "CREATE_TIME", uid: "create_time"},
+    {name: "TAGS", uid: "tags"},
+    {name: "CATEGORIES", uid: "categories"},
     {name: "TITLE", uid: "title"},
     {name: "STATUS", uid: "status", sortable: true},
+    {name: "CREATE_TIME", uid: "create_time"},
     {name: "ACTIONS", uid: "actions"},
 ];
 

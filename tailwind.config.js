@@ -69,26 +69,6 @@ module.exports = {
         nextui({
                 themes: {
                     light: {
-                        colors: {
-                            background: "#F7EEDD",
-                            foreground: "#000000",
-                            primary: {
-                                '50': '#fffcf7',
-                                '100': '#fff8ed',
-                                '200': '#ffebd4',
-                                '300': '#ffdab8',
-                                '400': '#ffb485',
-                                '500': '#ff7f50',
-                                '600': '#e66a40',
-                                '700': '#bf4e2c',
-                                '800': '#99381d',
-                                '900': '#732410',
-                                "DEFAULT": "#FF7F50"
-                            },
-                            secondary: {
-                                "DEFAULT": "#8B4513"
-                            }
-                        },
                     },
                     dark: {
                         colors: {},

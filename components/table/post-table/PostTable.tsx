@@ -31,7 +31,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
     draft: "warning",
     deleted: "danger",
 };
-const INITIAL_VISIBLE_COLUMNS = ["id", "title", "status", "actions", "create_time"];
+const INITIAL_VISIBLE_COLUMNS = ["id", "title", "status", "actions", "categories"];
 export default function PostTable({postList}: {
     postList: PostType[]
 }) {
@@ -63,7 +63,18 @@ export default function PostTable({postList}: {
         column: "views",
         direction: "ascending",
     });
-
+    const displayPostStatus = (status: number) => {
+        switch (status) {
+            case 0:
+                return "published";
+            case 1:
+                return "draft";
+            case 2:
+                return "deleted";
+            default:
+                return "unknown";
+        }
+    }
     const filteredItems = React.useMemo(() => {
         let filteredUsers = [...postList];
 
@@ -75,7 +86,7 @@ export default function PostTable({postList}: {
 
         if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
             filteredUsers = filteredUsers.filter((post) =>
-                Array.from(statusFilter).includes(post.status),
+                Array.from(statusFilter).includes(displayPostStatus(post.status)),
             );
         }
 
@@ -135,10 +146,11 @@ export default function PostTable({postList}: {
                     onChange={setPage}
                 />
                 <div className="hidden sm:flex w-[30%] justify-end gap-2">
-                    <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+                    <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}
+                            color={"secondary"}>
                         Previous
                     </Button>
-                    <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
+                    <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage} color={"warning"}>
                         Next
                     </Button>
                 </div>
@@ -233,11 +245,6 @@ export default function PostTable({postList}: {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        {/*<Button color="primary" endContent={*/}
-                        {/*    <Icon icon="fa6-solid:plus"></Icon>*/}
-                        {/*}>*/}
-                        {/*    Add New*/}
-                        {/*</Button>*/}
                         <AddPost/>
                     </div>
                 </div>
@@ -272,6 +279,7 @@ export default function PostTable({postList}: {
         deletePost(id)
     }
 
+    // TODO: 有待完善（样式）
     const renderCell = React.useCallback((post: PostType, columnKey: React.Key) => {
 
         switch (columnKey) {
@@ -285,6 +293,24 @@ export default function PostTable({postList}: {
                 return (
                     <p>{id}</p>
                 )
+            case "tags":
+                const tags = post["tags"]
+                return (
+                    <div className={"flex flex-row gap-1"}>
+                        {tags?.map((item, index) => (
+                            <Chip radius="sm" key={index}>{item.name}</Chip>
+                        ))}
+                    </div>
+                )
+            case "categories":
+                const categories = post["categories"]
+                return (
+                    <div className={"flex flex-row gap-1"}>
+                        {categories.map((item, index) => (
+                            <Chip radius="sm" key={index}>{item.name}</Chip>
+                        ))}
+                    </div>
+                )
             case "title":
                 const title = post["title"];
                 return (
@@ -295,9 +321,9 @@ export default function PostTable({postList}: {
             case "status":
                 const status = post["status"];
                 return (
-                    <Chip className="capitalize" color={statusColorMap[post.status === 0 ? "published" : "draft"]}
-                          size="sm" variant="flat">
-                        {status === 0 ? "published" : "draft"}
+                    <Chip className="capitalize" color={statusColorMap[displayPostStatus(status)]}
+                          radius={"sm"} variant="flat">
+                        {displayPostStatus(status)}
                     </Chip>
                 );
             case "actions":
@@ -354,7 +380,7 @@ export default function PostTable({postList}: {
                         </TableColumn>
                     )}
                 </TableHeader>
-                <TableBody emptyContent={"No users found"} items={sortedItems}>
+                <TableBody emptyContent={"No posts found"} items={sortedItems}>
                     {(item) => (
                         <TableRow key={item.id}>
                             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
