@@ -83,6 +83,7 @@ const AddPost = () => {
         })
     }
     const [selectedFile, setSelectedFile] = useState(null);
+
     const handleUpload = async () => {
         if (selectedFile) {
             const formData = new FormData();

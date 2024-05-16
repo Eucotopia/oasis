@@ -38,8 +38,10 @@ export default function DocsLayout({
                     <Sidebar defaultSelectedKey="home" items={items}/>
                 </ScrollShadow>
             </div>
-            <div className="w-full flex-1 flex-col">
-                <main className={cn("h-full w-full overflow-visible")}>
+            <div className="w-full flex-1 flex-col max-h-[600px]">
+                <main className={cn("h-full w-full overflow-scroll scrollbar-hide", {
+                    "max-w-[942px]": !isHidden
+                })}>
                     <div className="flex h-[90%] w-full flex-col gap-4 rounded-medium">
                         {children}
                     </div>
