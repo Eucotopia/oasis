@@ -6,7 +6,6 @@ import {Avatar} from "@nextui-org/avatar";
 import {Button} from "@nextui-org/button";
 import {Modal, ModalBody, ModalContent, ModalFooter, useDisclosure} from "@nextui-org/modal";
 
-
 export default function App() {
     const {data: columns, isLoading: isLoadingColumns} = useGetColumnsQuery()
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -35,7 +34,7 @@ export default function App() {
                 </ModalContent>
             </Modal>
             <Button onPress={onOpen}>Open Modal</Button>
-            <Accordion selectionMode="multiple" variant="splitted">
+            <Accordion variant="splitted">
                 {
                     columns.map(column => (
                         <AccordionItem
