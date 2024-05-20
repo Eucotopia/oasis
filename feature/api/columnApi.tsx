@@ -5,7 +5,7 @@ import {PostType} from "@/feature/api/postApi";
 import {baseUrl} from "@/feature/api/authApi";
 
 export type ColumnType = {
-    id: number,
+    id?: number,
     name: string,
     description: string,
     avatar: string,
@@ -36,8 +36,15 @@ export const columnApi = createApi({
         }),
         getHotColumns: builder.query<ResultResponse<ColumnType[]>, void>({
             query: () => ({url: '/hot'})
+        }),
+        addColumn: builder.mutation<ResultResponse<string>, ColumnType>({
+            query: (column) => ({
+                url: '',
+                method: 'POST',
+                body: column
+            })
         })
     }),
 })
 
-export const {useGetColumnByIdQuery, useGetColumnsQuery, useGetHotColumnsQuery} = columnApi
+export const {useGetColumnByIdQuery, useGetColumnsQuery, useGetHotColumnsQuery,useAddColumnMutation} = columnApi
