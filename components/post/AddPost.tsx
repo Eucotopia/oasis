@@ -310,7 +310,6 @@ const AddPost = () => {
                                                     Publish
                                                 </Button>
                                             </div>
-
                                         </section>
                                     ) : (
                                         <div className={"flex flex-row justify-between w-full rounded-lg "}>
