@@ -1,6 +1,6 @@
 'use client'
 import React, {ChangeEvent, useCallback, useState} from "react";
-import {Accordion, AccordionItem, cn, Input, ModalHeader, Spinner, Textarea} from "@nextui-org/react";
+import {Accordion, AccordionItem, Input, ModalHeader, Spinner, Textarea} from "@nextui-org/react";
 import {ColumnType, useAddColumnMutation, useGetColumnsQuery} from "@/feature/api/columnApi";
 import {Avatar} from "@nextui-org/avatar";
 import {Button} from "@nextui-org/button";
@@ -129,7 +129,7 @@ export default function App() {
                     )}
                 </ModalContent>
             </Modal>
-            <Button onPress={onOpen}>Open Modal</Button>
+            <Button onPress={onOpen}>Add New</Button>
             <Accordion variant="splitted">
                 {
                     columns.map(column => (

@@ -283,7 +283,7 @@ const AddPost = () => {
                                                             onSelectionChange={handeColumnIdChange as any}
                                                         >
                                                             {(item) => <AutocompleteItem
-                                                                key={item.id}>{item.name}</AutocompleteItem>}
+                                                                key={item.id ? item.id : item.name}>{item.name}</AutocompleteItem>}
                                                         </Autocomplete>
                                                     }
                                                 </div>
