@@ -182,7 +182,7 @@ const AddPost = () => {
                 size={"5xl"}
                 radius={"sm"}
                 classNames={{
-                    body: "scrollbar-hide overflow-hidden rounded-lg mb-20",
+                    body: "scrollbar-hide overflow-scroll rounded-lg mb-20",
                     // backdrop: "bg-gradient-to-br from-[#292f46]/50 to-secondary-500  backdrop-opacity-40",
                     base: "h-full",
                     header: "relative flex flex-row items-center",
@@ -215,7 +215,7 @@ const AddPost = () => {
                             <ModalFooter>
                                 {
                                     isShow ? (
-                                        <section className={"w-full pt-10 p-4 "}>
+                                        <section className={"w-full pt-10 p-4"}>
                                             <div
                                                 className={"h-full flex flex-col gap-4 w-full overflow-y-scroll overflow-x-hidden scrollbar-hide"}
                                                 style={{height: 'calc(100% - 60px)'}}>
