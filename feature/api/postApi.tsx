@@ -18,7 +18,7 @@ export type PostType = {
     rating: string
     comments?: number
     views?: number
-    status: number
+    status: boolean
     cover: string
     categories: CategoryType[]
     isPrivate: boolean

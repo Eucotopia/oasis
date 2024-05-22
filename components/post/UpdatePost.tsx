@@ -2,22 +2,23 @@ import {PostType, useUpdatePostMutation} from "@/feature/api/postApi";
 import {Autocomplete, AutocompleteItem, Button, CheckboxGroup, cn, ModalHeader, Switch} from "@nextui-org/react";
 import {Modal, ModalBody, ModalContent, ModalFooter} from "@nextui-org/modal";
 import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
-import {EditorContent} from "@tiptap/react";
 import {EditorHeader} from "@/components/tiptap/EditorHeader";
 import {Icon} from "@iconify/react";
 import {BlockEditor} from "@/components/tiptap/BlockEditor";
 import {Input, Textarea} from "@nextui-org/input";
 import TagGroupItem from "@/components/radio/TagGroupItem";
-import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {Divider} from "@nextui-org/divider";
 import {Link} from "@nextui-org/link";
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {useGetCategoriesQuery} from "@/feature/api/categoryApi";
 import {useGetTagsQuery} from "@/feature/api/tagApi";
 import {useGetColumnsQuery} from "@/feature/api/columnApi";
 import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
 import {useAppDispatch} from "@/hook/store";
 import {useUploadMutation} from "@/feature/api/fileApi";
+import {Image} from "@nextui-org/image";
+import {useFileUpload} from "@/components/tiptap/extensions/ImageUpload/view/hooks";
+import toast from "react-hot-toast";
 
 type UpdatePostProps = {
     postParam: PostType
@@ -25,6 +26,28 @@ type UpdatePostProps = {
     onEditPostOpenChange: () => void
 }
 const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePostProps) => {
+    const {handleUploadClick, ref} = useFileUpload()
+    const [uploadImage] = useUploadMutation();
+    const uploadFile = useCallback(async (file: File) => {
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            const url = await uploadImage(formData).unwrap();
+            setPost({
+                ...post,
+                cover: url
+            })
+        } catch (errPayload: any) {
+            const error = errPayload?.response?.data?.error || 'Something went wrong'
+            toast.error(error)
+        }
+    }, [uploadImage])
+
+    const onFileChange = useCallback(
+        // @ts-ignore
+        (e: ChangeEvent<HTMLInputElement>) => (e.target.files ? uploadFile(e.target.files[0]) : null),
+        [uploadFile],
+    )
     const [post, setPost] = React.useState<PostType>(postParam)
     useEffect(() => {
         setPost(postParam)
@@ -36,13 +59,12 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
     }))
     const [selectedFile, setSelectedFile] = useState(null);
     const dispatch = useAppDispatch()
-    const [uploadFile] = useUploadMutation();
 
     const handleUpload = async () => {
         if (selectedFile) {
             const formData = new FormData();
             formData.append('image', selectedFile);
-            const imageUrl = await uploadFile(formData).unwrap();
+            const imageUrl = await uploadImage(formData).unwrap();
             console.log(imageUrl)
             // @ts-ignore
             handleChange({target: {name: 'cover', value: imageUrl.data}})
@@ -105,7 +127,7 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
                 rating: "1",
                 categories: [],
                 columns: [],
-                status: 0
+                status: true
             })
         }
     }
@@ -151,122 +173,194 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
                             <ModalFooter>
                                 {
                                     isShow ? (
-                                        <section className={"w-full pt-10 pl-4 "}>
-                                            <div className={"h-full flex flex-col gap-4 overflow-scroll scrollbar-hide"}
-                                                 style={{height: 'calc(100% - 60px)'}}>
-                                                <Input
-                                                    variant={"faded"}
-                                                    value={post.title}
-                                                    isRequired
-                                                    name={"title"}
-                                                    onChange={handleChange}
-                                                    size={"lg"}
-                                                    type="text"
-                                                    label="Title"
-                                                    placeholder="Enter post title"
-                                                    labelPlacement="outside"
-                                                />
-                                                <Textarea
-                                                    name={"summary"}
-                                                    value={post.summary}
-                                                    onChange={handleChange}
-                                                    isRequired
-                                                    size={"lg"}
-                                                    labelPlacement="outside"
-                                                    variant={"faded"}
-                                                    maxRows={3}
-                                                    label="Summary"
-                                                    placeholder="Enter post summary "
-                                                />
-                                                <div className={"flex flex-row gap-8"}>
-                                                    <Autocomplete
-                                                        isRequired
-                                                        labelPlacement={"outside"}
-                                                        size={"lg"}
-                                                        label="Chose a category"
-                                                        defaultItems={categories}
-                                                        placeholder="Chose a category"
-                                                        className="w-1/3"
-                                                        onSelectionChange={handeCategoryChange as any}
-                                                    >
-                                                        {(item) => <AutocompleteItem
-                                                            key={item.id}>{item.name}</AutocompleteItem>}
-                                                    </Autocomplete>
-                                                </div>
-                                                <div
-                                                    className="flex flex-col items-start gap-2 w-2/3">
+                                        <section className={"w-full pt-10 p-4 "}>
+                                            <div
+                                                className={"h-full flex flex-col gap-4 w-full overflow-y-scroll overflow-x-hidden scrollbar-hide"}
+                                                style={{height: 'calc(100% - 60px)'}}>
+                                                <div className={"flex flex-row gap-4"}>
                                                     <div
-                                                        className={"text-medium after:content-['*'] after:text-danger"}>Chose
-                                                        some tags
-                                                    </div>
-                                                    <CheckboxGroup
-                                                        aria-label="Select tags"
-                                                        orientation="horizontal"
-                                                        onChange={handeTagChange as any}>
-                                                        {
-                                                            tags?.map((item, index) => {
-                                                                return (
-                                                                    <TagGroupItem icon="ic:baseline-apple"
-                                                                                  value={String(item.id)}
-                                                                                  key={item.id}>
-                                                                        {item.name}
-                                                                    </TagGroupItem>
+                                                        className={"w-2/5 flex flex-col justify-center items-center gap-4"}>
+                                                        {/*cover upload*/}
+                                                        <div
+                                                            className={"flex flex-col justify-center items-center bg-content2 rounded-md p-4 w-full text-center gap-4"}>
+                                                            <Input
+                                                                className="w-0 h-0 overflow-hidden opacity-0"
+                                                                type="file"
+                                                                ref={ref}
+                                                                accept=".jpg,.jpeg,.png,.webp,.gif"
+                                                                onChange={onFileChange}
+                                                            />
+                                                            {
+                                                                post.cover.length > 0 ? (
+                                                                    <Image src={post.cover} alt={"post cover"}
+                                                                           radius={"sm"}
+                                                                           className="max-w-[300px] max-h-[150px]"
+                                                                           onClick={handleUploadClick}/>
+                                                                ) : (
+                                                                    <>
+                                                                        <Icon icon="iconamoon:cloud-upload-fill"
+                                                                              width={50}
+                                                                              height={50}/>
+                                                                        <p className={"text-sm text-default-500"}>Choose
+                                                                            file or
+                                                                            drag
+                                                                            and drop</p>
+                                                                        <Button variant={"solid"} color={"primary"}
+                                                                                radius={"sm"}
+                                                                                size={"sm"} onClick={handleUploadClick}>Choose
+                                                                            File</Button>
+
+                                                                    </>
                                                                 )
-                                                            })
-                                                        }
-                                                    </CheckboxGroup>
+                                                            }
+                                                        </div>
+                                                        {/*status*/}
+                                                        <div
+                                                            className={"flex flex-row  bg-content2 rounded-md justify-between w-full p-4"}>
+                                                            <div className={"flex flex-col items-start justify-start"}>
+                                                                <p className={"text-medium"}>Status</p>
+                                                                <p className={"text-tiny text-default-500"}>Whether or
+                                                                    not the post should be published</p>
+                                                            </div>
+                                                            <Switch isSelected={post.status} onValueChange={() => {
+                                                                setPost({
+                                                                    ...post,
+                                                                    status: !post.status
+                                                                })
+                                                            }}/>
+                                                        </div>
+                                                        {/*isPrivate*/}
+                                                        <div
+                                                            className={"flex flex-row  bg-content2 rounded-md justify-between w-full p-4"}>
+                                                            <div className={"flex flex-col items-start justify-start"}>
+                                                                <p className={"text-medium"}>Private</p>
+                                                                <p className={"text-tiny text-default-500"}>Whether or
+                                                                    not the post should be private</p>
+                                                            </div>
+                                                            <Switch isSelected={post.isPrivate} onValueChange={() => {
+                                                                setPost({
+                                                                    ...post,
+                                                                    isPrivate: !post.isPrivate
+                                                                })
+                                                            }}/>
+                                                        </div>
+                                                        {/*isTop*/}
+                                                        <div
+                                                            className={"flex flex-row  bg-content2 rounded-md justify-between w-full p-4"}>
+                                                            <div className={"flex flex-col items-start justify-start"}>
+                                                                <p className={"text-medium"}>Top</p>
+                                                                <p className={"text-tiny text-default-500"}>Whether or
+                                                                    not the post should be top</p>
+                                                            </div>
+                                                            <Switch isSelected={post.isTop} onValueChange={() => {
+                                                                setPost({
+                                                                    ...post,
+                                                                    isTop: !post.isTop
+                                                                })
+                                                            }}/>
+                                                        </div>
+                                                        {/*category*/}
+                                                        <div
+                                                            className={"flex flex-row  bg-content1 rounded-md justify-between w-full p-4"}>
+                                                            <Autocomplete
+                                                                isRequired
+                                                                labelPlacement={"outside-left"}
+                                                                size={"lg"}
+                                                                label="Chose a category"
+                                                                defaultItems={categories}
+                                                                placeholder="Chose a category"
+                                                                onSelectionChange={handeCategoryChange as any}
+                                                            >
+                                                                {(item) => <AutocompleteItem
+                                                                    key={item.id}>{item.name}</AutocompleteItem>}
+                                                            </Autocomplete>
+                                                        </div>
+                                                    </div>
+                                                    <div className={"flex flex-col w-3/5 gap-4"}>
+                                                        <div
+                                                            className={"flex flex-col bg-content2 rounded-md p-4 gap-4 "}>
+                                                            <Input
+                                                                variant={"faded"}
+                                                                value={post.title}
+                                                                isRequired
+                                                                name={"title"}
+                                                                onChange={handleChange}
+                                                                size={"lg"}
+                                                                type="text"
+                                                                label="Title"
+                                                                placeholder="Enter post title"
+                                                                labelPlacement="outside"
+                                                            />
+                                                            <Textarea
+                                                                name={"summary"}
+                                                                value={post.summary}
+                                                                onChange={handleChange}
+                                                                isRequired
+                                                                size={"lg"}
+                                                                labelPlacement="outside"
+                                                                variant={"faded"}
+                                                                maxRows={3}
+                                                                label="Summary"
+                                                                placeholder="Enter post summary "
+                                                            />
+                                                        </div>
+                                                        {/*Tags*/}
+                                                        <div
+                                                            className={"flex flex-col gap-4 bg-content2 p-4 rounded-md "}>
+                                                            <p className={"text-medium"}>Tags</p>
+                                                            <CheckboxGroup
+                                                                aria-label="Select tags"
+                                                                orientation="horizontal"
+                                                                classNames={{
+                                                                    base: "flex flex-row justify-center items-center gap-1",
+                                                                    wrapper: "flex flex-row gap-1 overflow-x-scroll flex-nowrap scrollbar-hide p-1 justify-start items-center w-full",
+                                                                }}
+                                                                onChange={handeTagChange as any}>
+                                                                {
+                                                                    tags?.map((item, index) => {
+                                                                        return (
+                                                                            <TagGroupItem icon="ic:baseline-apple"
+                                                                                          value={String(item.id)}
+                                                                                          key={item.id}>
+                                                                                {item.name}
+                                                                            </TagGroupItem>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </CheckboxGroup>
+                                                        </div>
+                                                        <div
+                                                            className={"flex flex-row  bg-content2 rounded-md justify-between w-full p-4"}>
+                                                            {
+                                                                isColumn ? (
+                                                                    <Autocomplete
+                                                                        isRequired
+                                                                        labelPlacement={"outside-left"}
+                                                                        size={"lg"}
+                                                                        label="Chose a column"
+                                                                        defaultItems={columns}
+                                                                        placeholder="Chose a column"
+                                                                        onSelectionChange={handeColumnIdChange as any}
+                                                                    >
+                                                                        {(item) => <AutocompleteItem
+                                                                            key={item.id ? item.id : item.name}>{item.name}</AutocompleteItem>}
+                                                                    </Autocomplete>
+                                                                ) : (
+                                                                    <>
+                                                                        <div
+                                                                            className={"flex flex-col items-start justify-start"}>
+                                                                            <p className={"text-medium"}>Column</p>
+                                                                            <p className={"text-tiny text-default-500"}>Whether
+                                                                                or
+                                                                                not the post should be private</p>
+                                                                        </div>
+                                                                    </>
+                                                                )
+                                                            }
+                                                            <Switch isSelected={isColumn} onValueChange={setIsColumn}/>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className={"flex flex-row mt-5 gap-4"}>
-                                                    <Switch isSelected={post.isTop} onValueChange={() => {
-                                                        setPost(prevState => ({
-                                                            ...prevState,
-                                                            isTop: !prevState.isTop
-                                                        }))
-                                                    }}
-                                                            name={"isTop"}>
-                                                        isTop
-                                                    </Switch>
-                                                    <Switch isSelected={post.isPrivate}
-                                                            onValueChange={() => {
-                                                                setPost(prevState => ({
-                                                                    ...prevState,
-                                                                    isPrivate: !prevState.isPrivate
-                                                                }))
-                                                            }}
-                                                            name={"isPrivate"}>
-                                                        isPrivate
-                                                    </Switch>
-                                                    <Switch isSelected={isColumn} onValueChange={setIsColumn}>
-                                                        isColumn
-                                                    </Switch>
-                                                    {
-                                                        isColumn && <Autocomplete
-                                                            isRequired
-                                                            labelPlacement={"outside"}
-                                                            size={"lg"}
-                                                            label="Chose a column"
-                                                            defaultItems={columns}
-                                                            placeholder="Chose a column"
-                                                            className="w-1/3"
-                                                            onSelectionChange={handeColumnIdChange as any}
-                                                        >
-                                                            {(item) => <AutocompleteItem
-                                                                key={item.id}>{item.name}</AutocompleteItem>}
-                                                        </Autocomplete>
-                                                    }
-                                                </div>
-                                                <div>
-                                                    <RatingRadioGroup className="mt-2 w-72" value={post.rating}
-                                                                      setValue={setRating}/>
-                                                </div>
-                                                <input type="file" onChange={(e) => {
-                                                    // @ts-ignore
-                                                    setSelectedFile(e.target.files[0]);
-                                                }}
-                                                       name="image"
-                                                       className="hidden"
-                                                       id="upload-input"/>
-                                                <button onClick={handleUpload}>上传图片</button>
                                             </div>
                                             <Divider className={"w-full border-default-100"}/>
                                             <div
@@ -278,7 +372,6 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
                                                     Publish
                                                 </Button>
                                             </div>
-
                                         </section>
                                     ) : (
                                         <div className={"flex flex-row justify-between w-full rounded-lg "}>

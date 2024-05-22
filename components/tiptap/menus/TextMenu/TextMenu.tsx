@@ -22,6 +22,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
     const MemoFontFamilyPicker = memo(FontFamilyPicker)
 
     const states = useTextmenuStates(editor)
+
     const blockOptions = useTextmenuContentTypes(editor)
 
     return (
