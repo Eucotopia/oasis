@@ -4,16 +4,27 @@ import {Button, cn} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
 // import PopoverYoutubeLinkWrapper from "@/components/popover/PopoverYoutubeLinkWrapper";
 import {Input} from "@nextui-org/input";
-import React from "react";
+import React, {memo} from "react";
+import {FontSizePicker} from "@/components/tiptap/menus/TextMenu/components/FontSizePicker";
+import {FontFamilyPicker} from "@/components/tiptap/menus/TextMenu/components/FontFamilyPicker";
+import {useTextmenuCommands} from "@/components/tiptap/menus/TextMenu/hooks/useTextmenuCommands";
+import {useTextmenuStates} from "@/components/tiptap/menus/TextMenu/hooks/useTextmenuStates";
 
 export const EditorHeader = ({editor}: { editor: Editor }) => {
     const [youtubeLink, setYoutubeLink] = React.useState("");
+    const commands = useTextmenuCommands(editor)
+    const states = useTextmenuStates(editor)
+    const MemoFontSizePicker = memo(FontSizePicker)
+    const MemoFontFamilyPicker = memo(FontFamilyPicker)
     if (!Editor) {
         return null
     }
     return (
         <>
             <div className={"flex flex-row p-2 outline-none gap-1 w-full"}>
+                <MemoFontFamilyPicker onChange={commands.onSetFont} value={states.currentFont || ''}/>
+
+                <MemoFontSizePicker onChange={commands.onSetFontSize} value={states.currentSize || ''}/>
                 <Link
                     color={"foreground"}
                     onPress={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}

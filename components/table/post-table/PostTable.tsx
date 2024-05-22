@@ -35,13 +35,12 @@ const INITIAL_VISIBLE_COLUMNS = ["id", "title", "status", "actions", "categories
 export default function PostTable({postList}: {
     postList: PostType[]
 }) {
-    const [currentPost, setCurrentPost] = useState<PostType>()
 
+    const [currentPost, setCurrentPost] = useState<PostType>()
 
     const {isOpen: isEditPostOpen, onOpen: onEditPostOpen, onOpenChange: onEditPostOpenChange} = useDisclosure();
 
     const handleEditPost = (post: PostType) => {
-        console.log(post.content)
         setCurrentPost(post);
         onEditPostOpen()
     };

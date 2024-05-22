@@ -75,7 +75,6 @@ export default function App() {
                         <>
                             <ModalHeader className="flex flex-col gap-1">Add New Column</ModalHeader>
                             <ModalBody>
-
                                 {
                                     column.avatar.length > 0 ? (
                                         <Image src={column.avatar} alt={"column cover"}/>

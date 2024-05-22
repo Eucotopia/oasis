@@ -37,7 +37,7 @@ export const FontSizePicker = ({onChange, value}: FontSizePickerProps) => {
     return (
         <>
             <Dropdown>
-                <DropdownTrigger >
+                <DropdownTrigger>
                     <Button
                         variant="light"
                         className="capitalize"

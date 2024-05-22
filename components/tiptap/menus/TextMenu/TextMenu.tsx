@@ -65,6 +65,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
             >
                 <Icon icon={"fa6-solid:italic"} width={18} height={18}/>
             </Button>
+
             <Button
                 isIconOnly
                 size={"sm"}

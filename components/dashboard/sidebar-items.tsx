@@ -1,4 +1,4 @@
-import {type SidebarItem} from "./sidebar";
+import {type SidebarItem, SidebarItemType} from "./sidebar";
 
 export const items: SidebarItem[] = [
     {

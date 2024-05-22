@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {ChangeEvent, useCallback, useRef, useState} from "react";
 import {
     Autocomplete,
     AutocompleteItem,
@@ -29,8 +29,12 @@ import {useUploadMutation} from "@/feature/api/fileApi";
 import {useLastPost} from "@/hook/useLastPost";
 import {useAppDispatch} from "@/hook/store";
 import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
+import {useFileUpload} from "@/components/tiptap/extensions/ImageUpload/view/hooks";
+import toast from "react-hot-toast";
+import {Image} from "@nextui-org/image";
 
 const AddPost = () => {
+
     const [post, setPost] = React.useState<PostType>(
         {
             title: "",
@@ -40,16 +44,41 @@ const AddPost = () => {
             isPrivate: false,
             isTop: false,
             cover: "",
-            rating: "1",
+            rating: "5",
             categories: [],
             columns: [],
             status: 0
         }
     );
+
+    const {handleUploadClick, ref} = useFileUpload()
+
+    const [uploadImage] = useUploadMutation();
+
+    const uploadFile = useCallback(async (file: File) => {
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+            const url = await uploadImage(formData).unwrap();
+            setPost({
+                ...post,
+                cover: url
+            })
+        } catch (errPayload: any) {
+            const error = errPayload?.response?.data?.error || 'Something went wrong'
+            toast.error(error)
+        }
+    }, [uploadImage])
+
+    const onFileChange = useCallback(
+        // @ts-ignore
+        (e: ChangeEvent<HTMLInputElement>) => (e.target.files ? uploadFile(e.target.files[0]) : null),
+        [uploadFile],
+    )
     const [isShow, setIsShow] = React.useState(false);
+
     const dispatch = useAppDispatch()
 
-    const [uploadFile] = useUploadMutation();
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -84,16 +113,16 @@ const AddPost = () => {
     }
     const [selectedFile, setSelectedFile] = useState(null);
 
-    const handleUpload = async () => {
-        if (selectedFile) {
-            const formData = new FormData();
-            formData.append('image', selectedFile);
-            const imageUrl = await uploadFile(formData).unwrap();
-            console.log(imageUrl)
-            // @ts-ignore
-            handleChange({target: {name: 'cover', value: imageUrl.data}})
-        }
-    };
+    // const handleUpload = async () => {
+    //     if (selectedFile) {
+    //         const formData = new FormData();
+    //         formData.append('image', selectedFile);
+    //         const imageUrl = await uploadFile(formData).unwrap();
+    //         console.log(imageUrl)
+    //         // @ts-ignore
+    //         handleChange({target: {name: 'cover', value: imageUrl.data}})
+    //     }
+    // };
     const handeTagChange = (value: string[]) => {
         setPost({
             ...post,
@@ -183,122 +212,156 @@ const AddPost = () => {
                             <ModalFooter>
                                 {
                                     isShow ? (
-                                        <section className={"w-full pt-10 pl-4 "}>
+                                        <section className={"w-full pt-10 p-4 "}>
                                             <div className={"h-full flex flex-col gap-4 overflow-scroll scrollbar-hide"}
                                                  style={{height: 'calc(100% - 60px)'}}>
-                                                <Input
-                                                    variant={"faded"}
-                                                    value={post.title}
-                                                    isRequired
-                                                    name={"title"}
-                                                    onChange={handleChange}
-                                                    size={"lg"}
-                                                    type="text"
-                                                    label="Title"
-                                                    placeholder="Enter post title"
-                                                    labelPlacement="outside"
-                                                />
-                                                <Textarea
-                                                    name={"summary"}
-                                                    value={post.summary}
-                                                    onChange={handleChange}
-                                                    isRequired
-                                                    size={"lg"}
-                                                    labelPlacement="outside"
-                                                    variant={"faded"}
-                                                    maxRows={3}
-                                                    label="Summary"
-                                                    placeholder="Enter post summary "
-                                                />
-                                                <div className={"flex flex-row gap-8"}>
-                                                    <Autocomplete
-                                                        isRequired
-                                                        labelPlacement={"outside"}
-                                                        size={"lg"}
-                                                        label="Chose a category"
-                                                        defaultItems={categories}
-                                                        placeholder="Chose a category"
-                                                        className="w-1/3"
-                                                        onSelectionChange={handeCategoryChange as any}
-                                                    >
-                                                        {(item) => <AutocompleteItem
-                                                            key={item.id}>{item.name}</AutocompleteItem>}
-                                                    </Autocomplete>
-                                                </div>
-                                                <div
-                                                    className="flex flex-col items-start gap-2 w-2/3">
-                                                    <div
-                                                        className={"text-medium after:content-['*'] after:text-danger"}>Chose
-                                                        some tags
-                                                    </div>
-                                                    <CheckboxGroup
-                                                        aria-label="Select tags"
-                                                        orientation="horizontal"
-                                                        onChange={handeTagChange as any}>
+                                                <div className={"flex flex-row"}>
+                                                    <div className={"w-1/3 flex flex-col justify-center items-center"}>
+                                                        {/*cover upload*/}
                                                         {
-                                                            tags?.map((item, index) => {
-                                                                return (
-                                                                    <TagGroupItem icon="ic:baseline-apple"
-                                                                                  value={String(item.id)}
-                                                                                  key={item.id}>
-                                                                        {item.name}
-                                                                    </TagGroupItem>
-                                                                )
-                                                            })
+                                                            post.cover.length > 0 ? (
+                                                                <Image src={post.cover} alt={"post cover"} onClick={handleUploadClick}/>
+                                                            ) : (
+                                                                <div
+                                                                    className={"flex flex-col justify-center items-center bg-content2 rounded-md p-4 w-full text-center gap-4"}>
+                                                                    <Icon icon="iconamoon:cloud-upload-fill" width={50}
+                                                                          height={50}/>
+                                                                    <p className={"text-sm text-default-500"}>Choose
+                                                                        file or
+                                                                        drag
+                                                                        and drop</p>
+                                                                    <Button variant={"solid"} color={"primary"}
+                                                                            radius={"sm"}
+                                                                            size={"sm"} onClick={handleUploadClick}>Choose
+                                                                        File</Button>
+                                                                    <Input
+                                                                        className="w-0 h-0 overflow-hidden opacity-0"
+                                                                        type="file"
+                                                                        ref={ref}
+                                                                        accept=".jpg,.jpeg,.png,.webp,.gif"
+                                                                        onChange={onFileChange}
+                                                                    />
+                                                                </div>
+                                                            )
                                                         }
-                                                    </CheckboxGroup>
+                                                    </div>
+                                                    <div className={"w-2/3"}>
+                                                    </div>
+
                                                 </div>
-                                                <div className={"flex flex-row mt-5 gap-4"}>
-                                                    <Switch isSelected={post.isTop} onValueChange={() => {
-                                                        setPost(prevState => ({
-                                                            ...prevState,
-                                                            isTop: !prevState.isTop
-                                                        }))
-                                                    }}
-                                                            name={"isTop"}>
-                                                        isTop
-                                                    </Switch>
-                                                    <Switch isSelected={post.isPrivate}
-                                                            onValueChange={() => {
-                                                                setPost(prevState => ({
-                                                                    ...prevState,
-                                                                    isPrivate: !prevState.isPrivate
-                                                                }))
-                                                            }}
-                                                            name={"isPrivate"}>
-                                                        isPrivate
-                                                    </Switch>
-                                                    <Switch isSelected={isColumn} onValueChange={setIsColumn}>
-                                                        isColumn
-                                                    </Switch>
-                                                    {
-                                                        isColumn && <Autocomplete
-                                                            isRequired
-                                                            labelPlacement={"outside"}
-                                                            size={"lg"}
-                                                            label="Chose a column"
-                                                            defaultItems={columns}
-                                                            placeholder="Chose a column"
-                                                            className="w-1/3"
-                                                            onSelectionChange={handeColumnIdChange as any}
-                                                        >
-                                                            {(item) => <AutocompleteItem
-                                                                key={item.id ? item.id : item.name}>{item.name}</AutocompleteItem>}
-                                                        </Autocomplete>
-                                                    }
-                                                </div>
-                                                <div>
-                                                    <RatingRadioGroup className="mt-2 w-72" value={post.rating}
-                                                                      setValue={setRating}/>
-                                                </div>
-                                                <input type="file" onChange={(e) => {
-                                                    // @ts-ignore
-                                                    setSelectedFile(e.target.files[0]);
-                                                }}
-                                                       name="image"
-                                                       className="hidden"
-                                                       id="upload-input"/>
-                                                <button onClick={handleUpload}>上传图片</button>
+                                                {/*<Input*/}
+                                                {/*    variant={"faded"}*/}
+                                                {/*    value={post.title}*/}
+                                                {/*    isRequired*/}
+                                                {/*    name={"title"}*/}
+                                                {/*    onChange={handleChange}*/}
+                                                {/*    size={"lg"}*/}
+                                                {/*    type="text"*/}
+                                                {/*    label="Title"*/}
+                                                {/*    placeholder="Enter post title"*/}
+                                                {/*    labelPlacement="outside"*/}
+                                                {/*/>*/}
+                                                {/*<Textarea*/}
+                                                {/*    name={"summary"}*/}
+                                                {/*    value={post.summary}*/}
+                                                {/*    onChange={handleChange}*/}
+                                                {/*    isRequired*/}
+                                                {/*    size={"lg"}*/}
+                                                {/*    labelPlacement="outside"*/}
+                                                {/*    variant={"faded"}*/}
+                                                {/*    maxRows={3}*/}
+                                                {/*    label="Summary"*/}
+                                                {/*    placeholder="Enter post summary "*/}
+                                                {/*/>*/}
+                                                {/*<div className={"flex flex-row gap-8"}>*/}
+                                                {/*    <Autocomplete*/}
+                                                {/*        isRequired*/}
+                                                {/*        labelPlacement={"outside"}*/}
+                                                {/*        size={"lg"}*/}
+                                                {/*        label="Chose a category"*/}
+                                                {/*        defaultItems={categories}*/}
+                                                {/*        placeholder="Chose a category"*/}
+                                                {/*        className="w-1/3"*/}
+                                                {/*        onSelectionChange={handeCategoryChange as any}*/}
+                                                {/*    >*/}
+                                                {/*        {(item) => <AutocompleteItem*/}
+                                                {/*            key={item.id}>{item.name}</AutocompleteItem>}*/}
+                                                {/*    </Autocomplete>*/}
+                                                {/*</div>*/}
+                                                {/*<div*/}
+                                                {/*    className="flex flex-col items-start gap-2 w-2/3">*/}
+                                                {/*    <div*/}
+                                                {/*        className={"text-medium after:content-['*'] after:text-danger"}>Chose*/}
+                                                {/*        some tags*/}
+                                                {/*    </div>*/}
+                                                {/*    <CheckboxGroup*/}
+                                                {/*        aria-label="Select tags"*/}
+                                                {/*        orientation="horizontal"*/}
+                                                {/*        onChange={handeTagChange as any}>*/}
+                                                {/*        {*/}
+                                                {/*            tags?.map((item, index) => {*/}
+                                                {/*                return (*/}
+                                                {/*                    <TagGroupItem icon="ic:baseline-apple"*/}
+                                                {/*                                  value={String(item.id)}*/}
+                                                {/*                                  key={item.id}>*/}
+                                                {/*                        {item.name}*/}
+                                                {/*                    </TagGroupItem>*/}
+                                                {/*                )*/}
+                                                {/*            })*/}
+                                                {/*        }*/}
+                                                {/*    </CheckboxGroup>*/}
+                                                {/*</div>*/}
+                                                {/*<div className={"flex flex-row mt-5 gap-4"}>*/}
+                                                {/*    <Switch isSelected={post.isTop} onValueChange={() => {*/}
+                                                {/*        setPost(prevState => ({*/}
+                                                {/*            ...prevState,*/}
+                                                {/*            isTop: !prevState.isTop*/}
+                                                {/*        }))*/}
+                                                {/*    }}*/}
+                                                {/*            name={"isTop"}>*/}
+                                                {/*        isTop*/}
+                                                {/*    </Switch>*/}
+                                                {/*    <Switch isSelected={post.isPrivate}*/}
+                                                {/*            onValueChange={() => {*/}
+                                                {/*                setPost(prevState => ({*/}
+                                                {/*                    ...prevState,*/}
+                                                {/*                    isPrivate: !prevState.isPrivate*/}
+                                                {/*                }))*/}
+                                                {/*            }}*/}
+                                                {/*            name={"isPrivate"}>*/}
+                                                {/*        isPrivate*/}
+                                                {/*    </Switch>*/}
+                                                {/*    <Switch isSelected={isColumn} onValueChange={setIsColumn}>*/}
+                                                {/*        isColumn*/}
+                                                {/*    </Switch>*/}
+                                                {/*    {*/}
+                                                {/*        isColumn && <Autocomplete*/}
+                                                {/*            isRequired*/}
+                                                {/*            labelPlacement={"outside"}*/}
+                                                {/*            size={"lg"}*/}
+                                                {/*            label="Chose a column"*/}
+                                                {/*            defaultItems={columns}*/}
+                                                {/*            placeholder="Chose a column"*/}
+                                                {/*            className="w-1/3"*/}
+                                                {/*            onSelectionChange={handeColumnIdChange as any}*/}
+                                                {/*        >*/}
+                                                {/*            {(item) => <AutocompleteItem*/}
+                                                {/*                key={item.id ? item.id : item.name}>{item.name}</AutocompleteItem>}*/}
+                                                {/*        </Autocomplete>*/}
+                                                {/*    }*/}
+                                                {/*</div>*/}
+                                                {/*<div>*/}
+                                                {/*    <RatingRadioGroup className="mt-2 w-72" value={post.rating}*/}
+                                                {/*                      setValue={setRating}/>*/}
+                                                {/*</div>*/}
+                                                {/*<input type="file" onChange={(e) => {*/}
+                                                {/*    // @ts-ignore*/}
+                                                {/*    setSelectedFile(e.target.files[0]);*/}
+                                                {/*}}*/}
+                                                {/*       name="image"*/}
+                                                {/*       className="hidden"*/}
+                                                {/*       id="upload-input"/>*/}
+                                                {/*<button onClick={handleUpload}>上传图片</button>*/}
                                             </div>
                                             <Divider className={"w-full border-default-100"}/>
                                             <div
