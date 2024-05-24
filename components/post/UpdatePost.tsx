@@ -6,7 +6,7 @@ import {EditorHeader} from "@/components/tiptap/EditorHeader";
 import {Icon} from "@iconify/react";
 import {BlockEditor} from "@/components/tiptap/BlockEditor";
 import {Input, Textarea} from "@nextui-org/input";
-import TagGroupItem from "@/components/radio/TagGroupItem";
+import TagGroupItem from "@/components/custom/TagGroupItem";
 import {Divider} from "@nextui-org/divider";
 import {Link} from "@nextui-org/link";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";

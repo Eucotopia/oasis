@@ -3,7 +3,7 @@ export default function ProjectsLayout({children}: {
 }) {
     return (
         <>
-            <section className="flex flex-col items-center justify-center gap-4 w-3xl ">
+            <section className="flex flex-col items-center justify-center gap-4">
                 {children}
             </section>
         </>

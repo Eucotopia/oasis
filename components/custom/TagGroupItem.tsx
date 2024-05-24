@@ -10,7 +10,7 @@ import {Icon} from "@iconify/react";
 export type TagGroupItemProps = Omit<CheckboxProps, "icon"> & {
     icon?: string;
 };
-//TODO 不要放在这里
+
 const TagGroupItem = React.forwardRef<HTMLLabelElement, TagGroupItemProps>(
     ({icon, size = "md", ...props}, ref) => {
         const {children, isSelected, isFocusVisible, getBaseProps, getLabelProps, getInputProps} =

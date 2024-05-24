@@ -39,6 +39,7 @@ export const postApi = createApi({
     }),
     reducerPath: 'postApi',
     tagTypes: ['Post'],
+    keepUnusedDataFor: 30,
     endpoints: (build) => ({
         // The query accepts a number and returns a ResultResponse<Post> type ✔
         getPost: build.query<PostType, number>({
@@ -113,12 +114,17 @@ export const postApi = createApi({
                     type: "Post",
                     id: "LIST"
                 }],
+        }),
+        getPostCount: build.query<number, void>({
+            query: () => ({url: "/count"}),
+            transformResponse: (response: ResultResponse<number>, meta, arg) => response.data,
         })
     }),
 })
 export const {
     useGetPostQuery,
     useAddPostMutation,
+    useGetPostCountQuery,
     useGetPostsByPageQuery,
     useGetPostsQuery,
     useGetHostPostsQuery,

@@ -22,7 +22,7 @@ export const items: SidebarItem[] = [
     {
         key: "tag-manage",
         href: "/dashboard/tag-manage",
-        icon: "solar:users-group-two-rounded-outline",
+        icon: "ic:round-tag",
         title: "Tag Manage",
     },
     {
@@ -34,25 +34,25 @@ export const items: SidebarItem[] = [
     {
         key: "post-manage",
         href: "/dashboard/post-manage",
-        icon: "solar:chart-outline",
+        icon: "ri:article-fill",
         title: "Post Manage",
     },
     {
         key: "user-manage",
         href: "/dashboard/user-manage",
-        icon: "solar:sort-by-time-linear",
+        icon: "mingcute:user-3-fill",
         title: "User Manage",
     },
     {
         key: "column-manage",
         href: "/dashboard/column-manage",
-        icon: "solar:bill-list-outline",
+        icon: "fluent:column-triple-edit-20-filled",
         title: "Column Manage",
     },
     {
         key: "settings",
         href: "#",
-        icon: "solar:settings-outline",
+        icon: "mingcute:settings-4-fill",
         title: "Settings",
     },
 ];

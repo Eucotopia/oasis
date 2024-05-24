@@ -14,7 +14,7 @@ export type ColumnType = {
 }
 export const columnApi = createApi({
     reducerPath: 'columnApi',
-    tagTypes: ['ColumnApi'],
+    tagTypes: ['Column'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${baseUrl}/column`,
         prepareHeaders: (headers, {getState}) => {
@@ -27,24 +27,48 @@ export const columnApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        getColumnById: builder.query<ResultResponse<ColumnType>, number>({
+        getColumn: builder.query<ColumnType, number>({
             query: (id) => ({url: `/${id}`}),
+            transformResponse: (response: ResultResponse<ColumnType>, meta, arg) => response.data,
+            providesTags: (result, error, id) => [{type: 'Column', id: String(id)}]
         }),
         getColumns: builder.query<ColumnType[], void>({
             query: () => ({url: ''}),
             transformResponse: (response: ResultResponse<ColumnType[]>, meta, arg) => response.data,
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((column) => ({type: "Column" as const, id: String(column.id)})), {
+                    type: "Column",
+                    id: "LIST"
+                }] : [{
+                    type: "Column",
+                    id: "LIST"
+                }],
         }),
-        getHotColumns: builder.query<ResultResponse<ColumnType[]>, void>({
-            query: () => ({url: '/hot'})
+        getHotColumns: builder.query<ColumnType[], void>({
+            query: () => ({url: '/hot'}),
+            transformResponse: (response: ResultResponse<ColumnType[]>, meta, arg) => response.data,
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((column) => ({type: "Column" as const, id: String(column.id)}))] : [{
+                    type: "Column",
+                    id: "LIST"
+                }],
+
         }),
         addColumn: builder.mutation<ResultResponse<string>, ColumnType>({
             query: (column) => ({
                 url: '',
                 method: 'POST',
                 body: column
-            })
+            }),
+            invalidatesTags: (result, error, id) => {
+                return [{type: "Column", id: String(id)}]
+            }
+        }),
+        getColumnCount: builder.query<number, void>({
+            query: () => ({url: '/count'}),
+            transformResponse: (response: ResultResponse<number>, meta, arg) => response.data,
         })
     }),
 })
 
-export const {useGetColumnByIdQuery, useGetColumnsQuery, useGetHotColumnsQuery,useAddColumnMutation} = columnApi
+export const {useGetColumnsQuery, useGetHotColumnsQuery, useAddColumnMutation,useGetColumnCountQuery} = columnApi

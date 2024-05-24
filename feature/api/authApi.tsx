@@ -22,7 +22,7 @@ export type UserType = {
     address: string,
     status: number
 }
-export const baseUrl = 'http://47.119.161.226/api';
+export const baseUrl = 'http://localhost:8080';
 export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['Auth'],
@@ -70,6 +70,10 @@ export const authApi = createApi({
                 response.status
             },
         }),
+        getUserCount: buildr.query<number, void>({
+            query: () => ({url: '/count'}),
+            transformResponse: (response: ResultResponse<number>, meta, arg) => response.data,
+        })
     }),
 })
-export const {useUserLoginMutation, useGetUsersQuery} = authApi
+export const {useUserLoginMutation, useGetUsersQuery,useGetUserCountQuery} = authApi

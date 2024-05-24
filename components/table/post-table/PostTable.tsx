@@ -1,5 +1,7 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {
+    Autocomplete, AutocompleteItem,
+    CheckboxGroup,
     Chip,
     ChipProps,
     DropdownItem,
@@ -25,6 +27,9 @@ import {capitalize} from "@nextui-org/shared-utils";
 import AddPost from "@/components/post/AddPost";
 import UpdatePost from "@/components/post/UpdatePost";
 import {useDisclosure} from "@nextui-org/modal";
+import PopoverFilterWrapper from "@/components/custom/PopoverFilterWrapper";
+import TagGroupItem from "@/components/custom/TagGroupItem";
+import {useGetCategoriesQuery} from "@/feature/api/categoryApi";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
     published: "success",
@@ -58,6 +63,8 @@ export default function PostTable({postList}: {
 
     const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
 
+    const [categoriesFilter, setCategoriesFilter] = React.useState<Selection>("all");
+
     const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
         column: "views",
         direction: "ascending",
@@ -78,16 +85,16 @@ export default function PostTable({postList}: {
         let filteredUsers = [...postList];
 
         if (hasSearchFilter) {
-            filteredUsers = filteredUsers.filter((user) =>
-                user.title.toLowerCase().includes(filterValue.toLowerCase()),
+            filteredUsers = filteredUsers.filter((post) =>
+                post.title.toLowerCase().includes(filterValue.toLowerCase()),
             );
         }
 
-        if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-            filteredUsers = filteredUsers.filter((post) =>
-                Array.from(statusFilter).includes(displayPostStatus(post.status)),
-            );
-        }
+        // if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+        //     filteredUsers = filteredUsers.filter((post) =>
+        //         Array.from(statusFilter).includes(displayPostStatus(post.status)),
+        //     );
+        // }
 
         return filteredUsers;
     }, [postList, filterValue, statusFilter]);
@@ -157,6 +164,74 @@ export default function PostTable({postList}: {
         );
     }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
+    // TODO: 有待完善（样式）
+    const renderCell = React.useCallback((post: PostType, columnKey: React.Key) => {
+
+        switch (columnKey) {
+            case "create_time":
+                const create_time = post["createTime"]
+                return (
+                    <p className={"w-44"}>{create_time}</p>
+                )
+            case "id":
+                const id = post["id"]
+                return (
+                    <p>{id}</p>
+                )
+            case "tags":
+                const tags = post["tags"]
+                return (
+                    <div className={"flex flex-row gap-1"}>
+                        {tags?.map((item, index) => (
+                            <Chip radius="sm" key={index}>{item.name}</Chip>
+                        ))}
+                    </div>
+                )
+            case "categories":
+                const categories = post["categories"]
+                return (
+                    <div className={"flex flex-row gap-1"}>
+                        {categories.map((item, index) => (
+                            <Chip radius="sm" key={index}>{item.name}</Chip>
+                        ))}
+                    </div>
+                )
+            case "title":
+                const title = post["title"];
+                return (
+                    <p className={"line-clamp-1"}>
+                        {title}
+                    </p>
+                );
+            // case "status":
+            //     const status = post["status"];
+            //     return (
+            //         <Chip className="capitalize" color={statusColorMap[displayPostStatus(status)]}
+            //               radius={"sm"} variant="flat">
+            //             {displayPostStatus(status)}
+            //         </Chip>
+            //     );
+            case "actions":
+                return (
+                    <div className="relative flex justify-end items-center gap-2 ">
+                        <Dropdown>
+                            <DropdownTrigger>
+                                <Button isIconOnly size="sm" variant="light">
+                                    <Icon icon={"fa6-solid:ellipsis-vertical"} width={20} height={20}/>
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Table Columns1">
+                                <DropdownItem href={`/blog/${post.id}`}>View</DropdownItem>
+                                <DropdownItem onPress={() => handleEditPost(post)}>Edit</DropdownItem>
+                                <DropdownItem onPress={() => handleDeletePost(post.id)}>Delete</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </div>
+                );
+            // default:
+            //     return cellValue;
+        }
+    }, []);
     const onClear = React.useCallback(() => {
         setFilterValue("")
         setPage(1)
@@ -175,8 +250,8 @@ export default function PostTable({postList}: {
         setRowsPerPage(Number(e.target.value));
         setPage(1);
     }, []);
-
-    const topContent = React.useMemo(() => {
+    const {data: categories, isLoading: isLoadingCategories} = useGetCategoriesQuery()
+    const topContent = useMemo(() => {
         return (
             <div className="flex flex-col gap-4 ">
                 <div className="flex justify-between gap-3 items-end">
@@ -196,6 +271,24 @@ export default function PostTable({postList}: {
                         onValueChange={onSearchChange}
                     />
                     <div className="flex gap-3">
+                        <PopoverFilterWrapper title="Tag">
+                            <CheckboxGroup
+                                aria-label="Select tag"
+                                className="gap-1"
+                                orientation="horizontal"
+                            >
+                                <TagGroupItem value="sneakers">Sneakers</TagGroupItem>
+                                <TagGroupItem value="boots">Boots</TagGroupItem>
+                                <TagGroupItem value="sandals">Sandals</TagGroupItem>
+                                <TagGroupItem value="slippers">Slippers</TagGroupItem>
+                                <TagGroupItem value="basketball">Basketball</TagGroupItem>
+                                <TagGroupItem value="running">Running</TagGroupItem>
+                                <TagGroupItem value="football">Football</TagGroupItem>
+                                <TagGroupItem value="paddle">Paddle</TagGroupItem>
+                                <TagGroupItem value="tennis">Tennis</TagGroupItem>
+                                <TagGroupItem value="golf">Golf</TagGroupItem>
+                            </CheckboxGroup>
+                        </PopoverFilterWrapper>
                         <Dropdown>
                             <DropdownTrigger className="hidden sm:flex">
                                 <Button endContent={<ChevronDownIcon className="text-small" aria-hidden="true"
@@ -278,74 +371,6 @@ export default function PostTable({postList}: {
         deletePost(id)
     }
 
-    // TODO: 有待完善（样式）
-    const renderCell = React.useCallback((post: PostType, columnKey: React.Key) => {
-
-        switch (columnKey) {
-            case "create_time":
-                const create_time = post["createTime"]
-                return (
-                    <p className={"w-44"}>{create_time}</p>
-                )
-            case "id":
-                const id = post["id"]
-                return (
-                    <p>{id}</p>
-                )
-            case "tags":
-                const tags = post["tags"]
-                return (
-                    <div className={"flex flex-row gap-1"}>
-                        {tags?.map((item, index) => (
-                            <Chip radius="sm" key={index}>{item.name}</Chip>
-                        ))}
-                    </div>
-                )
-            case "categories":
-                const categories = post["categories"]
-                return (
-                    <div className={"flex flex-row gap-1"}>
-                        {categories.map((item, index) => (
-                            <Chip radius="sm" key={index}>{item.name}</Chip>
-                        ))}
-                    </div>
-                )
-            case "title":
-                const title = post["title"];
-                return (
-                    <p className={"line-clamp-1"}>
-                        {title}
-                    </p>
-                );
-            case "status":
-                const status = post["status"];
-                return (
-                    <Chip className="capitalize" color={statusColorMap[displayPostStatus(status)]}
-                          radius={"sm"} variant="flat">
-                        {displayPostStatus(status)}
-                    </Chip>
-                );
-            case "actions":
-                return (
-                    <div className="relative flex justify-end items-center gap-2 ">
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button isIconOnly size="sm" variant="light">
-                                    <Icon icon={"fa6-solid:ellipsis-vertical"} width={20} height={20}/>
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Table Columns1">
-                                <DropdownItem href={`/blog/${post.id}`}>View</DropdownItem>
-                                <DropdownItem onPress={() => handleEditPost(post)}>Edit</DropdownItem>
-                                <DropdownItem onPress={() => handleDeletePost(post.id)}>Delete</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </div>
-                );
-            // default:
-            //     return cellValue;
-        }
-    }, []);
     return (
         <>
             {currentPost && (

@@ -21,7 +21,7 @@ import {Divider} from "@nextui-org/divider";
 import {Input, Textarea} from "@nextui-org/input";
 import {useGetTagsQuery} from "@/feature/api/tagApi";
 import {PostType, useAddPostMutation} from "@/feature/api/postApi"
-import TagGroupItem from "@/components/radio/TagGroupItem";
+import TagGroupItem from "@/components/custom/TagGroupItem";
 import {useGetCategoriesQuery} from "@/feature/api/categoryApi";
 import {useGetColumnsQuery} from "@/feature/api/columnApi";
 import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
@@ -32,8 +32,6 @@ import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
 import {useFileUpload} from "@/components/tiptap/extensions/ImageUpload/view/hooks";
 import toast from "react-hot-toast";
 import {Image} from "@nextui-org/image";
-import {CustomRadio} from "@/components/custom/CustomRadio";
-import header from "@/components/tiptap/extensions/Table/Header";
 
 const AddPost = () => {
 
