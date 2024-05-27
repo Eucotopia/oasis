@@ -8,6 +8,8 @@ import {useGetColumnCountQuery} from "@/feature/api/columnApi";
 import {useGetUserCountQuery} from "@/feature/api/authApi";
 import ReactECharts from "echarts-for-react"
 import * as echarts from 'echarts';
+import {useGetCategoryCountQuery} from "@/feature/api/categoryApi";
+import {useGetTagCountQuery} from "@/feature/api/tagApi";
 
 export default function DashboardPage() {
     const {data: postCount, isLoading: isGetPostCountLoading} = useGetPostCountQuery()
@@ -16,6 +18,9 @@ export default function DashboardPage() {
 
     const {data: userCount, isLoading: isGetUserCountLoading} = useGetUserCountQuery()
 
+    const {data: categoryCount, isLoading: isGetCategoryCountLoading} = useGetCategoryCountQuery()
+
+    const {data: tagCount, isLoading: isGetTagCountLoading} = useGetTagCountQuery();
     let base = +new Date(1968, 9, 3);
     let oneDay = 24 * 3600 * 1000;
     let date = [];
@@ -48,11 +53,13 @@ export default function DashboardPage() {
             {
                 type: 'inside',
                 start: 0,
-                end: 10
+                end: 10,
+                show: false
             },
             {
                 start: 0,
-                end: 10
+                end: 10,
+                show: false
             }
         ],
         series: [
@@ -96,7 +103,7 @@ export default function DashboardPage() {
                         key={"achievement"}
                         size={'md'}
                         aria-label="achievement">
-                        <Tab key="photos" title="Photos">
+                        <Tab key="photos" title="Data Snapshot">
                             <div className={"flex flex-col flex-1 px-4 py-3 bg-content1 rounded-md gap-4"}>
                                 <p className={"text-xl grid"}>Post Count</p>
                                 <p className={"text-4xl"}>
@@ -135,33 +142,33 @@ export default function DashboardPage() {
                                 <p className={"text-tiny text-default-500"}>-8% month over month</p>
                             </div>
                         </Tab>
-                        <Tab key="music" title="Music">
+                        <Tab key="music" title="请起一个名字">
                             <div className={"flex flex-col flex-1 px-4 py-3 bg-content1 rounded-md gap-4"}>
-                                <p className={"text-xl grid"}>Post Count</p>
+                                <p className={"text-xl grid"}>Category Count</p>
                                 <p className={"text-4xl"}>
                                     {
-                                        isGetPostCountLoading ? (
+                                        isGetCategoryCountLoading ? (
                                             <Spinner color="secondary"/>
                                         ) : (
-                                            postCount
+                                            categoryCount
                                         )
                                     }
                                 </p>
                                 <p className={"text-tiny text-default-500"}>+20% month over month</p>
                             </div>
                             <div className={"flex flex-col flex-1 p-4 py-3 bg-content1 rounded-md gap-4"}>
-                                <p className={"text-xl"}>Column Count</p>
+                                <p className={"text-xl"}>Tag Count</p>
                                 <p className={"text-4xl"}>
-                                    {isGetColumnCountLoading ? (
+                                    {isGetTagCountLoading ? (
                                         <Spinner color="secondary"/>
                                     ) : (
-                                        columnCount
+                                        tagCount
                                     )}
                                 </p>
                                 <p className={"text-tiny text-default-500"}>+33% month over month</p>
                             </div>
                             <div className={"flex flex-col flex-1 p-4 py-3 bg-content1 rounded-md gap-4"}>
-                                <p className={"text-xl"}>User Count</p>
+                                <p className={"text-xl"}>Column Count</p>
                                 <p className={"text-4xl"}>
                                     {
                                         isGetUserCountLoading ? (
@@ -228,7 +235,8 @@ export default function DashboardPage() {
                     />
                 </div>
                 <div className={"flex flex-row w-full gap-4 min-h-72"}>
-                    <div className={"w-3/5  rounded-md bg-content1"}>
+                    <div className={"w-3/5  rounded-md bg-content1 pt-4 pl-4"}>
+                        <p className={"font-bold text-2xl"}>Web Traffic Tracker</p>
                         <ReactECharts option={option}/>
                     </div>
                     <div className={"w-2/5 rounded-md bg-content1"}>

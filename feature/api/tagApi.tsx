@@ -40,8 +40,12 @@ export const tagApi = createApi({
                 method: 'POST',
                 body: tags
             }),
+        }),
+        getTagCount: builder.query<number, void>({
+            query: () => ({url: '/count'}),
+            transformResponse: (response: ResultResponse<number>) => response.data,
         })
     }),
 })
 
-export const {useGetTagsQuery, useAddTagMutation} = tagApi
+export const {useGetTagsQuery, useAddTagMutation,useGetTagCountQuery} = tagApi

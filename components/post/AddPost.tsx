@@ -7,7 +7,7 @@ import {
     cn,
     Modal,
     ModalContent,
-    ModalHeader, Radio, RadioGroup,
+    ModalHeader, Radio, RadioGroup, ScrollShadow,
     Switch,
     useDisclosure
 } from "@nextui-org/react";

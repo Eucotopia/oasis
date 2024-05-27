@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@excalidraw/excalidraw": "^0.17.6",
     "@iconify/react": "^4.1.1",
     "@nextui-org/accordion": "^2.0.29",
     "@nextui-org/autocomplete": "^2.0.11",

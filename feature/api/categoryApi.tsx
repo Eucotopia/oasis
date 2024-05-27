@@ -39,8 +39,12 @@ export const categoryApi = createApi({
         }),
         getRootCategories: builder.query<ResultResponse<CategoryType[]>, void>({
             query: () => ({url: '/root'}),
+        }),
+        getCategoryCount: builder.query<number, void>({
+            query: () => ({url: '/count'}),
+            transformResponse: (response: ResultResponse<number>) => response.data,
         })
     }),
 })
 
-export const {useGetCountQuery, useGetCategoriesQuery, useGetRootCategoriesQuery} = categoryApi
+export const {useGetCountQuery, useGetCategoriesQuery, useGetRootCategoriesQuery,useGetCategoryCountQuery} = categoryApi
