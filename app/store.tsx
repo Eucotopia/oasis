@@ -11,7 +11,7 @@ import {faqApi} from "@/feature/api/faqApi";
 import {fileApi} from "@/feature/api/fileApi";
 import {columnApi} from "@/feature/api/columnApi";
 import {categoryApi} from "@/feature/api/categoryApi";
-import {blogRollApi} from "@/feature/api/BlogRoll";
+import {blogRollApi} from "@/feature/api/blogRoll";
 import {setupListeners} from "@reduxjs/toolkit/query";
 
 // define persist config

@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import {useGetBlogRollsQuery} from "@/feature/api/BlogRoll";
+import {useGetBlogRollsQuery} from "@/feature/api/blogRoll";
 
 
 export default function App() {

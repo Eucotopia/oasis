@@ -10,11 +10,12 @@ module.exports = {
     ],
     theme: {
         light: {
-            backgroundImage: {
-            }
+            backgroundImage: {}
         },
         extend: {
             animation: {
+                "scrolling-banner": "scrolling-banner var(--duration) linear infinite",
+                "scrolling-banner-vertical": "scrolling-banner-vertical var(--duration) linear infinite",
                 first: "moveVertical 30s ease infinite",
                 second: "moveInCircle 20s reverse infinite",
                 third: "moveInCircle 40s linear infinite",
@@ -22,6 +23,15 @@ module.exports = {
                 fifth: "moveInCircle 20s ease infinite",
             },
             keyframes: {
+                "scrolling-banner": {
+                    from: {transform: "translateX(0)"},
+                    to: {transform: "translateX(calc(-50% - var(--gap)/2))"},
+                },
+                "scrolling-banner-vertical": {
+                    from: {transform: "translateY(0)"},
+                    to: {transform: "translateY(calc(-50% - var(--gap)/2))"},
+                },
+
                 moveHorizontal: {
                     "0%": {
                         transform: "translateX(-50%) translateY(-10%)",

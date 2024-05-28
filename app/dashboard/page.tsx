@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import {Input, Spinner, Tabs} from "@nextui-org/react";
+import {Chip, Input, Listbox, ListboxItem, ScrollShadow, Spinner, Tabs} from "@nextui-org/react";
 import {Tab} from "@nextui-org/tabs";
 import {SearchIcon} from "@/components/icons";
 import {useGetPostCountQuery} from "@/feature/api/postApi";
@@ -10,8 +10,10 @@ import ReactECharts from "echarts-for-react"
 import * as echarts from 'echarts';
 import {useGetCategoryCountQuery} from "@/feature/api/categoryApi";
 import {useGetTagCountQuery} from "@/feature/api/tagApi";
+import {Avatar} from "@nextui-org/avatar";
 
 export default function DashboardPage() {
+
     const {data: postCount, isLoading: isGetPostCountLoading} = useGetPostCountQuery()
 
     const {data: columnCount, isLoading: isGetColumnCountLoading} = useGetColumnCountQuery()
@@ -239,8 +241,32 @@ export default function DashboardPage() {
                         <p className={"font-bold text-2xl"}>Web Traffic Tracker</p>
                         <ReactECharts option={option}/>
                     </div>
-                    <div className={"w-2/5 rounded-md bg-content1"}>
-                        asd
+                    <div className={"w-2/5 rounded-md bg-content1 p-4"}>
+                        <p className={"font-bold text-3xl"}>title</p>
+                        {/*<Listbox*/}
+                        {/*    classNames={{*/}
+                        {/*        // base: "max-w-xs",*/}
+                        {/*        list: "max-h-[300px] overflow-scroll",*/}
+                        {/*    }}*/}
+                        {/*    defaultSelectedKeys={["1"]}*/}
+                        {/*    items={users}*/}
+                        {/*    label="Assigned to"*/}
+                        {/*    selectionMode="multiple"*/}
+                        {/*    variant="flat"*/}
+                        {/*>*/}
+                        {/*    {(item) => (*/}
+                        {/*        <ListboxItem key={item.id} textValue={item.name}>*/}
+                        {/*            <div className="flex gap-2 items-center">*/}
+                        {/*                <Avatar alt={item.name} className="flex-shrink-0" size="sm"*/}
+                        {/*                        src={item.avatar}/>*/}
+                        {/*                <div className="flex flex-col">*/}
+                        {/*                    <span className="text-small">{item.name}</span>*/}
+                        {/*                    <span className="text-tiny text-default-400">{item.email}</span>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        </ListboxItem>*/}
+                        {/*    )}*/}
+                        {/*</Listbox>*/}
                     </div>
                 </div>
             </div>

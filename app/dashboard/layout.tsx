@@ -23,7 +23,7 @@ export default function DocsLayout({
             <div className="flex h-dvh w-full gap-6 mt-8">
                 <div
                     className={cn(
-                        "relative flex flex-col p-2 transition-width bg-content1 rounded-medium max-h-[600px]",
+                        "relative flex flex-col p-2 transition-width bg-content1 rounded-medium",
                         {
                             "w-16 items-center px-2 ": isCompact,
                         },

@@ -11,6 +11,7 @@ export type BlogRollType = {
     link: string
     avatar: string
     status: number
+    level: number
 }
 export const blogRollApi = createApi({
     reducerPath: 'blogrollApi',
@@ -59,7 +60,42 @@ export const blogRollApi = createApi({
                     type: "BlogRoll",
                     id: "LIST"
                 }],
+        }),
+        getRecommendedBlogRolls: buildr.query<BlogRollType[], void>({
+            query: () => ({
+                url: "/recommend",
+                method: 'GET',
+            }),
+            transformResponse: (response: ResultResponse<BlogRollType[]>) => response.data,
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((blogroll) => ({
+                    type: "BlogRoll" as const,
+                    id: String(blogroll.id)
+                })), {type: "BlogRoll", id: "LIST"}] : [{
+                    type: "BlogRoll",
+                    id: "LIST"
+                }]
+        }),
+        getHighQualityBlogRolls: buildr.query<BlogRollType[], void>({
+            query: () => ({
+                url: "/highQuality",
+                method: 'GET',
+            }),
+            transformResponse: (response: ResultResponse<BlogRollType[]>) => response.data,
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((blogroll) => ({
+                    type: "BlogRoll" as const,
+                    id: String(blogroll.id)
+                })), {type: "BlogRoll", id: "LIST"}] : [{
+                    type: "BlogRoll",
+                    id: "LIST"
+                }]
         })
     }),
 })
-export const {useAddBlogRollMutation,useGetBlogRollsQuery} = blogRollApi
+export const {
+    useAddBlogRollMutation,
+    useGetBlogRollsQuery,
+    useGetRecommendedBlogRollsQuery,
+    useGetHighQualityBlogRollsQuery
+} = blogRollApi
