@@ -17,7 +17,7 @@ import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
 import {useAppDispatch} from "@/hook/store";
 import {useUploadMutation} from "@/feature/api/fileApi";
 import {Image} from "@nextui-org/image";
-import {useFileUpload} from "@/components/tiptap/extensions/ImageUpload/view/hooks";
+import {useFileUpload} from "@/hook/ImageUpload";
 import toast from "react-hot-toast";
 
 type UpdatePostProps = {

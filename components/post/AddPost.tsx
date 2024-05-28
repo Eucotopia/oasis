@@ -7,7 +7,7 @@ import {
     cn,
     Modal,
     ModalContent,
-    ModalHeader, Radio, RadioGroup, ScrollShadow,
+    ModalHeader,
     Switch,
     useDisclosure
 } from "@nextui-org/react";
@@ -24,12 +24,11 @@ import {PostType, useAddPostMutation} from "@/feature/api/postApi"
 import TagGroupItem from "@/components/custom/TagGroupItem";
 import {useGetCategoriesQuery} from "@/feature/api/categoryApi";
 import {useGetColumnsQuery} from "@/feature/api/columnApi";
-import RatingRadioGroup from "@/components/rating/RatingRadioGroup";
 import {useUploadMutation} from "@/feature/api/fileApi";
 import {useLastPost} from "@/hook/useLastPost";
 import {useAppDispatch} from "@/hook/store";
 import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
-import {useFileUpload} from "@/components/tiptap/extensions/ImageUpload/view/hooks";
+import {useFileUpload} from "@/hook/ImageUpload";
 import toast from "react-hot-toast";
 import {Image} from "@nextui-org/image";
 
@@ -244,7 +243,8 @@ const AddPost = () => {
                                                                         <p className={"text-sm text-default-500"}>Choose
                                                                             file or
                                                                             drag
-                                                                            and drop</p>
+                                                                            and drop
+                                                                        </p>
                                                                         <Button variant={"solid"} color={"primary"}
                                                                                 radius={"sm"}
                                                                                 size={"sm"} onClick={handleUploadClick}>Choose

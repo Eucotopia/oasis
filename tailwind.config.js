@@ -11,7 +11,6 @@ module.exports = {
     theme: {
         light: {
             backgroundImage: {
-                "test": "radial-gradient(farthest-corner at 30% 50%, #F7EEDD 30%, #F2D7BE 50%, #E9C4A5 70%)",
             }
         },
         extend: {
@@ -68,10 +67,8 @@ module.exports = {
     plugins: [
         nextui({
                 themes: {
-                    light: {
-                    },
-                    dark: {
-                    },
+                    light: {},
+                    dark: {},
                     "purple-dark": {
                         extend: "dark", // <- inherit default values from dark theme
                         colors: {

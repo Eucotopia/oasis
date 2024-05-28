@@ -3,7 +3,7 @@ import {type SidebarItem, SidebarItemType} from "./sidebar";
 export const items: SidebarItem[] = [
     {
         key: "home",
-        href: "#",
+        href: "/dashboard",
         icon: "solar:home-2-linear",
         title: "Home",
     },
@@ -48,6 +48,12 @@ export const items: SidebarItem[] = [
         href: "/dashboard/column-manage",
         icon: "fluent:column-triple-edit-20-filled",
         title: "Column Manage",
+    },
+    {
+        key: "blogroll-manage",
+        href: "/dashboard/blogroll-manage",
+        icon: "fluent:link-person-24-filled",
+        title: "BlogRoll Manage",
     },
     {
         key: "settings",

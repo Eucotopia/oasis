@@ -16,7 +16,7 @@ import {Avatar} from "@nextui-org/avatar";
 import {Button} from "@nextui-org/button";
 import {Modal, ModalBody, ModalContent, ModalFooter, useDisclosure} from "@nextui-org/modal";
 import {Icon} from "@iconify/react";
-import {useFileUpload} from "@/components/tiptap/extensions/ImageUpload/view/hooks";
+import {useFileUpload} from "@/hook/ImageUpload";
 import toast from "react-hot-toast";
 import {useUploadMutation} from "@/feature/api/fileApi";
 import {Image} from "@nextui-org/image";

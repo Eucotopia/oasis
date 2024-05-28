@@ -11,6 +11,7 @@ import {faqApi} from "@/feature/api/faqApi";
 import {fileApi} from "@/feature/api/fileApi";
 import {columnApi} from "@/feature/api/columnApi";
 import {categoryApi} from "@/feature/api/categoryApi";
+import {blogRollApi} from "@/feature/api/BlogRoll";
 import {setupListeners} from "@reduxjs/toolkit/query";
 
 // define persist config
@@ -21,7 +22,7 @@ const persistConfig = {
     blacklist: []
 }
 
-const middleware = [thunk, postApi.middleware, faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware]
+const middleware = [thunk, postApi.middleware, faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware, blogRollApi.middleware]
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
     [tagApi.reducerPath]: tagApi.reducer,
     [fileApi.reducerPath]: fileApi.reducer,
     [columnApi.reducerPath]: columnApi.reducer,
-    [categoryApi.reducerPath]: categoryApi.reducer
+    [categoryApi.reducerPath]: categoryApi.reducer,
+    [blogRollApi.reducerPath]: blogRollApi.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
