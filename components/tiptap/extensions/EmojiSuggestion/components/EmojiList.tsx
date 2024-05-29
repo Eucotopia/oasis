@@ -87,7 +87,7 @@ const EmojiList = forwardRef((props: EmojiListProps, ref) => {
             <Listbox
                 variant="flat"
                 aria-label="Listbox menu with sections"
-                className="p-1 gap-0 divide-y divide-default-300/50 dark:divide-default-100/80 bg-content1 max-w-[300px] overflow-scroll max-h-96 scrollbar-hide shadow-small"
+                className="p-1 gap-0 divide-y rounded-md divide-default-300/50 dark:divide-default-100/80 bg-content1 max-w-[300px] overflow-scroll max-h-96 scrollbar-hide shadow-small"
                 itemClasses={{
                     base: "px-2 rounded-medium gap-2 h-12 data-[hover=true]:bg-default-100/80",
                 }}

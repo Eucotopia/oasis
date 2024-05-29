@@ -273,13 +273,13 @@ export default function BlogRoll() {
                     )}
                 </ModalContent>
             </Modal>
-
-
-            <div className={"h-screen flex flex-col"}>
-                <p className={"text-2xl font-bold md:text-4xl lg:text-5xl text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto"}>Blogroll
-                    Brigade</p>
-                <TextGenerateEffect
-                    words={"The journey of creating and sharing content is not for the faint of heart. It takes grit, determination, and a passion for spreading ideas and inspiration to keep going, especially when it comes to writing blog posts. Yet, you persist, and that's something to be proud of!"}/>
+            <div
+                className={"w-[1280px] flex flex-col"}>
+                <p className={"text-2xl font-bold md:text-4xl lg:text-7xl max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto bg-gradient-radial from-primary-300 via-35% to-success-300 bg-clip-text text-transparent"}>
+                    Blogroll Brigade
+                </p>
+                {/*<TextGenerateEffect*/}
+                {/*    words={"The journey of creating and sharing content is not for the faint of heart. It takes grit, determination, and a passion for spreading ideas and inspiration to keep going, especially when it comes to writing blog posts. Yet, you persist, and that's something to be proud of!"}/>*/}
             </div>
 
             <Button color={"secondary"} size={"lg"}>random access</Button>
@@ -304,7 +304,7 @@ export default function BlogRoll() {
             {/*</section>*/}
 
             {/*High Quality*/}
-            <div className={"flex flex-col items-start gap-4 mb-8 w-full"}>
+            <div className={"flex flex-col items-start gap-4 mb-8 "}>
                 <p className={"text-2xl font-bold"}>Active</p>
                 <div className={"grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full"}>
                     {

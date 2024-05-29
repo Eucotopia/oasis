@@ -9,8 +9,12 @@ module.exports = {
         './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
     ],
     theme: {
+        backgroundImage: {
+        },
         light: {
-            backgroundImage: {}
+            backgroundImage: {
+                index: "linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, transparent 75%, transparent)"
+            },
         },
         extend: {
             animation: {
@@ -77,8 +81,10 @@ module.exports = {
     plugins: [
         nextui({
                 themes: {
-                    light: {},
-                    dark: {},
+                    light: {
+                    },
+                    dark: {
+                    },
                     "purple-dark": {
                         extend: "dark", // <- inherit default values from dark theme
                         colors: {

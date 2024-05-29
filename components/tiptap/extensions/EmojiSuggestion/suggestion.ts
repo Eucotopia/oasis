@@ -33,6 +33,7 @@ export const emojiSuggestion = {
           getReferenceClientRect: props.clientRect,
           appendTo: () => document.body,
           content: component.element,
+          theme:"slash-command",
           showOnCreate: true,
           interactive: true,
           trigger: 'manual',

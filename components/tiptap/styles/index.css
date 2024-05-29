@@ -47,5 +47,6 @@
 
 [data-theme='slash-command'] {
     width: 1000vw;
+    border-radius: 6px;
 }
 

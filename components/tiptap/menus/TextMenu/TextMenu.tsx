@@ -32,7 +32,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
             pluginKey="textMenu"
             shouldShow={states.shouldShow}
             updateDelay={100}
-            className={"text-black inline-flex h-full leading-none gap-1 flex-row p-1 items-center bg-content2 rounded-md"}
+            className={"text-black inline-flex h-full leading-none gap-1 flex-row px-1 items-center bg-content2 rounded-md"}
         >
             <MemoFontFamilyPicker onChange={commands.onSetFont} value={states.currentFont || ''}/>
 

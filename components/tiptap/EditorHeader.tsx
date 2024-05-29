@@ -21,14 +21,14 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
     }
     return (
         <>
-            <div className={"flex flex-row p-2 outline-none gap-1 w-full"}>
+            <div className={"flex flex-row outline-none gap-1 w-full"}>
                 <MemoFontFamilyPicker onChange={commands.onSetFont} value={states.currentFont || ''}/>
 
                 <MemoFontSizePicker onChange={commands.onSetFontSize} value={states.currentSize || ''}/>
                 <Link
                     color={"foreground"}
                     onPress={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4",
                     )}>
                     <Icon icon={"fa6-solid:text-slash"} width={20} height={20}/>
@@ -36,18 +36,15 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                 <Link
                     color={"foreground"}
                     onPress={() => editor.chain().focus().setImageUpload().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
-                        "hover:bg-content4",
-                        {
-                            "bg-content4": editor.isActive("underline")
-                        })}
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
+                        "hover:bg-content4")}
                 >
                     <Icon icon={"fa6-solid:upload"} width={20} height={20}/>
                 </Link>
                 <Link
                     color={"foreground"}
                     onPress={() => editor.chain().focus().undo().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4",
                     )}>
                     <Icon icon={"fa6-solid:arrow-rotate-left"} width={20} height={20}/>
@@ -55,7 +52,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                 <Link
                     color={"foreground"}
                     onPress={() => editor.chain().focus().redo().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1",
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4",
                     )}>
                     <Icon icon={"fa6-solid:arrow-rotate-right"} width={20} height={20}/>
@@ -88,13 +85,15 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                 <Link
                     color={"foreground"}
                     onClick={() => editor.chain().focus().setHardBreak().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
+                        "hover:bg-content4")}>
                     <Icon icon={"fa6-solid:grip-lines"} width={20} height={20}/>
                 </Link>
                 <Link
                     color={"foreground"}
                     onClick={() => editor.chain().focus().setHorizontalRule().run()}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-1")}>
+                    className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
+                        "hover:bg-content4")}>
                     <Icon icon={"fa6-solid:ruler-horizontal"} width={20} height={20}/>
                 </Link>
             </div>

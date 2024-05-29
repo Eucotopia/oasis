@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import {Chip, Input, Listbox, ListboxItem, ScrollShadow, Spinner, Tabs} from "@nextui-org/react";
+import {Chip, CircularProgress, Input, Listbox, ListboxItem, ScrollShadow, Spinner, Tabs} from "@nextui-org/react";
 import {Tab} from "@nextui-org/tabs";
 import {SearchIcon} from "@/components/icons";
 import {useGetPostCountQuery} from "@/feature/api/postApi";
@@ -11,6 +11,7 @@ import * as echarts from 'echarts';
 import {useGetCategoryCountQuery} from "@/feature/api/categoryApi";
 import {useGetTagCountQuery} from "@/feature/api/tagApi";
 import {Avatar} from "@nextui-org/avatar";
+import {Card, CardBody} from "@nextui-org/card";
 
 export default function DashboardPage() {
 
