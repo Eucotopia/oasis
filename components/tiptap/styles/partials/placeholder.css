@@ -22,11 +22,11 @@
 
   /* Blockquote Placeholder */
   blockquote .is-empty:not(.is-editor-empty):first-child:last-child::before {
-    content: 'Enter a quote';
+    content: 'Enter a title';
   }
 
   blockquote + figcaption.is-empty:not(.is-editor-empty)::before {
-    content: 'Author';
+    content: 'content';
   }
 
   [data-placeholder][data-suggestion]::before,
