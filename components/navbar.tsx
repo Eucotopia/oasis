@@ -213,10 +213,9 @@ export const Navbar = () => {
                             <Dropdown placement="bottom-end">
                                 <DropdownTrigger>
                                     <Avatar
-                                        isBordered
                                         as="button"
+                                        color={"success"}
                                         className="transition-transform"
-                                        color="secondary"
                                         name={currentUser.username}
                                         size="sm"
                                         src={currentUser.cover}
