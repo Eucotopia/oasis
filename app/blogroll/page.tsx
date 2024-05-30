@@ -285,23 +285,7 @@ export default function BlogRoll() {
             <Button color={"secondary"} size={"lg"}>random access</Button>
             <Button onPress={onOpen} size={"lg"} color={"success"}>Apply</Button>
 
-            {/*<section className="w-full max-w-6xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">*/}
-            {/*    <ScrollingBanner shouldPauseOnHover duration={50} gap="40px">*/}
-            {/*        {logos.map(({key, logo}) => (*/}
-            {/*            <div key={key} className="flex items-center justify-center text-foreground">*/}
-            {/*                {logo}*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </ScrollingBanner>*/}
-            {/*    <Spacer y={12}/>*/}
-            {/*    <ScrollingBanner isReverse shouldPauseOnHover duration={50} gap="40px">*/}
-            {/*        {logos.map(({key, logo}) => (*/}
-            {/*            <div key={key} className="flex items-center justify-center text-foreground">*/}
-            {/*                {logo}*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </ScrollingBanner>*/}
-            {/*</section>*/}
+
 
             {/*High Quality*/}
             <div className={"flex flex-col items-start gap-4 mb-8 "}>

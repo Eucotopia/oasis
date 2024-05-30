@@ -47,7 +47,7 @@ export default function RootLayout({
             }}>
             <div className="relative flex flex-col h-screen">
                 <Navbar/>
-                <main className="container mx-auto max-w-7xl px-6 flex-grow ">
+                <main className="container max-w-screen-2xl mx-auto flex-grow text-center">
                     {children}
                 </main>
                 <footer className="w-full flex items-center justify-center py-3">

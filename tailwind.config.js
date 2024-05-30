@@ -10,6 +10,7 @@ module.exports = {
     ],
     theme: {
         backgroundImage: {
+            hero: "radial-gradient(128.17% 50% at 50% 50%, #fb845920 0, transparent 100%)"
         },
         light: {
             backgroundImage: {
@@ -81,10 +82,8 @@ module.exports = {
     plugins: [
         nextui({
                 themes: {
-                    light: {
-                    },
-                    dark: {
-                    },
+                    light: {},
+                    dark: {},
                     "purple-dark": {
                         extend: "dark", // <- inherit default values from dark theme
                         colors: {
