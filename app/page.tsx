@@ -269,14 +269,14 @@ export default function Home() {
             <section className={"flex flex-col justify-center items-center lg:pt-36 pt-28 gap-5"}>
                 <Chip
                     variant="solid"
-                    className={"dark:text-[#ff8c00] dark:bg-[#ff8c001f] px-3 py-4 mb-3"}
+                    className={"dark:text-[#ff8c00] dark:bg-[#ff8c001f] px-3 py-4 mb-3 text-medium"}
                     startContent={
-                        <Icon icon="line-md:star-pulsating-loop"></Icon>
+                        <Icon icon="ic:twotone-apple"></Icon>
                     }>
-                    <strong className={"ml-1 mr-2"}>NEW</strong>
-                    Powered by Advanced AI Technology
+                    <strong className={"ml-1 mr-2"}>WWDC 2024</strong>
+                    Coming in swiftly.
                 </Chip>
-                <div className={"text-4xl md:text-6xl font-extrabold w-[600px]"}>
+                <div className={"text-4xl md:text-6xl font-extrabold w-[600px] text-center"}>
                     Most Advance&nbsp;
                     <i className={"bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] "}>
                         AI Headshot&nbsp;
@@ -298,7 +298,7 @@ export default function Home() {
                 >
                     Open Studio
                 </Button>
-                <section className="w-full px-6 py-20 sm:py-32 lg:px-8 lg:py-36">
+                <section className="w-full px-6 py-20 sm:py-32 lg:px-8 lg:py-20">
                     <ScrollingBanner shouldPauseOnHover duration={50} gap="40px">
                         {Life.map(({key, logo}) => (
                             <div key={key} className="flex items-center justify-center text-foreground">
