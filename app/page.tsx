@@ -7,49 +7,96 @@ import {
 } from "@nextui-org/react";
 import {useAddFaqMutation, useGetFaqsByAnswerQuery} from "@/feature/api/faqApi";
 import ScrollingBanner from "@/components/scrolling/scrolling-banner";
-import {Logo1, Logo10, Logo2, Logo3, Logo4, Logo5, Logo6, Logo7, Logo8, Logo9} from "@/app/blogroll/logos";
 import {useMediaQuery} from "usehooks-ts";
+import {
+    Android,
+    AppleLogo,
+    CSSLogo,
+    HtmlLogo,
+    MusicLogo, MysqlLogo,
+    PlayStationLogo, RabbitMQ,
+    ReactLogo, Redis, RiotGame, SpringBoot, Swift,
+    SwitchLogo,
+    TypeScriptLogo
+} from "@/components/icons";
 
-const logos = [
+const Life = [
     {
         key: "logo-1",
-        logo: Logo1,
+        logo: <AppleLogo/>
     },
     {
         key: "logo-2",
-        logo: Logo2,
+        logo: <MusicLogo/>
+
     },
     {
         key: "logo-3",
-        logo: Logo3,
+        logo: <SwitchLogo/>
+
     },
     {
         key: "logo-4",
-        logo: Logo4,
+        logo: <PlayStationLogo/>
+
+
     },
     {
         key: "logo-5",
-        logo: Logo5,
+        logo: <RiotGame/>
+    }
+];
+const Survive = [
+    {
+        key: "logo-1",
+        logo: <Android/>
+    },
+    {
+        key: "logo-2",
+        logo: <Swift/>
+
+    },
+    {
+        key: "logo-3",
+        logo: <RabbitMQ/>
+
+    },
+    {
+        key: "logo-4",
+        logo: <Redis/>
+
+
+    },
+    {
+        key: "logo-5",
+        logo: <SpringBoot/>
+
     },
     {
         key: "logo-6",
-        logo: Logo6,
+        logo: <MysqlLogo/>
+
     },
     {
         key: "logo-7",
-        logo: Logo7,
+        logo: <CSSLogo/>
+
+
     },
     {
         key: "logo-8",
-        logo: Logo8,
+        logo: <HtmlLogo/>
+
     },
     {
         key: "logo-9",
-        logo: Logo9,
+        logo: <TypeScriptLogo/>
+
     },
     {
         key: "logo-10",
-        logo: Logo10,
+        logo: <ReactLogo/>
+
     },
 ];
 type Testimonial = {
@@ -253,7 +300,7 @@ export default function Home() {
                 </Button>
                 <section className="w-full px-6 py-20 sm:py-32 lg:px-8 lg:py-36">
                     <ScrollingBanner shouldPauseOnHover duration={50} gap="40px">
-                        {logos.map(({key, logo}) => (
+                        {Life.map(({key, logo}) => (
                             <div key={key} className="flex items-center justify-center text-foreground">
                                 {logo}
                             </div>
@@ -261,7 +308,7 @@ export default function Home() {
                     </ScrollingBanner>
                     <Spacer y={12}/>
                     <ScrollingBanner isReverse shouldPauseOnHover duration={50} gap="40px">
-                        {logos.map(({key, logo}) => (
+                        {Survive.map(({key, logo}) => (
                             <div key={key} className="flex items-center justify-center text-foreground">
                                 {logo}
                             </div>
@@ -272,8 +319,10 @@ export default function Home() {
             <section className="mx-auto w-full max-w-7xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">
                 <div className={"flex flex-col justify-center items-center gap-6"}>
                     <Chip color={"warning"}>Featured Reviews</Chip>
-                    <h1 className={"max-w-xl md:text-4xl text-2xl leading-tight font-extrabold"}>Reviews from Our Community</h1>
-                    <p className={"max-w-xl text-default-500"}>See what our users have to say about their experience with Fulgent AI.</p>
+                    <h1 className={"max-w-xl md:text-4xl text-2xl leading-tight font-extrabold"}>Reviews from Our
+                        Community</h1>
+                    <p className={"max-w-xl text-default-500"}>See what our users have to say about their experience
+                        with Fulgent AI.</p>
                 </div>
                 <div className="columns-1 sm:columns-2 md:columns-3 gap-8 mt-24">
                     <ScrollingBanner isVertical duration={isMobile ? 20 : 12} shouldPauseOnHover={false}>

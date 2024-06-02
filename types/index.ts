@@ -1,7 +1,11 @@
-import {SVGProps} from "react";
+import React, {SVGProps} from "react";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
     size?: number;
+    width?: number;
+    height?: number;
+    style?: React.CSSProperties; // Add this property
+    [key: string]: any; // Add this to allow for any other props
 };
 
 export type ResultResponse<T> = {

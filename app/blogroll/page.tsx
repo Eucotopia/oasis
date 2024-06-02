@@ -20,160 +20,48 @@ import {
     useGetRecommendedBlogRollsQuery
 } from "@/feature/api/blogRoll";
 import {Image} from "@nextui-org/image";
-import ScrollingBanner from "@/components/scrolling/scrolling-banner";
+import {Icon} from "@iconify/react";
 
-import {
-    Logo1, Logo10,
-    Logo2,
-    Logo3,
-    Logo4,
-    Logo5,
-    Logo6,
-    Logo7, Logo8, Logo9
-} from "@/app/blogroll/logos";
-import TeamMemberCard, {type TeamMember} from "@/app/blogroll/basic-team-page/team-member-card";
-
-const teamMembers: TeamMember[] = [
-    {
-        name: "John Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258114e29026708c",
-        role: "CEO",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@john-doe",
-            linkedin: "john-doe",
-            github: "@john-doe",
-        },
-    },
-    {
-        name: "Jane Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258ab4e29066708c",
-        role: "CTO",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@jane-doe",
-            linkedin: "jane-doe",
-            github: "@jane-doe",
-        },
-    },
-    {
-        name: "Robert Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258114e29066708c",
-        role: "Principal Designer",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@robert-doe",
-            linkedin: "robert-doe",
-            github: "@robert-doe",
-        },
-    },
-    {
-        name: "Mark Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258a14e29066708c",
-        role: "Principal Engineer",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@mark-doe",
-            linkedin: "mark-doe",
-            github: "@mark-doe",
-        },
-    },
-    {
-        name: "Frank Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258114e29526708c",
-        role: "Frontend Engineer",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@frank-doe",
-            linkedin: "frank-doe",
-            github: "@frank-doe",
-        },
-    },
-    {
-        name: "Zoe Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258114e29926708c",
-        role: "Backend Engineer",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@zoe-doe",
-            linkedin: "zoe-doe",
-            github: "@zoe-doe",
-        },
-    },
-    {
-        name: "Bob Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258114e29b26708c",
-        role: "Product Manager",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@bob-doe",
-            linkedin: "bob-doe",
-            github: "@bob-doe",
-        },
-    },
-    {
-        name: "Francis Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258b14e29326708c",
-        role: "Product Designer",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@francis-doe",
-            linkedin: "francis-doe",
-            github: "@francis-doe",
-        },
-    },
-    {
-        name: "Milan Doe",
-        avatar: "https://i.pravatar.cc/150?u=a04258114e29326708c",
-        role: "Customer Support",
-        bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-        social: {
-            twitter: "@milan-doe",
-            linkedin: "milan-doe",
-            github: "@milan-doe",
-        },
-    },
-];
 const logos = [
     {
         key: "logo-1",
-        logo: Logo1,
+        logo: <Icon icon="cbi:apple-tv"></Icon>,
     },
     {
         key: "logo-2",
-        logo: Logo2,
+        logo: "Logo2",
     },
     {
         key: "logo-3",
-        logo: Logo3,
+        logo: "Logo3",
     },
     {
         key: "logo-4",
-        logo: Logo4,
+        logo: "Logo4",
     },
     {
         key: "logo-5",
-        logo: Logo5,
+        logo: "Logo5",
     },
     {
         key: "logo-6",
-        logo: Logo6,
+        logo: "Logo6",
     },
     {
         key: "logo-7",
-        logo: Logo7,
+        logo: "Logo7",
     },
     {
         key: "logo-8",
-        logo: Logo8,
+        logo: "Logo8",
     },
     {
         key: "logo-9",
-        logo: Logo9,
+        logo: "Logo9",
     },
     {
         key: "logo-10",
-        logo: Logo10,
+        logo: "Logo10",
     },
 ];
 export default function BlogRoll() {

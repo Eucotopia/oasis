@@ -20,7 +20,7 @@ export default function DocsLayout({
     }, []);
     return (
         <>
-            <div className="flex h-dvh w-full gap-6 mt-8">
+            <div className="flex h-dvh mx-auto gap-6 mt-8 max-w-7xl">
                 <div
                     className={cn(
                         "relative flex flex-col p-2 transition-width bg-content1 rounded-medium",
