@@ -41,9 +41,9 @@ export default function Home() {
                     wwdc 2024 Coming in swiftly.
                 </Chip>
                 <div className={"text-4xl md:text-6xl font-extrabold w-[574px] text-center"}>
-                    Only you &nbsp;
+                    Only you&nbsp;
                     <i className={"bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] "}>
-                        can control &nbsp;
+                        can control&nbsp;
                     </i>
                     your future.
                 </div>
