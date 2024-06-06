@@ -22,8 +22,8 @@ export type UserType = {
     address: string,
     status: number
 }
-export const baseUrl= 'http://localhost:8080';
-export const baseUrl1 = 'http://47.119.161.226/api';
+export const baseUrl1= 'http://localhost:8080';
+export const baseUrl = 'http://47.119.161.226/api';
 export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['Auth'],

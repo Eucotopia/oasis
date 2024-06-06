@@ -205,6 +205,7 @@ export const Navbar = () => {
                         <Link isExternal href={siteConfig.links.github} aria-label="Github">
                             <GithubIcon className="text-content4-foreground"/>
                         </Link>
+                        <ThemeSwitch/>
                     </NavbarItem>
                     <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
                     <NavbarItem className={"hidden lg:flex"}>

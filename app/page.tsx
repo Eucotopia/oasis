@@ -30,7 +30,7 @@ export default function Home() {
     if (!faqs) return null
     return (
         <>
-            <section className="fixed h-svh dark:bg-hero w-screen"/>
+            {/*<section className="fixed h-svh dark:bg-hero w-screen"/>*/}
             <section className={"flex flex-col justify-center items-center lg:pt-36 pt-28 gap-5"}>
                 <Chip
                     variant="solid"
@@ -40,9 +40,9 @@ export default function Home() {
                     }>
                     wwdc 2024 Coming in swiftly.
                 </Chip>
-                <div className={"text-4xl md:text-6xl font-extrabold w-[574px] text-center"}>
+                <div className={"text-4xl md:text-6xl font-extrabold w-[700px] text-center"}>
                     Only you&nbsp;
-                    <i className={"bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] "}>
+                    <i className={"bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] leading-tight"}>
                         can control&nbsp;
                     </i>
                     your future.

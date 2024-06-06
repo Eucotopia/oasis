@@ -220,7 +220,7 @@ export default function RootLayout({
                         </div>
                         <div className="flex flex-wrap justify-between gap-2 pt-8">
                             <p className="text-small text-default-400">&copy; 2024 Acme Inc. All rights reserved.</p>
-                            <ThemeSwitch/>
+                            <Link href={"https://beian.miit.gov.cn/"} isExternal className={"text-small text-default-400"}>鄂ICP备2024058930号</Link>
                         </div>
                     </div>
                 </footer>
