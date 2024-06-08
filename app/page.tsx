@@ -5,9 +5,18 @@ import {
     Button, Chip,
 } from "@nextui-org/react";
 import {useAddFaqMutation, useGetFaqsByAnswerQuery} from "@/feature/api/faqApi";
-import ScrollingBanner from "@/components/scrolling/scrolling-banner";
-import {Link} from "@nextui-org/link";
-
+import NextLink from "next/link";
+import {
+    Blast,
+    Burst,
+    Cherry, Circle,
+    Claymorphism,
+    HeartShaped, Line,
+    Pentagram,
+    Platter,
+    Pointed,
+    RoundedTriangle, Smile
+} from "@/components/icons"
 
 export default function Home() {
     const [isOpen, setIsOpen] = React.useState(false);
@@ -31,43 +40,62 @@ export default function Home() {
     return (
         <>
             <section className="fixed h-svh dark:bg-hero w-screen"/>
-            <section className={"flex flex-col justify-center items-center lg:pt-36 pt-28 gap-5"}>
+            <Burst
+                size={900}
+                opacity={0.4}
+                style={{
+                    position: "absolute",
+                    right: "0%",
+                    top: "0%",
+                    overflow: "hidden"
+                }}
+            />
+            <Pointed style={{position: "absolute", left: "12%", top: "2%"}} size={500} opacity={0.6}/>
+            <Smile style={{position: "absolute", left: "12%", top: "40%"}} size={200} opacity={0.6} fill={"#9263FF"}/>
+            <Cherry opacity={0.5} style={{position: "absolute", left: "5%", top: "20%"}} size={200} fill={"#FF2B4B"}/>
+            <HeartShaped opacity={0.5} style={{position: "absolute", left: "4%", top: "65%"}} size={250}
+                         fill={"#3B6CFF"}/>
+            <Circle opacity={0.5} style={{position: "absolute", left: "20%", top: "60%"}} size={200} fill={"#DBE7FF"}/>
+            <Line fill={"#FF3DC5"} style={{position: "absolute", left: "20%", top: "80%"}} size={150}/>
+            <section className="flex flex-col justify-center items-center lg:pt-36 pt-28 gap-5 px-4 ">
                 <Chip
                     variant="solid"
-                    className={"dark:text-[#ff8c00] dark:bg-[#ff8c001f] px-3 py-4 mb-3 text-medium uppercase"}
-                    startContent={
-                        <Icon icon="ic:twotone-apple" height={20}></Icon>
-                    }>
-                    wwdc 2024 Coming in swiftly.
+                    className="dark:text-[#ff8c00] dark:bg-[#ff8c001f] px-3 py-4 mb-3 text-medium uppercase"
+                    startContent={<Icon icon="ic:twotone-apple" height={20}></Icon>}
+                >
+                    WWDC 2024 Coming in swiftly.
                 </Chip>
-                <div className={"text-4xl md:text-6xl font-extrabold w-[700px] text-center"}>
+                <div className="text-3xl md:text-4xl lg:text-6xl font-extrabold w-full max-w-[700px] text-center">
                     Only you&nbsp;
-                    <i className={"bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] leading-tight"}>
+                    <i className="bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] leading-tight">
                         can control&nbsp;
                     </i>
                     your future.
                 </div>
-                <div className={"max-w-2xl text-base text-default-500 text-center mb-5"}>
-                    When you feel like hope is gone, look inside you and search your soul. you will find a hero lies in
-                    you. dreams are hard to follow, but don&apos;t let anyone steal your dream.
+                <div
+                    className="max-w-lg md:max-w-xl lg:max-w-2xl text-base text-default-500 text-center mb-5 px-4 md:px-0">
+                    When you feel like hope is gone, look inside you and search your soul. You will find a hero lies in
+                    you. Dreams are hard to follow, but don&apos;t let anyone steal your dream.
                 </div>
                 <Button
-                    as={Link}
-                    href={"/about"}
-                    variant={"solid"}
-                    size={"lg"}
-                    color={"warning"}
-                    radius={"lg"}
-                    className={"uppercase"}
+                    as={NextLink}
+                    href="/about"
+                    variant="solid"
+                    size="lg"
+                    color="warning"
+                    radius="lg"
+                    className="uppercase"
                 >
                     About Me
                 </Button>
+                <Blast opacity={0.5} size={250} fill={"#FFAA4F"} style={{marginLeft:"-20rem"}}/>
             </section>
-            <section className="w-full px-6 py-20 sm:py-32 lg:px-8 lg:py-20">
-                <ScrollingBanner shouldPauseOnHover duration={50} gap="40px">
 
-                </ScrollingBanner>
-            </section>
+            {/*<section className="w-full px-6 py-20 sm:py-32 lg:px-8 lg:py-20">*/}
+            {/*    <ScrollingBanner shouldPauseOnHover duration={50} gap="40px">*/}
+
+            {/*    </ScrollingBanner>*/}
+            {/*</section>*/}
             {/*</section>*/}
             {/*<section className="mx-auto w-full max-w-7xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">*/}
             {/*    <div className={"flex flex-col justify-center items-center gap-6"}>*/}

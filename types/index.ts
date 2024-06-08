@@ -4,8 +4,8 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
     size?: number;
     width?: number | string | undefined;
     height?: number | string | undefined;
-    style?: React.CSSProperties; // Add this property
-    [key: string]: any; // Add this to allow for any other props
+    style?: React.CSSProperties;
+    [key: string]: any;
 };
 
 export type ResultResponse<T> = {

@@ -103,6 +103,7 @@ export default function RootLayout({
                 themes: ["light", "dark", "posthog", "political", "purple-dark"]
             }}>
             <div className="relative flex flex-col h-screen">
+                {/*需要修改*/}
                 {
                     isShow && (
                         <div
@@ -219,7 +220,8 @@ export default function RootLayout({
                         </div>
                         <div className="flex flex-wrap justify-between gap-2 pt-8">
                             <p className="text-small text-default-400">&copy; 2024 Acme Inc. All rights reserved.</p>
-                            <Link href={"https://beian.miit.gov.cn/"} isExternal className={"text-small text-default-400"}>鄂ICP备2024058930号</Link>
+                            <Link href={"https://beian.miit.gov.cn/"} isExternal
+                                  className={"text-small text-default-400"}>鄂ICP备2024058930号</Link>
                         </div>
                     </div>
                 </footer>

@@ -26,82 +26,16 @@ import {Divider} from "@nextui-org/divider";
 import {Icon} from "@iconify/react";
 import {Checkbox} from "@nextui-org/checkbox";
 import {useAppDispatch} from "@/hook/store";
-import React, {ChangeEvent, useCallback, useMemo, useRef, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
 import ThemeSwitch from "@/components/theme-switch";
-import {cn, Input, Listbox, ListboxItem, ModalHeader, ResizablePanel, Tooltip} from "@nextui-org/react";
+import {cn, Input, Listbox, ListboxItem, ModalHeader, ResizablePanel, Tooltip, useUser} from "@nextui-org/react";
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
 import {tv} from "tailwind-variants";
 import {isWebKit} from "@react-aria/utils";
 import {SearchLinearIcon} from "@nextui-org/shared-icons";
 
-const cmdk = tv({
-    slots: {
-        base: "max-h-full overflow-y-auto",
-        header: [
-            "flex",
-            "items-center",
-            "w-full",
-            "px-4",
-            "border-b",
-            "border-default-400/50",
-            "dark:border-default-100",
-        ],
-        searchIcon: "text-default-400 text-lg",
-        input: [
-            "w-full",
-            "px-2",
-            "h-14",
-            "font-sans",
-            "text-lg",
-            "outline-none",
-            "rounded-none",
-            "bg-transparent",
-            "text-default-700",
-            "placeholder-default-500",
-            "dark:text-default-500",
-            "dark:placeholder:text-default-300",
-        ],
-        list: ["px-4", "mt-2", "pb-4", "overflow-y-auto", "max-h-[50vh]"],
-        itemWrapper: [
-            "px-4",
-            "mt-2",
-            "group",
-            "flex",
-            "h-16",
-            "justify-between",
-            "items-center",
-            "rounded-lg",
-            "shadow",
-            "bg-content2/50",
-            "active:opacity-70",
-            "cursor-pointer",
-            "transition-opacity",
-            "data-[active=true]:bg-primary",
-            "data-[active=true]:text-primary-foreground",
-        ],
-        leftWrapper: ["flex", "gap-3", "items-center", "w-full", "max-w-full"],
-        leftIcon: [
-            "text-default-500 dark:text-default-300",
-            "group-data-[active=true]:text-primary-foreground",
-        ],
-        itemContent: ["flex", "flex-col", "gap-0", "justify-center", "max-w-[80%]"],
-        itemParentTitle: [
-            "text-default-400",
-            "text-xs",
-            "group-data-[active=true]:text-primary-foreground",
-            "select-none",
-        ],
-        itemTitle: [
-            "truncate",
-            "text-default-500",
-            "group-data-[active=true]:text-primary-foreground",
-            "select-none",
-        ],
-        emptyWrapper: ["flex", "flex-col", "text-center", "items-center", "justify-center", "h-32"],
-    },
-});
 export const Navbar = () => {
 
     const [isLogin, setIsLogin] = useState(true)
@@ -123,7 +57,6 @@ export const Navbar = () => {
             password: ""
         })
     }
-
     // get current path
     const pathname = usePathname()
 
