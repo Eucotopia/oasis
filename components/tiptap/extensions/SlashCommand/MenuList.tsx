@@ -6,7 +6,7 @@ import {Icon} from "@iconify/react";
 
 export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
     const scrollContainer = useRef<HTMLDivElement>(null)
-    const activeItem = useRef<HTMLButtonElement>(null)
+    const activeItem = useRef<HTMLDivElement>(null)
     const [selectedGroupIndex, setSelectedGroupIndex] = useState(0)
     const [selectedCommandIndex, setSelectedCommandIndex] = useState(0)
 
@@ -91,13 +91,19 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
     }))
 
     useEffect(() => {
-        if (activeItem.current && scrollContainer.current) {
-            const offsetTop = activeItem.current.offsetTop
-            const offsetHeight = activeItem.current.offsetHeight
-
-            scrollContainer.current.scrollTop = offsetTop - offsetHeight
+        if (scrollContainer.current) {
+            const activeItem = scrollContainer.current.querySelector(
+                `[data-group-index="${selectedGroupIndex}"][data-command-index="${selectedCommandIndex}"]`
+            );
+            if (activeItem) {
+                activeItem.scrollIntoView({
+                    behavior: "smooth",
+                    block: "end",
+                    inline: "end",
+                });
+            }
         }
-    }, [selectedCommandIndex, selectedGroupIndex])
+    }, [selectedCommandIndex, selectedGroupIndex]);
 
     const createCommandClickHandler = useCallback(
         (groupIndex: number, commandIndex: number) => {
@@ -118,18 +124,20 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
                 ref={scrollContainer}
                 variant="flat"
                 aria-label="Listbox menu with sections"
-                className="p-1 gap-0 rounded-md divide-y divide-default-300/50 dark:divide-default-100/80 bg-content1 max-w-[300px] overflow-scroll max-h-96 scrollbar-hide shadow-small "
+                classNames={{
+                    base: "flex flex-col gap-10 overflow-scroll max-h-96 scrollbar-hide shadow-small p-2 rounded-md bg-content1 max-w-[300px] p-3",
+                }}
                 itemClasses={{
-                    base: "px-2 rounded-medium gap-2 h-12 data-[hover=true]:bg-default-100/80",
+                    base: cn("py-3 px-3 mt-2"),
                 }}
             >
-
                 {props.items.map((group, groupIndex: number) => (
                     <ListboxSection
-                        showDivider
+                        classNames={{
+                            heading: cn("text-md text-default-500")
+                        }}
                         key={group.title}
                         title={group.title}
-                        className="w-full rounded-medium"
                     >
                         {group.commands.map((command, commandIndex: number) => (
                             <ListboxItem
@@ -141,7 +149,8 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
                                 startContent={
                                     <Icon icon={command.iconName} width={20} height={20}/>
                                 }
-                                // aria-current={commandIndex === selectedCommandIndex ? 'true' : 'false'}
+                                data-group-index={groupIndex}
+                                data-command-index={commandIndex}
                             >
                                 {command.label}
                             </ListboxItem>

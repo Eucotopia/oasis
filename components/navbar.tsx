@@ -26,13 +26,82 @@ import {Divider} from "@nextui-org/divider";
 import {Icon} from "@iconify/react";
 import {Checkbox} from "@nextui-org/checkbox";
 import {useAppDispatch} from "@/hook/store";
-import React, {ChangeEvent, useMemo, useState} from "react";
+import React, {ChangeEvent, useCallback, useMemo, useRef, useState} from "react";
 import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
 import ThemeSwitch from "@/components/theme-switch";
 import {cn, Input, Listbox, ListboxItem, ModalHeader, ResizablePanel, Tooltip} from "@nextui-org/react";
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
+import {tv} from "tailwind-variants";
+import {isWebKit} from "@react-aria/utils";
+import {SearchLinearIcon} from "@nextui-org/shared-icons";
 
+const cmdk = tv({
+    slots: {
+        base: "max-h-full overflow-y-auto",
+        header: [
+            "flex",
+            "items-center",
+            "w-full",
+            "px-4",
+            "border-b",
+            "border-default-400/50",
+            "dark:border-default-100",
+        ],
+        searchIcon: "text-default-400 text-lg",
+        input: [
+            "w-full",
+            "px-2",
+            "h-14",
+            "font-sans",
+            "text-lg",
+            "outline-none",
+            "rounded-none",
+            "bg-transparent",
+            "text-default-700",
+            "placeholder-default-500",
+            "dark:text-default-500",
+            "dark:placeholder:text-default-300",
+        ],
+        list: ["px-4", "mt-2", "pb-4", "overflow-y-auto", "max-h-[50vh]"],
+        itemWrapper: [
+            "px-4",
+            "mt-2",
+            "group",
+            "flex",
+            "h-16",
+            "justify-between",
+            "items-center",
+            "rounded-lg",
+            "shadow",
+            "bg-content2/50",
+            "active:opacity-70",
+            "cursor-pointer",
+            "transition-opacity",
+            "data-[active=true]:bg-primary",
+            "data-[active=true]:text-primary-foreground",
+        ],
+        leftWrapper: ["flex", "gap-3", "items-center", "w-full", "max-w-full"],
+        leftIcon: [
+            "text-default-500 dark:text-default-300",
+            "group-data-[active=true]:text-primary-foreground",
+        ],
+        itemContent: ["flex", "flex-col", "gap-0", "justify-center", "max-w-[80%]"],
+        itemParentTitle: [
+            "text-default-400",
+            "text-xs",
+            "group-data-[active=true]:text-primary-foreground",
+            "select-none",
+        ],
+        itemTitle: [
+            "truncate",
+            "text-default-500",
+            "group-data-[active=true]:text-primary-foreground",
+            "select-none",
+        ],
+        emptyWrapper: ["flex", "flex-col", "text-center", "items-center", "justify-center", "h-32"],
+    },
+});
 export const Navbar = () => {
 
     const [isLogin, setIsLogin] = useState(true)
@@ -118,22 +187,55 @@ export const Navbar = () => {
     const searchInput = (
         <Button
             onPress={onSearchOpen}
-            aria-label={"Quick Search"}
+            aria-label="Quick search"
             size={"md"}
+            className="text-sm font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20"
             variant={"flat"}
             startContent={
-                <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0"/>
+                <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" strokeWidth={2}
+                            size={18}
+                />
             }
             endContent={
-                <Kbd className="hidden lg:inline-block " keys={["command"]}>
+                <Kbd className="hidden py-0.5 px-2 lg:inline-block" keys={"command"}>
                     K
                 </Kbd>
             }
-            className={"text-default-400 text-medium "}
         >
             Quick Search
         </Button>
     )
+    const eventRef = useRef<"mouse" | "keyboard">();
+    const onInputKeyDown = useCallback(
+        (e: React.KeyboardEvent) => {
+            eventRef.current = "keyboard";
+            switch (e.key) {
+                case "ArrowDown": {
+                    e.preventDefault();
+                    alert("adf")
+                    break;
+                }
+                case "ArrowUp": {
+                    e.preventDefault();
+                    alert("adf")
+
+                    break;
+                }
+                case "Control":
+                case "Alt":
+                case "Shift": {
+                    e.preventDefault();
+                    break;
+                }
+                case "Enter": {
+                    alert("adf")
+
+                    break;
+                }
+            }
+        },
+        [],
+    );
 
     return (
         <>
@@ -556,43 +658,44 @@ export const Navbar = () => {
                 isOpen={isSearchOpen}
                 onOpenChange={onSearchOpenChange}
                 hideCloseButton
+                placement="top-center"
+                scrollBehavior="inside"
+                size="xl"
+                backdrop="opaque"
                 classNames={{
-                    // body: "scrollbar-hide overflow-scroll rounded-lg mb-20",
-                    // backdrop: "bg-gradient-to-br from-[#292f46]/50 to-secondary-500  backdrop-opacity-40",
-                    base: "border-none bg-content1 shadow-2xl backdrop-blur-3xl",
-                    header: "flex flex-row items-center border-b border-default-400/50 py-2 px-2",
-                    // footer: cn("absolute bottom-0 h-20 rounded-b-lg z-10 overflow-visible bg-content1 px-6 duration-300 ease-in-out transition-height w-full ", {
-                    //     "h-full rounded-t-lg": isShow,
-                    //     "border-t-1 border-default-100 ": !isShow,
-                    // })
+                    base: [
+                        "mt-[20vh]",
+                        "border-small",
+                        "dark:border-default-100",
+                        "supports-[backdrop-filter]:bg-background/80",
+                        "dark:supports-[backdrop-filter]:bg-background/30",
+                        "supports-[backdrop-filter]:backdrop-blur-md",
+                        "supports-[backdrop-filter]:backdrop-saturate-150",
+                    ],
+                    header: "flex items-center w-full px-4 py-0 border-b border-default-400/50 dark:border-default-100",
+                    backdrop: ["bg-black/80"],
                 }}
             >
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader>
-                                <Input
-                                    variant={"bordered"}
-                                    placeholder={"Search documentation"}
-                                    radius={"none"}
-                                    classNames={{
-                                        inputWrapper: "border-none text-default-500",
-                                        input: "w-full text-lg dark:placeholder:text-default-300 placeholder:text-default-500"
-                                    }}
-                                    startContent={
-                                        <Icon icon={"iconamoon:search-light"} height={24}
-                                              className={"text-default-500"}/>
-                                    }
-                                    endContent={
-                                        <Kbd className="hidden lg:inline-block ">
-                                            esc
-                                        </Kbd>
-                                    }/>
+                            <ModalHeader aria-label={"Quick search command"}>
+                                <SearchIcon strokeWidth={2} width={24} height={24} className={"text-default-400"}/>
+                                <input
+                                    autoFocus={!isWebKit()}
+                                    className={"w-full px-2 h-14 font-sans text-lg outline-none rounded-none bg-transparent text-default-700 placeholder-default-500 dark:text-default-500 dark:placeholder:text-default-200"}
+                                    placeholder="Search documentation"
+                                    onKeyDown={onInputKeyDown}
+                                />
+                                <Kbd
+                                    className="py-0 space-x-0.5 rtl:space-x-reverse items-center font-sans text-center shadow-small bg-default-100 text-foreground-600 rounded-small hidden md:block border-none px-2 ml-2 font-medium text-[0.6rem]">
+                                    ESC
+                                </Kbd>
                             </ModalHeader>
                             <ModalBody>
-                                <p>
-                                    待开发
-                                </p>
+                                <div className="flex items-center justify-between">
+                                    <p className="text-default-600">Recent</p>
+                                </div>
                             </ModalBody>
                         </>
                     )}
