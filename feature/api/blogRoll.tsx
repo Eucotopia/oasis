@@ -2,7 +2,6 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {baseUrl} from "@/feature/api/authApi";
 import {ResultResponse} from "@/types";
-import {PostType} from "@/feature/api/postApi";
 
 export type BlogRollType = {
     id?: number

@@ -17,7 +17,6 @@ import {Button} from "@nextui-org/button";
 import {Modal, ModalBody, ModalContent, ModalFooter, useDisclosure} from "@nextui-org/modal";
 import {Icon} from "@iconify/react";
 import {useFileUpload} from "@/hook/ImageUpload";
-import toast from "react-hot-toast";
 import {useUploadMutation} from "@/feature/api/fileApi";
 import {Image} from "@nextui-org/image";
 import {Tab} from "@nextui-org/tabs";
@@ -31,7 +30,9 @@ export default function App() {
         rating: 5,
     })
     const {data: columns, isLoading: isLoadingColumns} = useGetColumnsQuery()
+
     const {handleUploadClick, ref} = useFileUpload()
+
     const [uploadImage] = useUploadMutation();
 
     const uploadFile = useCallback(async (file: File) => {
@@ -45,7 +46,7 @@ export default function App() {
             })
         } catch (errPayload: any) {
             const error = errPayload?.response?.data?.error || 'Something went wrong'
-            toast.error(error)
+            alert(error)
         }
     }, [column, uploadImage])
 

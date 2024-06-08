@@ -22,8 +22,8 @@ export type UserType = {
     address: string,
     status: number
 }
-export const baseUrl1= 'http://localhost:8080';
-export const baseUrl = 'http://47.119.161.226/api';
+export const baseUrl = 'http://localhost:8080';
+export const baseUrl1 = 'http://47.119.161.226/api';
 export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['Auth'],
@@ -46,7 +46,13 @@ export const authApi = createApi({
                 body: credentials,
             }),
             transformResponse: (response: ResultResponse<currentUserType>, meta, arg) => {
-                return response.data
+                if (response.code === 200) {
+                    alert('Login successful')
+                    return response.data;
+                } else {
+                    alert(`Login failed: ${response.message}`)
+                    throw new Error(response.message);
+                }
             },
             transformErrorResponse: (
                 response: {
@@ -55,7 +61,46 @@ export const authApi = createApi({
                 meta,
                 arg
             ) => {
-                response.status
+                if (response.status === 400) {
+                    alert(`请求错误: ${response.status}`)
+                } else if (response.status === 500) { // 假设 500 表示服务器错误
+                    alert('服务器错误，请稍后再试。');
+                } else {
+                    alert(`未知错误: ${response.status}`);
+                }
+                // return response.status;
+            },
+        }),
+        userRegister: buildr.mutation<number, UserLoginType>({
+            query: (credentials) => ({
+                url: '',
+                method: 'POST',
+                body: credentials,
+            }),
+            transformResponse: (response: ResultResponse<null>, meta, arg) => {
+                if (response.code === 200) {
+                    alert(response.message)
+                    return response.code;
+                } else {
+                    alert(`register failed: ${response.message}`)
+                    throw new Error(response.message);
+                }
+            },
+            transformErrorResponse: (
+                response: {
+                    status: string | number,
+                },
+                meta,
+                arg
+            ) => {
+                if (response.status === 400) {
+                    alert(`请求错误: ${response.status}`)
+                } else if (response.status === 500) { // 假设 500 表示服务器错误
+                    alert('服务器错误，请稍后再试。');
+                } else {
+                    alert(`未知错误: ${response.status}`);
+                }
+                // return response.status;
             },
         }),
         getUsers: buildr.query<UserType[], void>({
@@ -77,4 +122,4 @@ export const authApi = createApi({
         })
     }),
 })
-export const {useUserLoginMutation, useGetUsersQuery,useGetUserCountQuery} = authApi
+export const {useUserLoginMutation, useUserRegisterMutation, useGetUsersQuery, useGetUserCountQuery} = authApi

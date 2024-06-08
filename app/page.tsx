@@ -30,7 +30,7 @@ export default function Home() {
     if (!faqs) return null
     return (
         <>
-            {/*<section className="fixed h-svh dark:bg-hero w-screen"/>*/}
+            <section className="fixed h-svh dark:bg-hero w-screen"/>
             <section className={"flex flex-col justify-center items-center lg:pt-36 pt-28 gap-5"}>
                 <Chip
                     variant="solid"

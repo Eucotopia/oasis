@@ -22,7 +22,6 @@ export const authSlice = createSlice({
             state.currentUser = action.payload
         },
         removeCredentials: (state) => {
-            console.log("removeCredentials")
             state.currentUser = null
         }
     }

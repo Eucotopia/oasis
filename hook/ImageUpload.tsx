@@ -1,5 +1,4 @@
 import {DragEvent, useCallback, useEffect, useRef, useState} from 'react'
-import toast from 'react-hot-toast'
 import {useUploadMutation} from "@/feature/api/fileApi";
 
 export const useUploader = ({onUpload}: { onUpload: (url: string) => void }) => {
@@ -15,7 +14,7 @@ export const useUploader = ({onUpload}: { onUpload: (url: string) => void }) => 
             onUpload(url)
         } catch (errPayload: any) {
             const error = errPayload?.response?.data?.error || 'Something went wrong'
-            toast.error(error)
+            alert(error)
         }
         setLoading(false)
     }, [onUpload])

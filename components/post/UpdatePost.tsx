@@ -18,7 +18,6 @@ import {useAppDispatch} from "@/hook/store";
 import {useUploadMutation} from "@/feature/api/fileApi";
 import {Image} from "@nextui-org/image";
 import {useFileUpload} from "@/hook/ImageUpload";
-import toast from "react-hot-toast";
 
 type UpdatePostProps = {
     postParam: PostType
@@ -26,7 +25,9 @@ type UpdatePostProps = {
     onEditPostOpenChange: () => void
 }
 const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePostProps) => {
+
     const {handleUploadClick, ref} = useFileUpload()
+
     const [uploadImage] = useUploadMutation();
     const uploadFile = useCallback(async (file: File) => {
         try {
@@ -39,7 +40,7 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
             })
         } catch (errPayload: any) {
             const error = errPayload?.response?.data?.error || 'Something went wrong'
-            toast.error(error)
+            alert(error)
         }
     }, [uploadImage])
 

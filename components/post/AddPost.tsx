@@ -29,7 +29,6 @@ import {useLastPost} from "@/hook/useLastPost";
 import {useAppDispatch} from "@/hook/store";
 import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
 import {useFileUpload} from "@/hook/ImageUpload";
-import toast from "react-hot-toast";
 import {Image} from "@nextui-org/image";
 
 const AddPost = () => {
@@ -65,7 +64,7 @@ const AddPost = () => {
             })
         } catch (errPayload: any) {
             const error = errPayload?.response?.data?.error || 'Something went wrong'
-            toast.error(error)
+            alert(error)
         }
     }, [uploadImage])
 

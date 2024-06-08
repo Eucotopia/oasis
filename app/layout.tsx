@@ -5,7 +5,6 @@ import {fontSans} from "@/config/fonts";
 import {Providers} from "./providers";
 import {Navbar} from "@/components/navbar";
 import {Link} from "@nextui-org/link";
-import clsx from "clsx";
 import {Button, cn, Input} from "@nextui-org/react";
 import {Icon, type IconProps} from "@iconify/react";
 import React, {useState} from "react";
@@ -92,7 +91,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
         <head/>
         <body
-            className={clsx(
+            className={cn(
                 "min-h-screen bg-background font-sans antialiased",
                 fontSans.variable
             )}
