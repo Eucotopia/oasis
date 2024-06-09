@@ -87,8 +87,8 @@ export default function App() {
         <>
             <Popover placement="bottom" showArrow={true}>
                 <PopoverTrigger>
-                    <Link color={"foreground"} className={"cursor-pointer"} aria-label="theme-switch">
-                        <Icon icon={"line-md:moon-filled-alt-to-sunny-filled-loop-transition"} width={24} height={24}/>
+                    <Link className={"cursor-pointer"} aria-label="theme-switch">
+                        <Icon icon={"line-md:moon-filled-alt-to-sunny-filled-loop-transition"} className={"text-default-500"} width={24} height={24}/>
                     </Link>
                 </PopoverTrigger>
                 <PopoverContent>

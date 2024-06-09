@@ -1,6 +1,5 @@
 "use client"
 import "@/styles/globals.css";
-import {Metadata} from "next";
 import {fontSans} from "@/config/fonts";
 import {Providers} from "./providers";
 import {Navbar} from "@/components/navbar";
@@ -8,7 +7,6 @@ import {Link} from "@nextui-org/link";
 import {Button, cn, Input} from "@nextui-org/react";
 import {Icon, type IconProps} from "@iconify/react";
 import React, {useState} from "react";
-import ThemeSwitch from "@/components/theme-switch";
 import {AcmeIcon} from "@/components/icons";
 
 type SocialIconProps = Omit<IconProps, "icon">;
@@ -104,50 +102,50 @@ export default function RootLayout({
             }}>
             <div className="relative flex flex-col h-screen">
                 {/*需要修改*/}
-                {
-                    isShow && (
-                        <div
-                            className={cn("flex w-full items-center gap-x-3 border-b-1 border-divider bg-gradient-radial from-default-100 via-danger-100 to-danger-100 px-6 py-2 sm:px-3.5 sm:before:flex-1", {
-                                "invisible": !isShow,
-                            })}>
-                            <p className="text-small text-foreground">
-                                <Link className="text-inherit" href="#">
-                                    Congratulations to T1 on winning the 2024 Global Championship.&nbsp;
-                                </Link>
-                            </p>
-                            <Button
-                                as={Link}
-                                className="group relative h-9 overflow-hidden bg-transparent text-small font-normal"
-                                color="default"
-                                endContent={
-                                    <Icon
-                                        className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"
-                                        icon="solar:arrow-right-linear"
-                                        width={16}
-                                    />
-                                }
-                                href="#"
-                                style={{
-                                    border: "solid 2px transparent",
-                                    backgroundImage: `linear-gradient(hsl(var(--nextui-danger-50)), hsl(var(--nextui-danger-50))), linear-gradient(to right, #F871A0, #9353D3)`,
-                                    backgroundOrigin: "border-box",
-                                    backgroundClip: "padding-box, border-box",
-                                }}
-                                variant="bordered"
-                            >
-                                Explore
-                            </Button>
-                            <div className="flex flex-1 justify-end">
-                                <Button isIconOnly aria-label="Close Banner" className="-m-1" size="sm" variant="light"
-                                        onClick={() => setIsShow(false)}>
-                                    <Icon aria-hidden="true" className="text-default-500" icon="lucide:x" width={20}/>
-                                </Button>
-                            </div>
-                        </div>
-                    )
-                }
+                {/*{*/}
+                {/*    isShow && (*/}
+                {/*        <div*/}
+                {/*            className={cn("flex w-full items-center gap-x-3 border-b-1 border-divider bg-gradient-radial from-default-100 via-danger-100 to-danger-100 px-6 py-2 sm:px-3.5 sm:before:flex-1", {*/}
+                {/*                "invisible": !isShow,*/}
+                {/*            })}>*/}
+                {/*            <p className="text-small text-foreground">*/}
+                {/*                <Link className="text-inherit" href="#">*/}
+                {/*                    Congratulations to T1 on winning the 2024 Global Championship.&nbsp;*/}
+                {/*                </Link>*/}
+                {/*            </p>*/}
+                {/*            <Button*/}
+                {/*                as={Link}*/}
+                {/*                className="group relative h-9 overflow-hidden bg-transparent text-small font-normal"*/}
+                {/*                color="default"*/}
+                {/*                endContent={*/}
+                {/*                    <Icon*/}
+                {/*                        className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"*/}
+                {/*                        icon="solar:arrow-right-linear"*/}
+                {/*                        width={16}*/}
+                {/*                    />*/}
+                {/*                }*/}
+                {/*                href="#"*/}
+                {/*                style={{*/}
+                {/*                    border: "solid 2px transparent",*/}
+                {/*                    backgroundImage: `linear-gradient(hsl(var(--nextui-danger-50)), hsl(var(--nextui-danger-50))), linear-gradient(to right, #F871A0, #9353D3)`,*/}
+                {/*                    backgroundOrigin: "border-box",*/}
+                {/*                    backgroundClip: "padding-box, border-box",*/}
+                {/*                }}*/}
+                {/*                variant="bordered"*/}
+                {/*            >*/}
+                {/*                Explore*/}
+                {/*            </Button>*/}
+                {/*            <div className="flex flex-1 justify-end">*/}
+                {/*                <Button isIconOnly aria-label="Close Banner" className="-m-1" size="sm" variant="light"*/}
+                {/*                        onClick={() => setIsShow(false)}>*/}
+                {/*                    <Icon aria-hidden="true" className="text-default-500" icon="lucide:x" width={20}/>*/}
+                {/*                </Button>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    )*/}
+                {/*}*/}
                 <Navbar/>
-                <main className="container max-w-screen-2xl mx-auto flex-grow ">
+                <main className="container max-w-screen-2xl mx-auto flex-grow py-4">
                     {children}
                 </main>
                 <footer className="flex w-full flex-col">

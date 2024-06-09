@@ -8,7 +8,6 @@ import {
     NavbarMenuItem,
     NavbarMenuToggle,
 } from "@nextui-org/navbar";
-import {Button} from "@nextui-org/button";
 import {Kbd} from "@nextui-org/kbd";
 import {Link} from "@nextui-org/link";
 
@@ -21,7 +20,7 @@ import {DiscordIcon, GithubIcon, Logo, SearchIcon, TwitterIcon,} from "@/compone
 import {useAuth} from "@/hook/useAuth";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
 import {Avatar} from "@nextui-org/avatar";
-import {Modal, ModalBody, ModalContent, ModalFooter, useDisclosure} from "@nextui-org/modal";
+import {Modal, ModalBody, ModalContent, useDisclosure} from "@nextui-org/modal";
 import {Divider} from "@nextui-org/divider";
 import {Icon} from "@iconify/react";
 import {Checkbox} from "@nextui-org/checkbox";
@@ -30,19 +29,63 @@ import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} f
 import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
 import ThemeSwitch from "@/components/theme-switch";
-import {cn, Input, Listbox, ListboxItem, ModalHeader, ResizablePanel, Tooltip, useUser} from "@nextui-org/react";
+import {
+    Button,
+    cn,
+    Input,
+    Listbox,
+    ListboxItem,
+    ModalHeader,
+    ResizablePanel,
+    Tooltip,
+} from "@nextui-org/react";
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
-import {tv} from "tailwind-variants";
 import {isWebKit} from "@react-aria/utils";
-import {SearchLinearIcon} from "@nextui-org/shared-icons";
 
 export const Navbar = () => {
 
+    const searchRef = useRef<HTMLInputElement>(null);
+
+    const {
+        isOpen: isSearchOpen,
+        onOpen: onSearchOpen,
+        onOpenChange: onSearchOpenChange,
+        onClose: onSearchClose
+    } = useDisclosure()
+
+    // Function to handle keypress event
+    const handleKeyPress = (event: any) => {
+        if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+            event.preventDefault();
+            if (isSearchOpen) {
+                onSearchClose();
+            } else {
+                onSearchOpen();
+            }
+        }
+    };
+
+    // Adding event listener on component mount and removing on unmount
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress);
+
+        // Cleanup event listener on unmount
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [isSearchOpen]);
+
+    // Focus input when modal opens
+    useEffect(() => {
+        if (isSearchOpen && searchRef.current) {
+            searchRef.current.focus();
+        }
+    }, [isSearchOpen]);
+
     const [isLogin, setIsLogin] = useState(true)
 
-    const {isOpen: isSearchOpen, onOpen: onSearchOpen, onOpenChange: onSearchOpenChange} = useDisclosure()
 
-    const [userLogin, {isLoading}] = useUserLoginMutation()
+    const [userLogin, {isLoading: isLoginLoading}] = useUserLoginMutation()
 
     const [userRegister, {isLoading: isRegisterLogin}] = useUserRegisterMutation()
 
@@ -117,6 +160,7 @@ export const Navbar = () => {
         }
     }
 
+
     const searchInput = (
         <Button
             onPress={onSearchOpen}
@@ -138,7 +182,9 @@ export const Navbar = () => {
             Quick Search
         </Button>
     )
+
     const eventRef = useRef<"mouse" | "keyboard">();
+
     const onInputKeyDown = useCallback(
         (e: React.KeyboardEvent) => {
             eventRef.current = "keyboard";
@@ -151,7 +197,6 @@ export const Navbar = () => {
                 case "ArrowUp": {
                     e.preventDefault();
                     alert("adf")
-
                     break;
                 }
                 case "Control":
@@ -172,7 +217,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <NextUINavbar maxWidth="xl" position="sticky">
+            <NextUINavbar maxWidth="xl" position="sticky" shouldHideOnScroll>
                 <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
                     <NavbarBrand as="li" className="gap-3 max-w-fit">
                         <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -267,13 +312,13 @@ export const Navbar = () => {
                 >
                     <NavbarItem className="hidden sm:flex gap-2">
                         <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-                            <TwitterIcon className="text-content4-foreground"/>
+                            <TwitterIcon className="text-default-500"/>
                         </Link>
                         <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-                            <DiscordIcon className="text-content4-foreground"/>
+                            <DiscordIcon className="text-default-500"/>
                         </Link>
                         <Link isExternal href={siteConfig.links.github} aria-label="Github">
-                            <GithubIcon className="text-content4-foreground"/>
+                            <GithubIcon className="text-default-500"/>
                         </Link>
                         <ThemeSwitch/>
                     </NavbarItem>
@@ -435,9 +480,12 @@ export const Navbar = () => {
                                                                 Forgot password?
                                                             </Link>
                                                         </div>
-                                                        <Button color="primary" type="submit"
-                                                                isLoading={isLoading}
-                                                                onPress={onClose}>
+                                                        <Button
+                                                            color="primary"
+                                                            type="submit"
+                                                            isLoading={isLoginLoading}
+                                                            onPress={onClose}
+                                                        >
                                                             Log In
                                                         </Button>
                                                     </m.form>
@@ -566,7 +614,7 @@ export const Navbar = () => {
 
                                                         <Button color="primary"
                                                                 type="submit"
-                                                                isLoading={isLoading}>
+                                                                isLoading={isRegisterLogin}>
                                                             Sign Up
                                                         </Button>
                                                     </m.form>
@@ -591,6 +639,7 @@ export const Navbar = () => {
                 isOpen={isSearchOpen}
                 onOpenChange={onSearchOpenChange}
                 hideCloseButton
+                onClose={onSearchClose}
                 placement="top-center"
                 scrollBehavior="inside"
                 size="xl"
@@ -610,11 +659,12 @@ export const Navbar = () => {
                 }}
             >
                 <ModalContent>
-                    {(onClose) => (
+                    {() => (
                         <>
                             <ModalHeader aria-label={"Quick search command"}>
                                 <SearchIcon strokeWidth={2} width={24} height={24} className={"text-default-400"}/>
                                 <input
+                                    ref={searchRef}
                                     autoFocus={!isWebKit()}
                                     className={"w-full px-2 h-14 font-sans text-lg outline-none rounded-none bg-transparent text-default-700 placeholder-default-500 dark:text-default-500 dark:placeholder:text-default-200"}
                                     placeholder="Search documentation"
@@ -636,5 +686,4 @@ export const Navbar = () => {
             </Modal>
         </>
     )
-        ;
 };

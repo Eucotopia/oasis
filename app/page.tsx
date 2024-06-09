@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {Icon} from "@iconify/react";
 import {
-    Button, Chip,
+    Button, Chip, cn,
 } from "@nextui-org/react";
 import {useAddFaqMutation, useGetFaqsByAnswerQuery} from "@/feature/api/faqApi";
 import NextLink from "next/link";
@@ -10,13 +10,12 @@ import {
     Blast,
     Burst,
     Cherry, Circle,
-    Claymorphism,
     HeartShaped, Line,
-    Pentagram,
-    Platter,
     Pointed,
-    RoundedTriangle, Smile
+    Smile
 } from "@/components/icons"
+import {AnimatePresence, motion} from "framer-motion";
+import {ArrowRightIcon} from "@nextui-org/shared-icons";
 
 export default function Home() {
     const [isOpen, setIsOpen] = React.useState(false);
@@ -47,36 +46,124 @@ export default function Home() {
                     position: "absolute",
                     right: "0%",
                     top: "0%",
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    maxHeight: "100vh",
+                    maxWidth: "100vw"
                 }}
             />
-            <Pointed style={{position: "absolute", left: "12%", top: "2%"}} size={500} opacity={0.6}/>
-            <Smile style={{position: "absolute", left: "12%", top: "40%"}} size={200} opacity={0.6} fill={"#9263FF"}/>
-            <Cherry opacity={0.5} style={{position: "absolute", left: "5%", top: "20%"}} size={200} fill={"#FF2B4B"}/>
-            <HeartShaped opacity={0.5} style={{position: "absolute", left: "4%", top: "65%"}} size={250}
+            <Pointed style={{position: "absolute", left: "11%", top: "1%", maxHeight: "100vh", maxWidth: "100vw"}}
+                     size={500} opacity={0.6}/>
+            <Smile style={{position: "absolute", left: "12%", top: "40%", maxHeight: "100vh", maxWidth: "100vw"}}
+                   size={200} opacity={0.6} fill={"#9263FF"}/>
+            <Cherry opacity={0.5}
+                    style={{position: "absolute", left: "5%", top: "20%", maxHeight: "100vh", maxWidth: "100vw"}}
+                    size={200} fill={"#FF2B4B"}/>
+            <HeartShaped opacity={0.5}
+                         style={{position: "absolute", left: "4%", top: "65%", maxHeight: "100vh", maxWidth: "100vw"}}
+                         size={250}
                          fill={"#3B6CFF"}/>
-            <Circle opacity={0.5} style={{position: "absolute", left: "20%", top: "60%"}} size={200} fill={"#DBE7FF"}/>
-            <Line fill={"#FF3DC5"} style={{position: "absolute", left: "20%", top: "80%"}} size={150}/>
+            <Circle opacity={0.5}
+                    style={{position: "absolute", left: "20%", top: "60%", maxHeight: "100vh", maxWidth: "100vw"}}
+                    size={200} fill={"#DBE7FF"}/>
+            <Line fill={"#FF3DC5"}
+                  style={{position: "absolute", left: "20%", top: "80%", maxHeight: "100vh", maxWidth: "100vw"}}
+                  size={150}/>
             <section className="flex flex-col justify-center items-center lg:pt-36 pt-28 gap-5 px-4 ">
                 <Chip
                     variant="solid"
-                    className="dark:text-[#ff8c00] dark:bg-[#ff8c001f] px-3 py-4 mb-3 text-medium uppercase"
+                    className="dark:text-[#ff8c00] dark:bg-[#ff8c001f] px-3 py-4 mb-2 text-medium uppercase"
                     startContent={<Icon icon="ic:twotone-apple" height={20}></Icon>}
                 >
                     WWDC 2024 Coming in swiftly.
                 </Chip>
-                <div className="text-3xl md:text-4xl lg:text-6xl font-extrabold w-full max-w-[700px] text-center">
-                    Only you&nbsp;
-                    <i className="bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] leading-tight">
-                        can control&nbsp;
-                    </i>
-                    your future.
+                <div
+                    className={"text-4xl md:text-7xl drop-shadow-md  font-extrabold  text-center "}>
+                    <AnimatePresence>
+                        {"Only you ".split("").map((char, i) => (
+                            <motion.span
+                                key={i}
+                                initial="hidden"
+                                animate="visible"
+                                exit="hidden"
+                                variants={{
+                                    hidden: {opacity: 0, x: -20},
+                                    visible: {opacity: 1, x: 0},
+                                }}
+                                transition={{duration: 0.5, delay: i * 0.04}}
+                            >
+                                {char === " " ? <span>&nbsp;</span> : char}
+                            </motion.span>
+                        ))}
+                        {"can".split("").map((char, i) => (
+                            <motion.span
+                                key={i}
+                                initial="hidden"
+                                animate="visible"
+                                exit="hidden"
+                                variants={{
+                                    hidden: {opacity: 0, x: -20},
+                                    visible: {opacity: 1, x: 0},
+                                }}
+                                transition={{duration: 0.5, delay: 9 * 0.04 + i * 0.04}}
+                                className={"italic bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] "}
+                            >
+                                {char === " " ? <span>&nbsp;</span> : char}
+                            </motion.span>
+                        ))}
+                    </AnimatePresence>
                 </div>
                 <div
-                    className="max-w-lg md:max-w-xl lg:max-w-2xl text-base text-default-500 text-center mb-5 px-4 md:px-0">
+                    className={"text-4xl md:text-7xl drop-shadow-md  font-extrabold w-full text-center "}>
+                    <AnimatePresence>
+                        {"control ".split("").map((char, i) => (
+                            <motion.span
+                                key={i}
+                                initial="hidden"
+                                animate="visible"
+                                exit="hidden"
+                                variants={{
+                                    hidden: {opacity: 0, x: -20},
+                                    visible: {opacity: 1, x: 0},
+                                }}
+                                transition={{duration: 0.5, delay: 12 * 0.04 + i * 0.04}}
+                                className={"italic bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] "}
+                            >
+                                {char === " " ? <span>&nbsp;</span> : char}
+                            </motion.span>
+                        ))}
+                        {"your future.".split("").map((char, i) => (
+                            <motion.span
+                                key={i}
+                                initial="hidden"
+                                animate="visible"
+                                exit="hidden"
+                                variants={{
+                                    hidden: {opacity: 0, x: -20},
+                                    visible: {opacity: 1, x: 0},
+                                }}
+                                transition={{duration: 0.5, delay: 20 * 0.04 + i * 0.04}}
+                            >
+                                {char === " " ? <span>&nbsp;</span> : char}
+                            </motion.span>
+                        ))}
+                    </AnimatePresence>
+                </div>
+
+                <motion.h1
+                    initial="hidden"
+                    animate="visible"
+                    transition={{duration: 2}}
+                    variants={{
+                        hidden: {filter: "blur(10px)", opacity: 0},
+                        visible: {filter: "blur(0px)", opacity: 1},
+                    }}
+                    className={cn(
+                        "max-w-lg md:max-w-xl lg:max-w-2xl text-base text-default-400 text-center mb-5 px-4 md:px-0 mt-2",
+                    )}
+                >
                     When you feel like hope is gone, look inside you and search your soul. You will find a hero lies in
                     you. Dreams are hard to follow, but don&apos;t let anyone steal your dream.
-                </div>
+                </motion.h1>
                 <Button
                     as={NextLink}
                     href="/about"
@@ -85,17 +172,16 @@ export default function Home() {
                     color="warning"
                     radius="lg"
                     className="uppercase"
+                    endContent={
+                        <ArrowRightIcon/>
+                    }
                 >
                     About Me
                 </Button>
-                <Blast opacity={0.5} size={250} fill={"#FFAA4F"} style={{marginLeft:"-20rem"}}/>
+                <Blast opacity={0.5} size={250} fill={"#FFAA4F"} style={{marginLeft: "-20rem"}}/>
             </section>
+            {/*热门新闻*/}
 
-            {/*<section className="w-full px-6 py-20 sm:py-32 lg:px-8 lg:py-20">*/}
-            {/*    <ScrollingBanner shouldPauseOnHover duration={50} gap="40px">*/}
-
-            {/*    </ScrollingBanner>*/}
-            {/*</section>*/}
             {/*</section>*/}
             {/*<section className="mx-auto w-full max-w-7xl px-6 py-20 sm:py-32 lg:px-8 lg:py-40">*/}
             {/*    <div className={"flex flex-col justify-center items-center gap-6"}>*/}
