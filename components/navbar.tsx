@@ -217,7 +217,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <NextUINavbar maxWidth="xl" position="sticky" shouldHideOnScroll>
+            <NextUINavbar maxWidth="xl" position="sticky">
                 <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
                     <NavbarBrand as="li" className="gap-3 max-w-fit">
                         <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -435,6 +435,7 @@ export const Navbar = () => {
                                                             value={userState.email}
                                                             onChange={handleLoginChange}
                                                             name="email"
+                                                            isInvalid={isInvalid}
                                                             label="Email Address"
                                                             errorMessage={isInvalid && "Please enter a valid email"}
                                                             placeholder="Enter your email"
@@ -537,6 +538,7 @@ export const Navbar = () => {
                                                         <Input
                                                             placeholder="Enter your email"
                                                             autoFocus
+                                                            isInvalid={isInvalid}
                                                             errorMessage={isInvalid && "Please enter a valid email"}
                                                             onChange={handleLoginChange}
                                                             value={userState.email}

@@ -113,7 +113,7 @@ export default function Home() {
                     </AnimatePresence>
                 </div>
                 <div
-                    className={"text-4xl md:text-7xl drop-shadow-md  font-extrabold w-full text-center "}>
+                    className={"text-4xl md:text-7xl drop-shadow-md font-extrabold w-full text-center"}>
                     <AnimatePresence>
                         {"control ".split("").map((char, i) => (
                             <motion.span
@@ -126,7 +126,7 @@ export default function Home() {
                                     visible: {opacity: 1, x: 0},
                                 }}
                                 transition={{duration: 0.5, delay: 12 * 0.04 + i * 0.04}}
-                                className={"italic bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081] "}
+                                className={"italic bg-clip-text text-transparent bg-gradient-radial from-[#ff8c00] to-[#ff4081]"}
                             >
                                 {char === " " ? <span>&nbsp;</span> : char}
                             </motion.span>
