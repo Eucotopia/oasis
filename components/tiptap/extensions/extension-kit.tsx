@@ -17,6 +17,7 @@ import {
     HorizontalRule,
     ImageBlock,
     Link,
+    SnippetNode,
     ColorHighlighter,
     Placeholder,
     Selection,
@@ -42,7 +43,6 @@ import {
     TaskList,
     emojiSuggestion,
 } from '.'
-import SnippetCode from "@/components/tiptap/extensions/SnippetCode/SnippetCode";
 import Youtube from '@tiptap/extension-youtube'
 import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
 import {ImageUpload} from './ImageUpload'
@@ -78,7 +78,6 @@ export const ExtensionKit = () => [
     Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
     }),
-    SnippetCode,
     Youtube,
     HorizontalRule,
     StarterKit.configure({
@@ -95,6 +94,7 @@ export const ExtensionKit = () => [
         defaultLanguage: null,
     }),
     TextStyle,
+    SnippetNode,
     FontSize,
     FontFamily,
     Color,

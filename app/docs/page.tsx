@@ -6,8 +6,15 @@ export default function DocsPage() {
 
     return (
         <>
-            <Snippet className={"w-44 overflow-scroll scrollbar-hide"} >stall @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/reactnpm install @nextui-org/react</Snippet>
-
+            <Snippet color="success" symbol="#"
+                     classNames={{
+                         base: "!bg-pink-400",
+                         pre: "!pre-classes bg-red-400",
+                         content: "!bg-red-400",
+                     }}
+            >
+                asdfasd
+            </Snippet>
             <Input
                 type="email"
                 label="Email"

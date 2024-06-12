@@ -31,10 +31,7 @@ export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
         extensions: [
             ...ExtensionKit()
         ],
-        // content: editContent,
-        content: `
-    <snippetCode>asfasdfasdf</snippetCode>
-    `,
+        content: editContent,
         editorProps: {
             attributes: {
                 autocomplete: 'off',

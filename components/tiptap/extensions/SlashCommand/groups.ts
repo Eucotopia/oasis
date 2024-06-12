@@ -91,6 +91,16 @@ export const GROUPS: Group[] = [
         title: 'Insert',
         commands: [
             {
+                name: 'Snippet',
+                label: 'Snippet',
+                iconName: 'fa6-solid:table',
+                description: 'Insert a table',
+                // shouldBeHidden: editor => editor.isActive('snippet'),
+                action: editor => {
+                    editor.chain().focus().insertSnippet().run()
+                },
+            },
+            {
                 name: 'table',
                 label: 'Table',
                 iconName: 'fa6-solid:table',
