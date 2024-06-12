@@ -1,8 +1,8 @@
 import TiptapTableHeader from '@tiptap/extension-table-header'
-import { Plugin } from '@tiptap/pm/state'
-import { Decoration, DecorationSet } from '@tiptap/pm/view'
+import {Plugin} from '@tiptap/pm/state'
+import {Decoration, DecorationSet} from '@tiptap/pm/view'
 
-import { getCellsInRow, isColumnSelected, selectColumn } from './utils'
+import {getCellsInRow, isColumnSelected, selectColumn} from './utils'
 
 export const TableHeader = TiptapTableHeader.extend({
   addAttributes() {
@@ -17,9 +17,7 @@ export const TableHeader = TiptapTableHeader.extend({
         default: null,
         parseHTML: element => {
           const colwidth = element.getAttribute('colwidth')
-          const value = colwidth ? colwidth.split(',').map(item => parseInt(item, 10)) : null
-
-          return value
+            return colwidth ? colwidth.split(',').map(item => parseInt(item, 10)) : null
         },
       },
       style: {

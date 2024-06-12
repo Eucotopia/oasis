@@ -41,6 +41,7 @@ export const FontSizePicker = ({onChange, value}: FontSizePickerProps) => {
                     <Button
                         variant="light"
                         className="capitalize"
+                        size={"md"}
                         endContent={
                             <Icon icon={"fa6-solid:chevron-down"} width={12} height={12}/>
                         }

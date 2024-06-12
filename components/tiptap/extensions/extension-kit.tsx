@@ -42,6 +42,7 @@ import {
     TaskList,
     emojiSuggestion,
 } from '.'
+import Test from "./Test"
 import Youtube from '@tiptap/extension-youtube'
 import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
 import {ImageUpload} from './ImageUpload'
@@ -50,6 +51,7 @@ import {TableOfContentsNode} from './TableOfContentsNode'
 import {lowlight} from 'lowlight'
 import {useUploadMutation} from "@/feature/api/fileApi";
 import Image from '@tiptap/extension-image'
+
 const UploadImageHandle = async (file: File) => {
     const [uploadImage] = useUploadMutation();
     const formData = new FormData();
@@ -61,6 +63,7 @@ export const ExtensionKit = () => [
     // TODO:部分样式不可用
     Mathematics,
     Columns,
+    Test,
     ColorHighlighter,
     SmilieReplacer,
     TaskList,

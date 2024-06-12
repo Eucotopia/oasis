@@ -1,23 +1,23 @@
 import {Editor} from '@tiptap/core'
 
 export interface Group {
-  name: string
-  title: string
-  commands: Command[]
+    name: string
+    title: string
+    commands: Command[]
 }
 
 export interface Command {
-  name: string
-  label: string
-  description: string
-  aliases?: string[]
-  iconName: string
-  action: (editor: Editor) => void
-  shouldBeHidden?: (editor: Editor) => boolean
+    name: string
+    label: string
+    description: string
+    aliases?: string[]
+    iconName: string
+    action: (editor: Editor) => void
+    shouldBeHidden?: (editor: Editor) => boolean
 }
 
 export interface MenuListProps {
-  editor: Editor
-  items: Group[]
-  command: (command: Command) => void
+    editor: Editor
+    items: Group[]
+    command: (command: Command) => void
 }

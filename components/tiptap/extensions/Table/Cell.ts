@@ -1,125 +1,119 @@
-import { mergeAttributes, Node } from '@tiptap/core'
-import { Plugin } from '@tiptap/pm/state'
-import { Decoration, DecorationSet } from '@tiptap/pm/view'
+import {mergeAttributes, Node} from '@tiptap/core'
+import {Plugin} from '@tiptap/pm/state'
+import {Decoration, DecorationSet} from '@tiptap/pm/view'
 
-import { getCellsInColumn, isRowSelected, selectRow } from './utils'
+import {getCellsInColumn, isRowSelected, selectRow} from './utils'
 
 export interface TableCellOptions {
-  HTMLAttributes: Record<string, any>
+    HTMLAttributes: Record<string, any>
 }
 
 export const TableCell = Node.create<TableCellOptions>({
-  name: 'tableCell',
+    name: 'tableCell',
 
-  content: 'block+', // TODO: Do not allow table in table
+    content: 'block+', // TODO: Do not allow table in table
 
-  tableRole: 'cell',
+    tableRole: 'cell',
 
-  isolating: true,
+    isolating: true,
 
-  addOptions() {
-    return {
-      HTMLAttributes: {},
-    }
-  },
+    addOptions() {
+        return {
+            HTMLAttributes: {},
+        }
+    },
 
-  parseHTML() {
-    return [{ tag: 'td' }]
-  },
+    parseHTML() {
+        return [{tag: 'td'}]
+    },
 
-  renderHTML({ HTMLAttributes }) {
-    return ['td', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
-  },
+    renderHTML({HTMLAttributes}) {
+        return ['td', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
+    },
 
-  addAttributes() {
-    return {
-      colspan: {
-        default: 1,
-        parseHTML: element => {
-          const colspan = element.getAttribute('colspan')
-          const value = colspan ? parseInt(colspan, 10) : 1
+    addAttributes() {
+        return {
+            colspan: {
+                default: 1,
+                parseHTML: element => {
+                    const colspan = element.getAttribute('colspan')
+                  return colspan ? parseInt(colspan, 10) : 1
+                },
+            },
+            rowspan: {
+                default: 1,
+                parseHTML: element => {
+                    const rowspan = element.getAttribute('rowspan')
+                  return rowspan ? parseInt(rowspan, 10) : 1
+                },
+            },
+            colwidth: {
+                default: null,
+                parseHTML: element => {
+                    const colwidth = element.getAttribute('colwidth')
+                    return colwidth ? [parseInt(colwidth, 10)] : null
+                },
+            },
+            style: {
+                default: null,
+            },
+        }
+    },
 
-          return value
-        },
-      },
-      rowspan: {
-        default: 1,
-        parseHTML: element => {
-          const rowspan = element.getAttribute('rowspan')
-          const value = rowspan ? parseInt(rowspan, 10) : 1
+    addProseMirrorPlugins() {
+        const {isEditable} = this.editor
 
-          return value
-        },
-      },
-      colwidth: {
-        default: null,
-        parseHTML: element => {
-          const colwidth = element.getAttribute('colwidth')
-          const value = colwidth ? [parseInt(colwidth, 10)] : null
+        return [
+            new Plugin({
+                props: {
+                    decorations: state => {
+                        if (!isEditable) {
+                            return DecorationSet.empty
+                        }
 
-          return value
-        },
-      },
-      style: {
-        default: null,
-      },
-    }
-  },
+                        const {doc, selection} = state
+                        const decorations: Decoration[] = []
+                        const cells = getCellsInColumn(0)(selection)
 
-  addProseMirrorPlugins() {
-    const { isEditable } = this.editor
+                        if (cells) {
+                            cells.forEach(({pos}: { pos: number }, index: number) => {
+                                decorations.push(
+                                    Decoration.widget(pos + 1, () => {
+                                        const rowSelected = isRowSelected(index)(selection)
+                                        let className = 'grip-row'
 
-    return [
-      new Plugin({
-        props: {
-          decorations: state => {
-            if (!isEditable) {
-              return DecorationSet.empty
-            }
+                                        if (rowSelected) {
+                                            className += ' selected'
+                                        }
 
-            const { doc, selection } = state
-            const decorations: Decoration[] = []
-            const cells = getCellsInColumn(0)(selection)
+                                        if (index === 0) {
+                                            className += ' first'
+                                        }
 
-            if (cells) {
-              cells.forEach(({ pos }: { pos: number }, index: number) => {
-                decorations.push(
-                  Decoration.widget(pos + 1, () => {
-                    const rowSelected = isRowSelected(index)(selection)
-                    let className = 'grip-row'
+                                        if (index === cells.length - 1) {
+                                            className += ' last'
+                                        }
 
-                    if (rowSelected) {
-                      className += ' selected'
-                    }
+                                        const grip = document.createElement('a')
 
-                    if (index === 0) {
-                      className += ' first'
-                    }
+                                        grip.className = className
+                                        grip.addEventListener('mousedown', event => {
+                                            event.preventDefault()
+                                            event.stopImmediatePropagation()
 
-                    if (index === cells.length - 1) {
-                      className += ' last'
-                    }
+                                            this.editor.view.dispatch(selectRow(index)(this.editor.state.tr))
+                                        })
 
-                    const grip = document.createElement('a')
+                                        return grip
+                                    }),
+                                )
+                            })
+                        }
 
-                    grip.className = className
-                    grip.addEventListener('mousedown', event => {
-                      event.preventDefault()
-                      event.stopImmediatePropagation()
-
-                      this.editor.view.dispatch(selectRow(index)(this.editor.state.tr))
-                    })
-
-                    return grip
-                  }),
-                )
-              })
-            }
-
-            return DecorationSet.create(doc, decorations)
-          },
-        },
-      }),
-    ]
-  },
+                        return DecorationSet.create(doc, decorations)
+                    },
+                },
+            }),
+        ]
+    },
 })

@@ -11,14 +11,11 @@ import {Icon} from "@iconify/react";
 export const ColumnsMenu = ({editor, appendTo}: MenuProps) => {
     const getReferenceClientRect = useCallback(() => {
         const renderContainer = getRenderContainer(editor, 'columns')
-        const rect = renderContainer?.getBoundingClientRect() || new DOMRect(-1000, -1000, 0, 0)
-
-        return rect
+        return renderContainer?.getBoundingClientRect() || new DOMRect(-1000, -1000, 0, 0)
     }, [editor])
 
     const shouldShow = useCallback(() => {
-        const isColumns = editor.isActive('columns')
-        return isColumns
+        return editor.isActive('columns')
     }, [editor])
 
     const onColumnLeft = useCallback(() => {
@@ -50,45 +47,43 @@ export const ColumnsMenu = ({editor, appendTo}: MenuProps) => {
                 sticky: 'popper',
             }}
         >
-            <div className={"text-black inline-flex h-full leading-none gap-0.5 flex-row p-1 items-center"}>
+            <div className="flex items-center space-x-2 p-2 bg-white rounded-lg shadow-md">
                 <Button
                     isIconOnly
-                    size={"sm"}
-                    variant={"light"}
+                    size="sm"
+                    variant="light"
                     onPress={onColumnLeft}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer",
-                        {
-                            "bg-content4": editor.isActive('columns', { layout: ColumnLayout.SidebarLeft })
-                        })}
+                    className={cn("rounded-md cursor-pointer", {
+                        "bg-content4": editor.isActive('columns', {layout: ColumnLayout.SidebarLeft})
+                    })}
                 >
-                    <Icon icon={"mdi:dock-left"} width={26} height={26}/>
+                    <Icon icon="mdi:dock-left" width={26} height={26}/>
                 </Button>
                 <Button
                     isIconOnly
-                    size={"sm"}
-                    variant={"light"}
+                    size="sm"
+                    variant="light"
                     onPress={onColumnTwo}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer",
-                        {
-                            "bg-content4": editor.isActive('columns', { layout: ColumnLayout.TwoColumn })
-                        })}
+                    className={cn("rounded-md cursor-pointer", {
+                        "bg-content4": editor.isActive('columns', {layout: ColumnLayout.TwoColumn})
+                    })}
                 >
-                    <Icon icon={"fa6-solid:table-columns"} width={20} height={20}/>
+                    <Icon icon="fa6-solid:table-columns" width={20} height={20}/>
                 </Button>
                 <Button
                     isIconOnly
-                    size={"sm"}
-                    variant={"light"}
+                    size="sm"
+                    variant="light"
                     onPress={onColumnRight}
-                    className={cn("bg-transparent border-none rounded-md cursor-pointer",
-                        {
-                            "bg-content4": editor.isActive('columns', { layout: ColumnLayout.SidebarRight })
-                        })}
+                    className={cn("rounded-md cursor-pointer", {
+                        "bg-content4": editor.isActive('columns', {layout: ColumnLayout.SidebarRight})
+                    })}
                 >
-                    <Icon icon={"mdi:dock-right"} width={26} height={26}/>
+                    <Icon icon="mdi:dock-right" width={26} height={26}/>
                 </Button>
             </div>
         </BaseBubbleMenu>
+
     )
 }
 

@@ -11,15 +11,11 @@ import ImageBlockMenu from "@/components/tiptap/extensions/ImageBlock/components
 export const BlockEditor = ({editor}: {
     editor: Editor
 }) => {
-    const [isSelected, setIsSelected] = React.useState(false);
-    const [link, setLink] = React.useState("");
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["inter"]));
-    const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-        [selectedKeys]
-    );
-    const states = useTextmenuStates(editor)
     const menuContainerRef = useRef(null)
+
+    if (!editor) {
+        return null
+    }
 
     return (
         <>

@@ -55,6 +55,7 @@ export const FontFamilyPicker = ({onChange, value}: FontFamilyPickerProps) => {
                 <DropdownTrigger>
                     <Button
                         variant="light"
+                        size={"md"}
                         className="capitalize"
                         endContent={
                             <Icon icon={"fa6-solid:chevron-down"} width={12} height={12}/>

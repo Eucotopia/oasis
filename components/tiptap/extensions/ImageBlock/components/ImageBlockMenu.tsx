@@ -1,5 +1,5 @@
 import {BubbleMenu as BaseBubbleMenu} from '@tiptap/react'
-import React, {forwardRef, useCallback, useRef} from 'react'
+import React, {useCallback, useRef} from 'react'
 import {Instance, sticky} from 'tippy.js'
 
 import {ImageBlockWidth} from './ImageBlockWidth'
@@ -7,8 +7,6 @@ import {MenuProps} from "@/components/tiptap/menus/types";
 import {getRenderContainer} from "@/components/tiptap/lib/utils";
 import {Button, cn} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
-import {actionAlignHorizontallyCentered} from "@excalidraw/excalidraw/types/actions";
-import {Divider} from "@nextui-org/divider";
 
 export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
     const menuRef = useRef<HTMLDivElement>(null)
@@ -22,9 +20,7 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
     }, [editor])
 
     const shouldShow = useCallback(() => {
-        const isActive = editor.isActive('imageBlock')
-
-        return isActive
+        return editor.isActive('imageBlock')
     }, [editor])
 
     const onAlignImageLeft = useCallback(() => {
@@ -49,7 +45,6 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
     return (
         <BaseBubbleMenu
             editor={editor}
-            // pluginKey={`imageBlockMenu-${uuid()}`}
             shouldShow={shouldShow}
             updateDelay={0}
             tippyOptions={{
@@ -61,60 +56,52 @@ export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
                 onCreate: (instance: Instance) => {
                     tippyInstance.current = instance
                 },
-                appendTo: () => {
-                    return appendTo?.current
-                },
+                appendTo: () => appendTo?.current,
                 plugins: [sticky],
                 sticky: 'popper',
             }}
         >
-            {shouldShow() && (
-                <div ref={menuRef} className={"flex flex-row "}>
-                    <Button
-                        aria-label={"Align image left"}
-                        isIconOnly
-                        size={"sm"}
-                        variant={"light"}
-                        onPress={onAlignImageLeft}
-                        className={cn("bg-transparent border-none rounded-md cursor-pointer",
-                            {
-                                "bg-content4": editor.isActive('imageBlock', {align: 'left'})
-                            })}
-                    >
-                        <Icon icon="f7:sidebar-left" width={18} height={18}></Icon>
-                    </Button>
-                    <Button
-                        aria-label={"Align image center"}
-                        isIconOnly
-                        size={"sm"}
-                        variant={"light"}
-                        onPress={onAlignImageCenter}
-                        className={cn("bg-transparent border-none rounded-md cursor-pointer",
-                            {
-                                "bg-content4": editor.isActive('imageBlock', {align: 'center'})
-                            })}
-                    >
-                        <Icon icon="f7:text-aligncenter" width={18} height={18}></Icon>
-                    </Button>
-                    <Button
-                        aria-label={"Align image right"}
-                        isIconOnly
-                        size={"sm"}
-                        variant={"light"}
-                        onPress={onAlignImageRight}
-                        className={cn("bg-transparent border-none rounded-md cursor-pointer",
-                            {
-                                "bg-content4": editor.isActive('imageBlock', {align: 'right'})
-                            })}
-                    >
-                        <Icon icon="f7:sidebar-right" width={18} height={18}></Icon>
-                    </Button>
-                    <ImageBlockWidth onChange={onWidthChange}
-                                     value={parseInt(editor.getAttributes('imageBlock').width)}/>
-                </div>
-            )
-            }
+            <div ref={menuRef} className="flex items-center space-x-2 p-2 bg-white rounded-lg shadow-md">
+                <Button
+                    aria-label="Align image left"
+                    isIconOnly
+                    size="sm"
+                    variant="light"
+                    onPress={onAlignImageLeft}
+                    className={cn("rounded-md cursor-pointer", {
+                        "bg-content4": editor.isActive('imageBlock', {align: 'left'})
+                    })}
+                >
+                    <Icon icon="f7:sidebar-left" width={18} height={18}/>
+                </Button>
+                <Button
+                    aria-label="Align image center"
+                    isIconOnly
+                    size="sm"
+                    variant="light"
+                    onPress={onAlignImageCenter}
+                    className={cn("rounded-md cursor-pointer", {
+                        "bg-content4": editor.isActive('imageBlock', {align: 'center'})
+                    })}
+                >
+                    <Icon icon="f7:text-aligncenter" width={18} height={18}/>
+                </Button>
+                <Button
+                    aria-label="Align image right"
+                    isIconOnly
+                    size="sm"
+                    variant="light"
+                    onPress={onAlignImageRight}
+                    className={cn("rounded-md cursor-pointer", {
+                        "bg-content4": editor.isActive('imageBlock', {align: 'right'})
+                    })}
+                >
+                    <Icon icon="f7:sidebar-right" width={18} height={18}/>
+                </Button>
+                <ImageBlockWidth onChange={onWidthChange} value={parseInt(editor.getAttributes('imageBlock').width)}/>
+            </div>
         </BaseBubbleMenu>
+
     )
 }
 

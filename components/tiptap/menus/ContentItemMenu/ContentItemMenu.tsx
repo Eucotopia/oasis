@@ -38,41 +38,35 @@ export const ContentItemMenu = ({editor}: ContentItemMenuProps) => {
                     zIndex: 99,
                 }}
             >
-                <div className="flex items-center gap-1">
+                <div className="flex items-center space-x-2">
                     <Link onPress={actions.handleAdd} isBlock color="foreground">
-                        <Icon icon="fa6-solid:plus" height={20} width={20}></Icon>
+                        <Icon icon="fa6-solid:plus" height={20} width={20}/>
                     </Link>
                     <Dropdown>
                         <DropdownTrigger>
                             <Link color="foreground" isBlock>
-                                <Icon icon="fa6-solid:grip" height={20} width={20}></Icon>
+                                <Icon icon="fa6-solid:grip" height={20} width={20}/>
                             </Link>
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Static Actions">
                             <DropdownItem
                                 key="clear formatting"
                                 onPress={actions.resetTextFormatting}
-                                startContent={
-                                    <Icon icon="fa6-solid:text-slash" width={18} height={18}/>
-                                }
+                                startContent={<Icon icon="fa6-solid:text-slash" width={18} height={18}/>}
                             >
                                 Clear formatting
                             </DropdownItem>
                             <DropdownItem
                                 key="copy to clipboard"
                                 onPress={actions.copyNodeToClipboard}
-                                startContent={
-                                    <Icon icon="fa6-solid:copy" width={18} height={18}></Icon>
-                                }
+                                startContent={<Icon icon="fa6-solid:copy" width={18} height={18}/>}
                             >
                                 Copy to clipboard
                             </DropdownItem>
                             <DropdownItem
                                 key="duplicate"
                                 onPress={actions.duplicateNode}
-                                startContent={
-                                    <Icon icon="fa6-solid:copy" width={18} height={18}></Icon>
-                                }
+                                startContent={<Icon icon="fa6-solid:copy" width={18} height={18}/>}
                             >
                                 Duplicate
                             </DropdownItem>
@@ -81,9 +75,7 @@ export const ContentItemMenu = ({editor}: ContentItemMenuProps) => {
                                 className="text-danger"
                                 color="danger"
                                 onPress={actions.deleteNode}
-                                startContent={
-                                    <Icon icon="fa6-solid:trash" width={18} height={18}></Icon>
-                                }
+                                startContent={<Icon icon="fa6-solid:trash" width={18} height={18}/>}
                             >
                                 Delete
                             </DropdownItem>

@@ -1,42 +1,40 @@
 .ProseMirror {
     /* Image Block */
 
-    figure[data-type='imageBlock'] {
+    & figure[data-type='imageBlock'] {
         @apply m-0;
 
-        img {
+        & img {
             @apply rounded block w-full ;
         }
     }
 
     /* Block Quote */
-
-    figure[data-type='blockquoteFigure'] {
-        @apply my-14 text-black dark:text-white bg-yellow-400 opacity-85 rounded-md px-4 pt-1 pb-4 dark:bg-yellow-800;
+    & figure[data-type='blockquoteFigure'] {
+        @apply my-14 bg-[#FAF594] rounded-xl border-3 opacity-100 mt-6 mb-6 border-opacity-100 border-[#0D0D0D] py-4 px-5 dark:text-foreground dark:bg-gray-800;
     }
 
     & > blockquote,
     [data-type='blockquoteFigure'] {
-        blockquote {
-            @apply m-0 font-bold text-3xl;
+        & blockquote {
+            @apply m-0 leading-8 text-2xl font-bold;
 
             & > * {
-                @apply first:mt-0 last:mb-0;
+                @apply first:mb-1.5;
             }
         }
     }
 
     /* Columns */
-
     [data-type='columns'] {
-        @apply grid gap-4 mt-14 mb-12 ;
+        @apply grid gap-6 mt-8 mb-12;
 
         &.layout-sidebar-left {
-            grid-template-columns: 40fr 60fr;
+            grid-template-columns: 2fr 3fr;
         }
 
         &.layout-sidebar-right {
-            grid-template-columns: 60fr 40fr;
+            grid-template-columns: 3fr 2fr;
         }
 
         &.layout-two-column {
@@ -45,6 +43,6 @@
     }
 
     [data-type='column'] {
-        @apply overflow-auto border-1 border-dashed py-1 px-2 rounded-md;
+        @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md;
     }
 }

@@ -4,6 +4,7 @@ import { ShouldShowProps } from '../../types'
 import { isCustomNodeSelected, isTextSelected } from '../../../lib/utils'
 
 export const useTextmenuStates = (editor: Editor) => {
+
   const shouldShow = useCallback(
     ({ view, from }: ShouldShowProps) => {
       if (!view) {

@@ -1,33 +1,34 @@
-import { Node, mergeAttributes } from '@tiptap/core'
+import {Node, mergeAttributes} from '@tiptap/core'
 
 export const Column = Node.create({
-  name: 'column',
+    // 名称
+    name: 'column',
+    // 类型
+    content: 'block+',
+    // 常用于表格等
+    isolating: true,
 
-  content: 'block+',
+    addAttributes() {
+        return {
+            position: {
+                default: '',
+                parseHTML: element => element.getAttribute('data-position'),
+                renderHTML: attributes => ({'data-position': attributes.position}),
+            },
+        }
+    },
 
-  isolating: true,
+    renderHTML({HTMLAttributes}) {
+        return ['div', mergeAttributes(HTMLAttributes, {'data-type': 'column'}), 0]
+    },
 
-  addAttributes() {
-    return {
-      position: {
-        default: '',
-        parseHTML: element => element.getAttribute('data-position'),
-        renderHTML: attributes => ({ 'data-position': attributes.position }),
-      },
-    }
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'column' }), 0]
-  },
-
-  parseHTML() {
-    return [
-      {
-        tag: 'div[data-type="column"]',
-      },
-    ]
-  },
+    parseHTML() {
+        return [
+            {
+                tag: 'div[data-type="column"]',
+            },
+        ]
+    },
 })
 
 export default Column
