@@ -22,8 +22,9 @@ const SnippetView = () => {
         <NodeViewWrapper>
             <Snippet
                 variant={"bordered"}
-                symbol="#"
-                className={"w-full flex-row flex-1"}
+                // symbol="#"
+                hideSymbol
+                className={"w-full flex-row flex-1 items-center justify-between"}
             >
                 <NodeViewContent>
                 </NodeViewContent>
