@@ -33,13 +33,7 @@ export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
         ],
         // content: editContent,
         content: `
-    <p>
-      This is still the text editor you’re used to, but enriched with node views.
-    </p>
-    <react-component count="0"></react-component>
-    <p>
-      Did you see that? That’s a React component. We are really living in the future.
-    </p>
+    <snippetCode>asfasdfasdf</snippetCode>
     `,
         editorProps: {
             attributes: {

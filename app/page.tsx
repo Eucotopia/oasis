@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {Icon} from "@iconify/react";
 import {
-    Button, CardHeader, Chip, cn, Image
+    Button, CardHeader, Chip, cn, Image, Snippet
 } from "@nextui-org/react";
 import {useAddFaqMutation, useGetFaqsByAnswerQuery} from "@/feature/api/faqApi";
 import NextLink from "next/link";
@@ -39,6 +39,7 @@ export default function Home() {
     // if (!faqs) return null
     return (
         <>
+
             <section className="fixed h-svh dark:bg-hero w-screen"/>
             <Burst
                 size={900}

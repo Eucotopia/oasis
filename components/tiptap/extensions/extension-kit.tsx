@@ -42,7 +42,7 @@ import {
     TaskList,
     emojiSuggestion,
 } from '.'
-import Test from "./Test"
+import SnippetCode from "@/components/tiptap/extensions/SnippetCode/SnippetCode";
 import Youtube from '@tiptap/extension-youtube'
 import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
 import {ImageUpload} from './ImageUpload'
@@ -63,7 +63,6 @@ export const ExtensionKit = () => [
     // TODO:部分样式不可用
     Mathematics,
     Columns,
-    Test,
     ColorHighlighter,
     SmilieReplacer,
     TaskList,
@@ -79,6 +78,7 @@ export const ExtensionKit = () => [
     Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
     }),
+    SnippetCode,
     Youtube,
     HorizontalRule,
     StarterKit.configure({
