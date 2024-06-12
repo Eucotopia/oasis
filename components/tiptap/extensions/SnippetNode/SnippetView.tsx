@@ -3,28 +3,20 @@ import {Snippet} from "@nextui-org/react";
 
 const SnippetView = () => {
     return (
-        // <NodeViewWrapper>
-        //     <NodeViewContent style={{
-        //         display: 'flex',
-        //         justifyContent: 'center',
-        //         alignItems: 'center',
-        //         textAlign: 'center',
-        //         backgroundColor: '#fff',
-        //     }}>
-        //         <Snippet
-        //             variant={"bordered"}
-        //             symbol="#"
-        //             className={"w-full flex-row bg-pink-600"}
-        //         >
-        //         </Snippet>
-        //     </NodeViewContent>
-        // </NodeViewWrapper>
         <NodeViewWrapper>
             <Snippet
                 variant={"bordered"}
                 // symbol="#"
                 hideSymbol
-                className={"w-full flex-row flex-1 items-center justify-between"}
+                autoFocus
+                classNames={{
+                    base:"w-full",
+                    // copyButton:"absolute top-7 right-7",
+                }}
+                // className={"absolute top-1/2"}
+                onCopy={() => {
+                    alert("nice")
+                }}
             >
                 <NodeViewContent>
                 </NodeViewContent>
