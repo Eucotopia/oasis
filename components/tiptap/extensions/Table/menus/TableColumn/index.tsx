@@ -3,7 +3,7 @@ import React, {useCallback} from 'react'
 
 import {isColumnGripSelected} from './utils'
 import {MenuProps, ShouldShowProps} from '@/components/tiptap/menus/types'
-import {Button, Listbox, cn, ListboxItem} from "@nextui-org/react";
+import {Listbox, ListboxItem} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
 
 export const TableColumnMenu = React.memo(({editor, appendTo}: MenuProps): JSX.Element => {

@@ -8,7 +8,7 @@ import {getRenderContainer} from "@/components/tiptap/lib/utils";
 import {Button, cn} from "@nextui-org/react";
 import {Icon} from "@iconify/react";
 
-export const ImageBlockMenu = ({editor, appendTo}: MenuProps): JSX.Element => {
+export const ImageBlockMenu = ({editor, appendTo}: MenuProps) => {
     const menuRef = useRef<HTMLDivElement>(null)
     const tippyInstance = useRef<Instance | null>(null)
 

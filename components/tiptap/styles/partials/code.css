@@ -7,8 +7,8 @@
         }
     }
 
-    pre:not([class]) {
-        @apply caret-white bg-neutral-700 text-white rounded my-2 p-4 border border-black dark:bg-neutral-900 dark:border-neutral-800;
+    pre {
+        @apply my-2 p-2;
 
         code {
             @apply bg-inherit text-inherit p-0 shadow-none;

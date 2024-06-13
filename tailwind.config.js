@@ -83,7 +83,11 @@ module.exports = {
         nextui({
                 themes: {
                     light: {},
-                    dark: {},
+                    dark: {
+                        colors:{
+                            test:"#fff"
+                        }
+                    },
                     "purple-dark": {
                         extend: "dark", // <- inherit default values from dark theme
                         colors: {

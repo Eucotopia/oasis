@@ -81,7 +81,7 @@ export const GROUPS: Group[] = [
                 description: 'Code block with syntax highlighting',
                 shouldBeHidden: editor => editor.isActive('columns'),
                 action: editor => {
-                    editor.chain().focus().setCodeBlock().run()
+                    editor.chain().focus().setCodeBlockFigure().run()
                 },
             },
         ],
@@ -90,16 +90,6 @@ export const GROUPS: Group[] = [
         name: 'insert',
         title: 'Insert',
         commands: [
-            {
-                name: 'Snippet',
-                label: 'Snippet',
-                iconName: 'fa6-solid:table',
-                description: 'Insert a table',
-                // shouldBeHidden: editor => editor.isActive('snippet'),
-                action: editor => {
-                    editor.chain().focus().insertSnippet().run()
-                },
-            },
             {
                 name: 'table',
                 label: 'Table',

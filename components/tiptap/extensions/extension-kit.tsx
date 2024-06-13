@@ -17,7 +17,6 @@ import {
     HorizontalRule,
     ImageBlock,
     Link,
-    SnippetNode,
     ColorHighlighter,
     Placeholder,
     Selection,
@@ -42,9 +41,9 @@ import {
     TaskItem,
     TaskList,
     emojiSuggestion,
+    CodeBlockFigure
 } from '.'
 import Youtube from '@tiptap/extension-youtube'
-import {CodeBlockLowlight} from '@tiptap/extension-code-block-lowlight'
 import {ImageUpload} from './ImageUpload'
 import History from '@tiptap/extension-history'
 import {TableOfContentsNode} from './TableOfContentsNode'
@@ -75,6 +74,10 @@ export const ExtensionKit = () => [
     TableOfContents,
     TableOfContentsNode,
     Selection,
+    CodeBlockFigure.configure({
+        lowlight,
+        defaultLanguage: null
+    }),
     Heading.configure({
         levels: [1, 2, 3, 4, 5, 6],
     }),
@@ -89,12 +92,7 @@ export const ExtensionKit = () => [
         history: false,
         codeBlock: false,
     }),
-    CodeBlockLowlight.configure({
-        lowlight,
-        defaultLanguage: null,
-    }),
     TextStyle,
-    SnippetNode,
     FontSize,
     FontFamily,
     Color,
