@@ -3,6 +3,7 @@
 import {
     BlockquoteFigure,
     CharacterCount,
+    ReactComponent,
     Color,
     Document,
     Dropcursor,
@@ -82,6 +83,7 @@ export const ExtensionKit = () => [
         levels: [1, 2, 3, 4, 5, 6],
     }),
     Youtube,
+    ReactComponent,
     HorizontalRule,
     StarterKit.configure({
         document: false,

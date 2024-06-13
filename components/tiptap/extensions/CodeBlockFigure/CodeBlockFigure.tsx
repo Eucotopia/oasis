@@ -42,6 +42,9 @@ export const CodeBlockFigure = CodeBlockLowlight.extend({
 
     defining: true,
 
+    group:'block',
+
+    content:'inline*',
 
     isolating: true,
 

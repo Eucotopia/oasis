@@ -1,5 +1,5 @@
-import {Editor, NodeViewContent, NodeViewWrapper} from "@tiptap/react";
-import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Snippet} from "@nextui-org/react";
+import {Editor, NodeViewContent, NodeViewWrapper, useReactNodeView} from "@tiptap/react";
+import {Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Snippet} from "@nextui-org/react";
 import {useState} from "react";
 import {SnippetProps,} from "@nextui-org/react";
 
@@ -16,42 +16,31 @@ interface SnippetViewProps {
 }
 
 const SnippetView = (props: SnippetViewProps) => {
-    const { node, updateAttributes } = props;
 
-    const [color, setColor] = useState<SnippetProps['color']>("default")
-
-    const [variant, setVariant] = useState<SnippetProps['variant']>("solid")
-
-    const handleColorChange = (color: SnippetProps['color']) => {
-        updateAttributes({ color });
-    };
-
-    const handleVariantChange = (variant: SnippetProps['variant']) => {
-        updateAttributes({ variant });
-    };
-
-
+    const {node, updateAttributes} = props;
 
     return (
         <NodeViewWrapper>
-
             <Snippet
+                as={"span"}
                 classNames={{
-                    base: "relative",
+                    base: "relative flex flex-row flex-start justify-start p-0 px-1",
                     content: "max-h-96 overflow-scroll scrollbar-hide",
-                    pre: "max-h-96 overflow-scroll scrollbar-hide",
-                    copyButton: "absolute top-3 right-3"
+                    pre: "max-h-96 overflow-scroll scrollbar-hide w-full overflow-x-scroll",
+                    copyButton: "absolute top-3 right-3",
                 }}
                 variant={node.attrs.variant as SnippetProps['variant']}
-
                 color={node.attrs.color as SnippetProps['color']}
                 hideSymbol
                 autoFocus
                 radius={"sm"}
                 fullWidth
             >
-                <NodeViewContent>
-                </NodeViewContent>
+                <NodeViewContent style={{
+                    width: '100%',
+                    padding: 0,
+                    boxSizing: 'border-box',
+                }}/>
             </Snippet>
         </NodeViewWrapper>
     )
