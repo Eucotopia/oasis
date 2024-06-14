@@ -2218,6 +2218,8 @@ const GameIcon: React.FC<IconSvgProps> = ({
                                           }) => (
     <svg
         version="1.1"
+        // height={size | height}
+        // width={size | width}
         x="0px" y="0px"
         viewBox="0 0 500 500"
         style={{enableBackground: 'new 0 0 500 500'}}

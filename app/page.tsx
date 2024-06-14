@@ -19,12 +19,16 @@ import {
 } from "@/components/icons"
 import {AnimatePresence, motion} from "framer-motion";
 import {ArrowRightIcon} from "@nextui-org/shared-icons";
-import {Card, CardFooter} from "@nextui-org/card";
+import {Card, CardBody, CardFooter} from "@nextui-org/card";
+import {useRouter} from "next/navigation";
 
 export default function Home() {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const [question, setQuestion] = useState<string>();
+
+    const router = useRouter();
+
 
     const {data: faqs} = useGetFaqsByAnswerQuery()
 
@@ -188,96 +192,60 @@ export default function Home() {
             </section>
 
             <section className={"flex flex-row gap-8 p-4 max-w-7xl mx-auto"}>
-                <Card isFooterBlurred className="w-full h-[300px] flex flex-1">
-                    <CardHeader className="absolute z-10 top-1 flex-col items-start">
+                <Card
+                    classNames={{
+                        base: "hover:scale-110",
+                        body: "hover:cursor-pointer p-0"
+                    }}
+                    className="w-full h-[300px] flex flex-1 "
+                >
+                    <CardHeader className="absolute z-10 top-1 flex-col items-start ">
                         <p className="text-tiny text-white/60 uppercase font-bold">Explore the Gaming World</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
-                    <GameIcon/>
-                    <CardFooter
-                        className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-                        <div className="flex flex-grow gap-2 items-center">
-                            <Image
-                                alt="Breathing app icon"
-                                className="rounded-full w-10 h-11 bg-black"
-                                src="https://nextui.org/images/breathing-app-icon.jpeg"
-                            />
-                            <div className="flex flex-col">
-                                <p className="text-tiny text-white/60">Breathing App</p>
-                                <p className="text-tiny text-white/60">Get a good night&apos;s sleep.</p>
-                            </div>
-                        </div>
-                        <Button radius="full" size="sm">Get App</Button>
-                    </CardFooter>
+                    <CardBody onClick={() => router.push("/category/game")}>
+                        <GameIcon/>
+                    </CardBody>
                 </Card>
-                <Card isFooterBlurred className="w-full h-[300px] flex flex-1">
-
+                <Card
+                    classNames={{
+                        base: "hover:scale-110",
+                    }}
+                    isFooterBlurred
+                    className="w-full h-[300px] flex flex-1 "
+                >
                     <CardHeader className="absolute z-10 top-1 flex-col items-start">
                         <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
                     <GameIcon/>
-
-                    <CardFooter
-                        className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-                        <div className="flex flex-grow gap-2 items-center">
-                            <Image
-                                alt="Breathing app icon"
-                                className="rounded-full w-10 h-11 bg-black"
-                                src="https://nextui.org/images/breathing-app-icon.jpeg"
-                            />
-                            <div className="flex flex-col">
-                                <p className="text-tiny text-white/60">Breathing App</p>
-                                <p className="text-tiny text-white/60">Songs Close to the Heart</p>
-                            </div>
-                        </div>
-                        <Button radius="full" size="sm">Get App</Button>
-                    </CardFooter>
                 </Card>
-                <Card isFooterBlurred className="w-full h-[300px] flex flex-1">
+                <Card
+                    classNames={{
+                        base: "hover:scale-110",
+                    }}
+                    isFooterBlurred
+                    className="w-full h-[300px] flex flex-1 "
+                >
 
                     <CardHeader className="absolute z-10 top-1 flex-col items-start">
                         <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
                     <ProgramIcon/>
-                    <CardFooter
-                        className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-                        <div className="flex flex-grow gap-2 items-center">
-                            <Image
-                                alt="Breathing app icon"
-                                className="rounded-full w-10 h-11 bg-black"
-                                src="https://nextui.org/images/breathing-app-icon.jpeg"
-                            />
-                            <div className="flex flex-col">
-                                <p className="text-tiny text-white/60">Breathing App</p>
-                                <p className="text-tiny text-white/60">Programmer&apos;s Diary</p>
-                            </div>
-                        </div>
-                        <Button radius="full" size="sm">Get App</Button>
-                    </CardFooter>
                 </Card>
-                <Card isFooterBlurred className="w-full h-[300px] flex flex-1">
+                <Card
+                    classNames={{
+                        base: "hover:scale-110",
+                    }}
+                    isFooterBlurred
+                    className="w-full h-[300px] flex flex-1 "
+                >
                     <CardHeader className="absolute z-10 top-1 flex-col items-start">
                         <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
                     <Life/>
-                    <CardFooter
-                        className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-                        <div className="flex flex-grow gap-2 items-center">
-                            <Image
-                                alt="Breathing app icon"
-                                className="rounded-full w-10 h-11 bg-black"
-                                src="https://nextui.org/images/breathing-app-icon.jpeg"
-                            />
-                            <div className="flex flex-col">
-                                <p className="text-tiny text-white/60">Breathing App</p>
-                                <p className="text-tiny text-white/60">Sketches of Life</p>
-                            </div>
-                        </div>
-                        <Button radius="full" size="sm">Get App</Button>
-                    </CardFooter>
                 </Card>
             </section>
             {/*</section>*/}
