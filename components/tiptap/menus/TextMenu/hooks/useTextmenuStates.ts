@@ -14,7 +14,7 @@ export const useTextmenuStates = (editor: Editor) => {
       const domAtPos = view.domAtPos(from || 0).node as HTMLElement
       const nodeDOM = view.nodeDOM(from || 0) as HTMLElement
       const node = nodeDOM || domAtPos
-
+        // 如果是下述组件，将不展示
       if (isCustomNodeSelected(editor, node)) {
         return false
       }

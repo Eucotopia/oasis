@@ -87,6 +87,22 @@ export const GROUPS: Group[] = [
         ],
     },
     {
+        name: "note",
+        title: "Note",
+        commands: [
+            {
+                name: 'infoNote',
+                label: 'Info Note',
+                iconName: 'pajamas:severity-info',
+                description: '待定',
+                shouldBeHidden: editor => editor.isActive('columns'),
+                action: editor => {
+                    editor.chain().focus().setMessageNote().run()
+                },
+            },
+        ]
+    },
+    {
         name: 'insert',
         title: 'Insert',
         commands: [

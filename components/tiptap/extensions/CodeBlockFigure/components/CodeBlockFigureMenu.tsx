@@ -15,7 +15,7 @@ export const CodeBlockFigureMenu = ({editor, appendTo}: MenuProps) => {
     const tippyInstance = useRef<Instance | null>(null)
 
     const shouldShow = useCallback(() => {
-        return editor.isActive('codeBlockFigure')
+        return editor.isEditable && editor.isActive('codeBlockFigure')
     }, [editor])
 
     const setColor = useCallback((color: SnippetProps['color']) => {

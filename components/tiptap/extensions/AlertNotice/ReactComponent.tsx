@@ -1,7 +1,6 @@
 import {mergeAttributes, Node} from '@tiptap/core'
 import {ReactNodeViewRenderer} from '@tiptap/react'
 import {AlertNoticeView} from "@/components/tiptap/extensions/AlertNotice/components/AlertNoticeView";
-import {SnippetProps} from "@nextui-org/react";
 
 declare module '@tiptap/core' {
     interface Commands<ReturnType> {

@@ -9,9 +9,12 @@ import NextLink from "next/link";
 import {
     Blast,
     Burst,
-    Cherry, Circle,
-    HeartShaped, Line,
-    Pointed,
+    Cherry,
+    Circle,
+    GameIcon,
+    HeartShaped, Life,
+    Line,
+    Pointed, ProgramIcon,
     Smile
 } from "@/components/icons"
 import {AnimatePresence, motion} from "framer-motion";
@@ -36,7 +39,7 @@ export default function Home() {
         }
     }
 
-    // if (!faqs) return null
+    if (!faqs) return null
     return (
         <>
 
@@ -73,10 +76,11 @@ export default function Home() {
             <section className="flex flex-col justify-center items-center lg:pt-36 pt-28 gap-5 px-4 ">
                 <Chip
                     variant="solid"
-                    className="dark:text-[#ff8c00] dark:bg-[#ff8c001f] px-3 py-4 mb-2 text-medium uppercase"
-                    startContent={<Icon icon="ic:twotone-apple" height={20}></Icon>}
+                    radius={"sm"}
+                    color={"warning"}
+                    startContent={<Icon icon="ic:twotone-apple" height={20}/>}
                 >
-                    WWDC 2024 Coming in swiftly.
+                    Coming in swiftly.
                 </Chip>
                 <div
                     className={"text-4xl md:text-7xl drop-shadow-md  font-extrabold  text-center "}>
@@ -183,18 +187,13 @@ export default function Home() {
                 <Blast opacity={0.5} size={250} fill={"#FFAA4F"} style={{marginLeft: "-20rem"}}/>
             </section>
 
-            <section className={"flex flex-row gap-4 p-4"}>
+            <section className={"flex flex-row gap-8 p-4 max-w-7xl mx-auto"}>
                 <Card isFooterBlurred className="w-full h-[300px] flex flex-1">
                     <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                        <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
+                        <p className="text-tiny text-white/60 uppercase font-bold">Explore the Gaming World</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
-                    <Image
-                        removeWrapper
-                        alt="Relaxing app background"
-                        className="z-0 w-full h-full object-cover"
-                        src="https://nextui.org/images/card-example-5.jpeg"
-                    />
+                    <GameIcon/>
                     <CardFooter
                         className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                         <div className="flex flex-grow gap-2 items-center">
@@ -217,12 +216,8 @@ export default function Home() {
                         <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
-                    <Image
-                        removeWrapper
-                        alt="Relaxing app background"
-                        className="z-0 w-full h-full object-cover"
-                        src="https://nextui.org/images/card-example-5.jpeg"
-                    />
+                    <GameIcon/>
+
                     <CardFooter
                         className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                         <div className="flex flex-grow gap-2 items-center">
@@ -245,12 +240,7 @@ export default function Home() {
                         <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
-                    <Image
-                        removeWrapper
-                        alt="Relaxing app background"
-                        className="z-0 w-full h-full object-cover"
-                        src="https://nextui.org/images/card-example-5.jpeg"
-                    />
+                    <ProgramIcon/>
                     <CardFooter
                         className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                         <div className="flex flex-grow gap-2 items-center">
@@ -272,12 +262,7 @@ export default function Home() {
                         <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
-                    <Image
-                        removeWrapper
-                        alt="Relaxing app background"
-                        className="z-0 w-full h-full object-cover"
-                        src="https://nextui.org/images/card-example-5.jpeg"
-                    />
+                    <Life/>
                     <CardFooter
                         className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
                         <div className="flex flex-grow gap-2 items-center">

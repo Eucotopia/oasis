@@ -31,18 +31,7 @@ export const useBlockEditor = (blockEditorProps: BlockEditorProps) => {
         extensions: [
             ...ExtensionKit()
         ],
-        // content: editContent,
-        content: `
-    <p>
-      This is still the text editor you’re used to, but enriched with node views.
-    </p>
-    <react-component>
-      <p>This is editable. You can create a new component by pressing Mod+Enter.</p>
-    </react-component>
-    <p>
-      Did you see that? That’s a React component. We are really living in the future.
-    </p>
-    `,
+        content: editContent,
         editorProps: {
             attributes: {
                 autocomplete: 'off',
