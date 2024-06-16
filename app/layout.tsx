@@ -145,7 +145,7 @@ export default function RootLayout({
                 {/*    )*/}
                 {/*}*/}
                 <Navbar/>
-                <main className="container max-w-screen-2xl mx-auto flex-grow py-4">
+                <main className="container max-w-screen-2xl mx-auto  py-4">
                     {children}
                 </main>
                 <footer className="flex w-full flex-col">
