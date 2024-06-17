@@ -22,7 +22,7 @@ const SnippetView = (props: SnippetViewProps) => {
         <NodeViewWrapper>
             <Snippet
                 classNames={{
-                    base: "relative  py-0 px-1 flex flex-row",
+                    base: "relative py-0 px-1 flex flex-row",
                     content: "max-h-96 overflow-scroll scrollbar-hide",
                     pre: "max-h-96 overflow-scroll scrollbar-hide w-full overflow-x-scroll text-foreground",
                     copyButton: "absolute top-3 right-3",

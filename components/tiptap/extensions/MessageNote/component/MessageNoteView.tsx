@@ -22,17 +22,16 @@ export const MessageNoteView = (props: MessageNoteProps) => {
 
 
     return (
-        // <NodeViewWrapper
-        //     as={"p"}
-        //     // className={cn("rounded-md my-8 mx-0 relative", {
-        //     //     "bg-danger": node.attrs.type === "danger",
-        //     //     "bg-success": node.attrs.type === "info",
-        //     //     "bg-warning": node.attrs.type === "warning"
-        //     // })}
-        //     className={"w-full"}
-        //     size={"lg"}
-        // >
-        <div>
+        <NodeViewWrapper
+            as={Code}
+            // className={cn("rounded-md my-8 mx-0 relative", {
+            //     "bg-danger": node.attrs.type === "danger",
+            //     "bg-success": node.attrs.type === "info",
+            //     "bg-warning": node.attrs.type === "warning"
+            // })}
+            className={"w-full"}
+            size={"lg"}
+        >
             <div contentEditable={false}
                  className={cn("border-green-800 bg-green-800 rounded-br-md rounded-tl-md py-1 px-2 absolute top-0 text-tiny flex flex-row items-center ",
                      {
@@ -44,6 +43,6 @@ export const MessageNoteView = (props: MessageNoteProps) => {
                 {node.attrs.type as NoteType}
             </div>
             <NodeViewContent className={cn("mt-8 p-4 text-black")}/>
-        </div>
+        </NodeViewWrapper>
     )
 }
