@@ -340,11 +340,11 @@ export default function Home() {
                     isFooterBlurred
                     className="w-full md:w-auto h-[300px] flex flex-1 "
                 >
-                    <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                        <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
-                        <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
+                    <CardHeader className="absolute z-50 top-1 flex-col items-start">
+                        <p className="text-2xl text-white/60 uppercase font-bold">It&apos;s dangerous to go alone!</p>
+                        <h4 className="text-6xl text-white/90 font-medium ">Take this.</h4>
                     </CardHeader>
-                    <Life/>
+                    <Image src={"The Legend of Zelda.jpg"} width={800} alt="Legend of Zelda"/>
                 </Card>
                 <Card
                     classNames={{
@@ -353,11 +353,12 @@ export default function Home() {
                     isFooterBlurred
                     className="w-full md:w-auto h-[300px] flex flex-1 "
                 >
-                    <CardHeader className="absolute z-10 top-1 flex-col items-start">
+                    <CardHeader className="absolute z-50 top-1 flex-col items-start">
                         <p className="text-tiny text-white/60 uppercase font-bold">Your day your way</p>
                         <h4 className="text-white/90 font-medium text-xl">Adventures in Gaming</h4>
                     </CardHeader>
-                    <Life/>
+                    <Image src={"Super Mario Bros.jpeg"} width={800} height={800} alt="Super Mario Bros"/>
+
                 </Card>
             </ScrollShadow>
         </>

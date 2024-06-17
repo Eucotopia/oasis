@@ -11,7 +11,7 @@
 
     /* Block Quote */
     & figure[data-type='blockquoteFigure'] {
-        @apply my-14 bg-[#FAF594] rounded-xl border-3 opacity-100 mt-6 mb-6 border-opacity-100 border-[#0D0D0D] py-4 px-5 dark:text-foreground dark:bg-gray-800;
+        @apply my-14 bg-[#FAF594] rounded-xl border-2 opacity-100 mt-6 mb-6 border-opacity-100 border-[#0D0D0D] py-4 px-5 dark:text-foreground dark:bg-gray-800;
     }
 
     & > blockquote,

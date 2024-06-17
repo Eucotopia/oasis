@@ -35,7 +35,7 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
     }, [editor]);
 
     const shouldShow = useCallback(() => {
-        return editor.isActive('messageNote')
+        return editor.isEditable && editor.isActive('messageNote')
     }, [editor])
 
     return (
@@ -57,6 +57,7 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
                     plugins: [sticky],
                     sticky: 'popper',
                 }}
+                className={"flex flex-row gap-4"}
             >
                 <Dropdown size={"sm"}>
                     <DropdownTrigger>
@@ -77,7 +78,10 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
                     <DropdownTrigger>
                         <Button
                             size={"sm"}
-                            variant={editor.getAttributes("messageNote")?.radius}>{editor.getAttributes("messageNote")?.radius}</Button>
+                            radius={editor.getAttributes("messageNote")?.radius}
+                        >
+                            {editor.getAttributes("messageNote")?.radius}
+                        </Button>
                     </DropdownTrigger>
                     <DropdownMenu onAction={(key) => setRadius(key as CodeProps['radius'])}>
                         <DropdownItem key={"none"}>None</DropdownItem>

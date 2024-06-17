@@ -64,6 +64,7 @@ export const CodeBlockFigure = CodeBlockLowlight.extend({
 
     addAttributes() {
         return {
+            ...this.parent?.(),
             color: {
                 default: 'default',
                 parseHTML: element => element.getAttribute('data-color'),
@@ -80,18 +81,6 @@ export const CodeBlockFigure = CodeBlockLowlight.extend({
                 renderHTML: attributes => ({'data-radius': attributes.variant}),
             }
         };
-    },
-
-    renderHTML({HTMLAttributes}) {
-        return ['div', mergeAttributes(HTMLAttributes, {'data-type': 'snippet-block'}), 0];
-    },
-
-    parseHTML() {
-        return [
-            {
-                tag: 'div[data-type="snippet-block"]',
-            },
-        ];
     },
 
     addCommands() {

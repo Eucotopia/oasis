@@ -2,8 +2,10 @@ import {Editor, NodeViewContent, NodeViewWrapper} from "@tiptap/react";
 import React from "react";
 import {Icon} from "@iconify/react";
 import {NoteType} from "@/components/tiptap/extensions/MessageNote";
-import {Chip, cn, SnippetProps} from "@nextui-org/react";
+import {Chip, cn, SnippetProps, Tabs} from "@nextui-org/react";
 import {Code} from "@nextui-org/code";
+import {Tab} from "@nextui-org/tabs";
+import {Card, CardBody} from "@nextui-org/card";
 
 interface MessageNoteProps {
     editor: Editor;
@@ -25,8 +27,7 @@ export const MessageNoteView = (props: MessageNoteProps) => {
 
     return (
         <NodeViewWrapper>
-
-            <Code className={"w-full no-style"}
+            <Code className={"w-full no-style relative"}
                   size={node.attrs.size}
                   color={node.attrs.color}
                   radius={node.attrs.radius}
@@ -36,7 +37,7 @@ export const MessageNoteView = (props: MessageNoteProps) => {
                          {})}>
                     <Icon icon="mage:information-square-fill"/>
                 </div>
-                <NodeViewContent contentEditable={true} className={"outline-none"}/>
+                <NodeViewContent className={"outline-none"}/>
             </Code>
         </NodeViewWrapper>
     )
