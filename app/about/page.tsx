@@ -1,5 +1,7 @@
 import {TypewriterEffectSmooth} from "@/components/type/typewriter-effect";
 import {Snippet, SnippetProps} from "@nextui-org/react";
+import {Code} from "@nextui-org/code";
+import React from "react";
 
 const words = [
     {
@@ -16,6 +18,10 @@ const words = [
 export default function AboutPage() {
     return (
         <>
+            <Code color={"success"} className={"w-full p-0"} contentEditable={false}>
+                asdasdasddsadsa
+                {/*<NodeViewContent  contentEditable={true}/>*/}
+            </Code>
             <Snippet
                 classNames={{
                     base: "relative  py-0 px-1 flex flex-row",

@@ -1,5 +1,7 @@
 .ProseMirror {
-    & code:not(pre code) { /* target code elements that are not inside pre */
+    /* target code elements that are not inside pre */
+
+    & code:not(pre code):not(.no-style) {
         @apply caret-white text-foreground  rounded-sm shadow-lg font-mono bg-danger-500 px-1;
 
         &::selection {

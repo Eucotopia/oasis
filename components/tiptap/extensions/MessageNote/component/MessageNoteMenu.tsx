@@ -20,11 +20,6 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
         return editor.isActive('messageNote')
     }, [editor])
 
-    const setMessageNoteType = useCallback((type: NoteType) => {
-        if (type) {
-            editor.chain().focus(undefined, {scrollIntoView: false}).setMessageNoteType(type).run()
-        }
-    }, [editor]);
 
     return (
         <>
@@ -54,7 +49,7 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
                             {editor.getAttributes("messageNote")?.type}
                         </Button>
                     </DropdownTrigger>
-                    <DropdownMenu aria-label="Static Actions" onAction={(key) => setMessageNoteType(key as NoteType)}>
+                    <DropdownMenu aria-label="Static Actions" >
                         <DropdownItem key="info">info</DropdownItem>
                         <DropdownItem key="warning">warning</DropdownItem>
                         <DropdownItem key="danger">danger</DropdownItem>
