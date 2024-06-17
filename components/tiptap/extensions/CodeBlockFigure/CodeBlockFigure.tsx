@@ -34,6 +34,12 @@ declare module '@tiptap/core' {
              * @example editor.commands.toggleCodeBlock({ language: 'javascript' })
              */
             setCodeBlockFigureVariant: (variant: SnippetProps['variant']) => ReturnType;
+            /**
+             * set snippet radius
+             * @param attributes Code block attributes
+             * @example editor.commands.toggleCodeBlock({ language: 'javascript' })
+             */
+            setCodeBlockFigureRadius: (radius: SnippetProps['radius']) => ReturnType;
         };
     }
 }
@@ -42,9 +48,9 @@ export const CodeBlockFigure = CodeBlockLowlight.extend({
 
     defining: true,
 
-    group:'block',
+    group: 'block',
 
-    content:'inline*',
+    content: 'inline*',
 
     isolating: true,
 
@@ -68,6 +74,11 @@ export const CodeBlockFigure = CodeBlockLowlight.extend({
                 parseHTML: element => element.getAttribute('data-variant'),
                 renderHTML: attributes => ({'data-variant': attributes.variant}),
             },
+            radius: {
+                default: 'sm',
+                parseHTML: element => element.getAttribute('data-radius'),
+                renderHTML: attributes => ({'data-radius': attributes.variant}),
+            }
         };
     },
 
@@ -99,6 +110,9 @@ export const CodeBlockFigure = CodeBlockLowlight.extend({
             setCodeBlockFigureVariant: variant => ({commands}) => {
                 return commands.updateAttributes('codeBlockFigure', {variant});
             },
+            setCodeBlockFigureRadius: radius => ({commands}) => {
+                return commands.updateAttributes('codeBlockFigure', {radius})
+            }
         };
     },
 

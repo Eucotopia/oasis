@@ -30,12 +30,19 @@ export const CodeBlockFigureMenu = ({editor, appendTo}: MenuProps) => {
         }
     }, [editor]);
 
+    const setRadius = useCallback((radius: SnippetProps['radius']) => {
+        if (radius) {
+            editor.chain().focus(undefined, {scrollIntoView: false}).setCodeBlockFigureRadius(radius).run();
+        }
+    }, [editor]);
+
     return (
         <>
             <BaseBubbleMenu
                 editor={editor}
                 shouldShow={shouldShow}
                 updateDelay={0}
+                className={"flex flex-row gap-2"}
                 tippyOptions={{
                     offset: [0, 8],
                     popperOptions: {
@@ -52,7 +59,10 @@ export const CodeBlockFigureMenu = ({editor, appendTo}: MenuProps) => {
             >
                 <Dropdown size={"sm"}>
                     <DropdownTrigger>
-                        <Button>{editor.getAttributes("codeBlockFigure")?.color}</Button>
+                        <Button
+                            size={"sm"}
+                            variant={editor.getAttributes("codeBlockFigure")?.variant}
+                            color={editor.getAttributes("codeBlockFigure")?.color}>{editor.getAttributes("codeBlockFigure")?.color}</Button>
                     </DropdownTrigger>
                     <DropdownMenu onAction={(key) => setColor(key as SnippetProps['color'])}>
                         <DropdownItem key={"default"}>Default</DropdownItem>
@@ -65,13 +75,31 @@ export const CodeBlockFigureMenu = ({editor, appendTo}: MenuProps) => {
                 </Dropdown>
                 <Dropdown>
                     <DropdownTrigger>
-                        <Button>{editor.getAttributes("codeBlockFigure")?.variant}</Button>
+                        <Button
+                            size={"sm"}
+                            variant={editor.getAttributes("codeBlockFigure")?.variant}>{editor.getAttributes("codeBlockFigure")?.variant}</Button>
                     </DropdownTrigger>
                     <DropdownMenu onAction={(key) => setVariant(key as SnippetProps['variant'])}>
                         <DropdownItem key={"solid"}>Solid</DropdownItem>
                         <DropdownItem key={"flat"}>Flat</DropdownItem>
                         <DropdownItem key={"bordered"}>Bordered</DropdownItem>
                         <DropdownItem key={"shadow"}>Shadow</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+                <Dropdown size={"sm"}>
+                    <DropdownTrigger>
+                        <Button
+                            size={"sm"}
+                            radius={editor.getAttributes("codeBlockFigure")?.radius}
+                        >
+                            {editor.getAttributes("codeBlockFigure")?.radius}
+                        </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu onAction={(key) => setRadius(key as SnippetProps['radius'])}>
+                        <DropdownItem key={"none"}>None</DropdownItem>
+                        <DropdownItem key={"sm"}>Sm</DropdownItem>
+                        <DropdownItem key={"md"}>Md</DropdownItem>
+                        <DropdownItem key="lg">Lg</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
             </BaseBubbleMenu>

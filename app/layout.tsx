@@ -8,6 +8,7 @@ import {Button, cn, Input} from "@nextui-org/react";
 import {Icon, type IconProps} from "@iconify/react";
 import React, {useState} from "react";
 import {AcmeIcon} from "@/components/icons";
+import {Image} from "@nextui-org/image";
 
 type SocialIconProps = Omit<IconProps, "icon">;
 
@@ -218,8 +219,24 @@ export default function RootLayout({
                         </div>
                         <div className="flex flex-wrap justify-between gap-2 pt-8">
                             <p className="text-small text-default-400">&copy; 2024 Acme Inc. All rights reserved.</p>
-                            <Link href={"https://beian.miit.gov.cn/"} isExternal
-                                  className={"text-small text-default-400"}>鄂ICP备2024058930号</Link>
+                            <div className={"flex flex-row gap-4"}>
+                                <Link
+                                    isExternal
+                                    href={"https://www.beian.gov.cn"}
+                                    className={"text-small text-default-400"}
+                                >
+                                    <Image src={"https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"} height={15}
+                                           width={15} alt={"gov logo"}/>
+                                    &nbsp;粤公网安备44030002003865号
+                                </Link>
+                                <Link
+                                    href={"https://beian.miit.gov.cn/"}
+                                    isExternal
+                                    className={"text-small text-default-400"}
+                                >
+                                    鄂ICP备2024058930号
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </footer>

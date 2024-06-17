@@ -13,7 +13,9 @@ declare module '@tiptap/core' {
              */
             setMessageNote: (attributes?: { type: NoteType; } | undefined) => ReturnType
 
-            setMessageNoteType: (attributes: { type: NoteType; } | undefined) => ReturnType
+            toggleMessageNote: (attributes?: { type: NoteType; } | undefined) => ReturnType
+
+            setMessageNoteType: (type: NoteType) => ReturnType
         }
     }
 }

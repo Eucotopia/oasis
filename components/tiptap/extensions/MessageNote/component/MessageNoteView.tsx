@@ -2,6 +2,8 @@ import {Editor, NodeViewContent, NodeViewWrapper} from "@tiptap/react";
 import React from "react";
 import {Icon} from "@iconify/react";
 import {NoteType} from "@/components/tiptap/extensions/MessageNote";
+import {Chip, cn} from "@nextui-org/react";
+import {Code} from "@nextui-org/code";
 
 interface MessageNoteProps {
     editor: Editor;
@@ -20,14 +22,28 @@ export const MessageNoteView = (props: MessageNoteProps) => {
 
 
     return (
-        <NodeViewWrapper
-            className={"bg-green-100 border-2 border-solid border-green-500 rounded-md my-8 mx-0 relative"}>
+        // <NodeViewWrapper
+        //     as={"p"}
+        //     // className={cn("rounded-md my-8 mx-0 relative", {
+        //     //     "bg-danger": node.attrs.type === "danger",
+        //     //     "bg-success": node.attrs.type === "info",
+        //     //     "bg-warning": node.attrs.type === "warning"
+        //     // })}
+        //     className={"w-full"}
+        //     size={"lg"}
+        // >
+        <div>
             <div contentEditable={false}
-                 className={"border-green-800 bg-green-800 rounded-br-md rounded-tl-md py-1 px-2 absolute top-0 text-tiny flex flex-row items-center"}>
+                 className={cn("border-green-800 bg-green-800 rounded-br-md rounded-tl-md py-1 px-2 absolute top-0 text-tiny flex flex-row items-center ",
+                     {
+                         "bg-danger": node.attrs.type === "danger",
+                         "bg-success": node.attrs.type === "info",
+                         "bg-warning": node.attrs.type === "warning"
+                     })}>
                 <Icon icon="mage:information-square-fill"/>
                 {node.attrs.type as NoteType}
             </div>
-            <NodeViewContent className={"mt-8 p-4 text-black"}/>
-        </NodeViewWrapper>
+            <NodeViewContent className={cn("mt-8 p-4 text-black")}/>
+        </div>
     )
 }

@@ -275,7 +275,7 @@ export default function Home() {
                 <p className={""}>see all</p>
             </div>
             <ScrollShadow
-                className="flex flex-col md:flex-row flex-wrap  gap-4 md:gap-8  p-4 max-w-7xl mx-auto justify-between">
+                className="flex flex-col md:flex-row flex-wrap gap-4 md:gap-8  p-4 max-w-7xl mx-auto justify-between">
                 <Card
                     isPressable
                     onPress={() => router.push("/category/game")}
