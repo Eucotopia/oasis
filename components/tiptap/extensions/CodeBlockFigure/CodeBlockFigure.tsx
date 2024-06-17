@@ -105,13 +105,13 @@ export const CodeBlockFigure = CodeBlockLowlight.extend({
                     return commands.toggleNode(this.name, 'paragraph', attributes)
                 },
             setCodeBlockFigureColor: color => ({commands}) => {
-                return commands.updateAttributes('codeBlockFigure', {color});
+                return commands.updateAttributes(this.name, {color});
             },
             setCodeBlockFigureVariant: variant => ({commands}) => {
-                return commands.updateAttributes('codeBlockFigure', {variant});
+                return commands.updateAttributes(this.name, {variant});
             },
             setCodeBlockFigureRadius: radius => ({commands}) => {
-                return commands.updateAttributes('codeBlockFigure', {radius})
+                return commands.updateAttributes(this.name, {radius})
             }
         };
     },

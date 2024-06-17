@@ -2,6 +2,7 @@ import {mergeAttributes, Node} from '@tiptap/core'
 import {ReactNodeViewRenderer} from "@tiptap/react";
 import {MessageNoteView} from "./component/MessageNoteView";
 import {SnippetProps} from "@nextui-org/react";
+import {CodeProps} from "@nextui-org/code";
 
 export type NoteType = 'info' | 'danger' | 'warning';
 
@@ -21,21 +22,16 @@ declare module '@tiptap/core' {
              * @param attributes Code block attributes
              * @example editor.commands.toggleCodeBlock({ language: 'javascript' })
              */
-            setMessageNoteColor: (color: SnippetProps['color']) => ReturnType;
-
-            /**
-             * set snippet variant
-             * @param attributes Code block attributes
-             * @example editor.commands.toggleCodeBlock({ language: 'javascript' })
-             */
-            setMessageNoteVariant: (variant: SnippetProps['variant']) => ReturnType;
+            setMessageNoteColor: (color: CodeProps['color']) => ReturnType;
 
             /**
              * set snippet radius
              * @param attributes Code block attributes
              * @example editor.commands.toggleCodeBlock({ language: 'javascript' })
              */
-            setMessageNoteRadius: (radius: SnippetProps['radius']) => ReturnType;
+            setMessageNoteRadius: (radius: CodeProps['radius']) => ReturnType;
+
+            setMessageNoteSize: (size: CodeProps['size']) => ReturnType
         }
     }
 }
@@ -57,15 +53,15 @@ export const MessageNote = Node.create({
                 parseHTML: element => element.getAttribute('data-color'),
                 renderHTML: attributes => ({'data-color': attributes.color}),
             },
-            variant: {
-                default: 'bordered',
-                parseHTML: element => element.getAttribute('data-variant'),
-                renderHTML: attributes => ({'data-variant': attributes.variant}),
-            },
             radius: {
                 default: 'sm',
                 parseHTML: element => element.getAttribute('data-radius'),
-                renderHTML: attributes => ({'data-radius': attributes.variant}),
+                renderHTML: attributes => ({'data-radius': attributes.radius}),
+            },
+            size: {
+                default: 'sm',
+                parseHTML: element => element.getAttribute('data-size'),
+                renderHTML: attributes => ({'data-size': attributes.size}),
             }
         };
     },
@@ -99,11 +95,11 @@ export const MessageNote = Node.create({
             setMessageNoteColor: color => ({commands}) => {
                 return commands.updateAttributes(this.name, {color});
             },
-            setMessageNoteVariant: variant => ({commands}) => {
-                return commands.updateAttributes('messageNote', {variant});
+            setMessageNoteSize: size => ({commands}) => {
+                return commands.updateAttributes(this.name, {size});
             },
             setMessageNoteRadius: radius => ({commands}) => {
-                return commands.updateAttributes('messageNote', {radius})
+                return commands.updateAttributes(this.name, {radius})
             }
         };
     },

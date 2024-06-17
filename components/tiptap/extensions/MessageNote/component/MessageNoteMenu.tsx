@@ -4,8 +4,8 @@ import {getRenderContainer} from "@/components/tiptap/lib/utils";
 import {Instance, sticky} from "tippy.js";
 import {Button, DropdownItem, SnippetProps} from "@nextui-org/react";
 import {BubbleMenu as BaseBubbleMenu} from "@tiptap/react";
-import {NoteType} from "@/components/tiptap/extensions/MessageNote";
 import {Dropdown, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
+import {CodeProps} from "@nextui-org/code";
 
 export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
 
@@ -16,10 +16,27 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
 
     const tippyInstance = useRef<Instance | null>(null)
 
+    const setColor = useCallback((color: CodeProps['color']) => {
+        if (color) {
+            editor.chain().focus(undefined, {scrollIntoView: false}).setMessageNoteColor(color).run();
+        }
+    }, [editor]);
+
+    const setRadius = useCallback((radius: CodeProps['radius']) => {
+        if (radius) {
+            editor.chain().focus(undefined, {scrollIntoView: false}).setMessageNoteRadius(radius).run();
+        }
+    }, [editor]);
+
+    const setSize = useCallback((size: CodeProps['size']) => {
+        if (size) {
+            editor.chain().focus(undefined, {scrollIntoView: false}).setMessageNoteSize(size).run();
+        }
+    }, [editor]);
+
     const shouldShow = useCallback(() => {
         return editor.isActive('messageNote')
     }, [editor])
-
 
     return (
         <>
@@ -41,18 +58,48 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
                     sticky: 'popper',
                 }}
             >
+                <Dropdown size={"sm"}>
+                    <DropdownTrigger>
+                        <Button
+                            size={"sm"}
+                            color={editor.getAttributes("messageNote")?.color}>{editor.getAttributes("messageNote")?.color}</Button>
+                    </DropdownTrigger>
+                    <DropdownMenu onAction={(key) => setColor(key as CodeProps['color'])}>
+                        <DropdownItem key={"default"}>Default</DropdownItem>
+                        <DropdownItem key={"primary"}>Primary</DropdownItem>
+                        <DropdownItem key={"secondary"}>Secondary</DropdownItem>
+                        <DropdownItem key="success">Success</DropdownItem>
+                        <DropdownItem key="warning">Warning</DropdownItem>
+                        <DropdownItem key="danger">Danger</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
                 <Dropdown>
                     <DropdownTrigger>
                         <Button
-                            variant="bordered"
+                            size={"sm"}
+                            variant={editor.getAttributes("messageNote")?.radius}>{editor.getAttributes("messageNote")?.radius}</Button>
+                    </DropdownTrigger>
+                    <DropdownMenu onAction={(key) => setRadius(key as CodeProps['radius'])}>
+                        <DropdownItem key={"none"}>None</DropdownItem>
+                        <DropdownItem key={"sm"}>Sm</DropdownItem>
+                        <DropdownItem key={"md"}>Md</DropdownItem>
+                        <DropdownItem key="lg">Lg</DropdownItem>
+                        <DropdownItem key="full">Full</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+                <Dropdown size={"sm"}>
+                    <DropdownTrigger>
+                        <Button
+                            size={"sm"}
+                            radius={editor.getAttributes("messageNote")?.size}
                         >
-                            {editor.getAttributes("messageNote")?.type}
+                            {editor.getAttributes("messageNote")?.size}
                         </Button>
                     </DropdownTrigger>
-                    <DropdownMenu aria-label="Static Actions" >
-                        <DropdownItem key="info">info</DropdownItem>
-                        <DropdownItem key="warning">warning</DropdownItem>
-                        <DropdownItem key="danger">danger</DropdownItem>
+                    <DropdownMenu onAction={(key) => setSize(key as CodeProps['size'])}>
+                        <DropdownItem key={"sm"}>Sm</DropdownItem>
+                        <DropdownItem key={"md"}>Md</DropdownItem>
+                        <DropdownItem key="lg">Lg</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
             </BaseBubbleMenu>
