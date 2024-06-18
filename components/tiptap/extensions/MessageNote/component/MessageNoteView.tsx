@@ -24,21 +24,33 @@ export const MessageNoteView = (props: MessageNoteProps) => {
 
     const {node, updateAttributes} = props;
 
+    const getIcon = () => {
+        switch (node.attrs.color) {
+            case "primary":
+                return "hugeicons:note-done";
+            case "danger":
+                return "maki:danger";
+            case "warning":
+                return "typcn:warning";
+            default:
+                return "hugeicons:note-done";
+        }
+    }
 
     return (
-        <NodeViewWrapper>
-            <Code className={"w-full no-style relative"}
-                  size={node.attrs.size}
-                  color={node.attrs.color}
-                  radius={node.attrs.radius}
-                  contentEditable={false}>
-                <div contentEditable={false}
-                     className={cn("border-green-800 bg-green-800 rounded-br-md rounded-tl-md py-1 px-2 absolute top-0 text-tiny flex flex-row items-center",
-                         {})}>
-                    <Icon icon="mage:information-square-fill"/>
-                </div>
-                <NodeViewContent className={"outline-none"}/>
-            </Code>
-        </NodeViewWrapper>
+        <>
+            <NodeViewWrapper>
+                <Code className={"w-full no-style pt-8 pb-4 px-5 sm:px-8 my-8"}
+                      size={node.attrs.size}
+                      color={node.attrs.color}
+                      radius={node.attrs.radius}>
+                    <div
+                        className={cn("flex flex-row items-center text-2xl gap-2")}>
+                        <Icon icon={getIcon()} width={"3rem"} height={"3rem"}/>
+                        <NodeViewContent className={"font-bold w-full line-clamp-1"}/>
+                    </div>
+                </Code>
+            </NodeViewWrapper>
+        </>
     )
 }

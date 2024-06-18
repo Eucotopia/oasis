@@ -8,11 +8,14 @@ import {TableColumnMenu, TableRowMenu} from "@/components/tiptap/extensions/Tabl
 import ImageBlockMenu from "@/components/tiptap/extensions/ImageBlock/components/ImageBlockMenu";
 import {CodeBlockFigureMenu} from "@/components/tiptap/extensions/CodeBlockFigure/components/CodeBlockFigureMenu";
 import {MessageNoteMenu} from "@/components/tiptap/extensions/MessageNote/component/MessageNoteMenu";
+import {useMediaQuery} from "usehooks-ts";
 
 export const BlockEditor = ({editor}: {
     editor: Editor
 }) => {
     const menuContainerRef = useRef(null)
+
+    const isMobile = useMediaQuery("(max-width: 768px)");
 
     if (!editor) {
         return null
@@ -20,17 +23,17 @@ export const BlockEditor = ({editor}: {
 
     return (
         <>
-            <div ref={menuContainerRef}>
-                <TextMenu editor={editor}/>
-                {editor.isEditable && <ColumnsMenu editor={editor} appendTo={menuContainerRef}/>}
-                <TableRowMenu editor={editor} appendTo={menuContainerRef}/>
-                <TableColumnMenu editor={editor} appendTo={menuContainerRef}/>
-                <ImageBlockMenu editor={editor} appendTo={menuContainerRef}/>
-                <CodeBlockFigureMenu editor={editor} appendTo={menuContainerRef}/>
-                <MessageNoteMenu editor={editor} appendTo={menuContainerRef}/>
-                {editor.isEditable && <ContentItemMenu editor={editor}/>}
-                <LinkMenu editor={editor} appendTo={menuContainerRef}/>
-                <EditorContent editor={editor} className="flex-1 overflow-y-auto"/>
+            <div ref={menuContainerRef} className={`md:max-w-4xl ${isMobile ? 'max-w-96 p-2' : ''}`}>
+                <TextMenu editor={editor} />
+                {editor.isEditable && <ColumnsMenu editor={editor} appendTo={menuContainerRef} />}
+                <TableRowMenu editor={editor} appendTo={menuContainerRef} />
+                <TableColumnMenu editor={editor} appendTo={menuContainerRef} />
+                <ImageBlockMenu editor={editor} appendTo={menuContainerRef} />
+                <CodeBlockFigureMenu editor={editor} appendTo={menuContainerRef} />
+                <MessageNoteMenu editor={editor} appendTo={menuContainerRef} />
+                {editor.isEditable && <ContentItemMenu editor={editor} />}
+                <LinkMenu editor={editor} appendTo={menuContainerRef} />
+                <EditorContent editor={editor} />
             </div>
         </>
     );

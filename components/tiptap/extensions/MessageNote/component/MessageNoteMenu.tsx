@@ -63,7 +63,9 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
                     <DropdownTrigger>
                         <Button
                             size={"sm"}
-                            color={editor.getAttributes("messageNote")?.color}>{editor.getAttributes("messageNote")?.color}</Button>
+                        >
+                            {editor.getAttributes("messageNote")?.color}
+                        </Button>
                     </DropdownTrigger>
                     <DropdownMenu onAction={(key) => setColor(key as CodeProps['color'])}>
                         <DropdownItem key={"default"}>Default</DropdownItem>
@@ -78,7 +80,6 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
                     <DropdownTrigger>
                         <Button
                             size={"sm"}
-                            radius={editor.getAttributes("messageNote")?.radius}
                         >
                             {editor.getAttributes("messageNote")?.radius}
                         </Button>
@@ -95,7 +96,6 @@ export const MessageNoteMenu = ({editor, appendTo}: MenuProps) => {
                     <DropdownTrigger>
                         <Button
                             size={"sm"}
-                            radius={editor.getAttributes("messageNote")?.size}
                         >
                             {editor.getAttributes("messageNote")?.size}
                         </Button>

@@ -23,8 +23,8 @@ const SnippetView = (props: SnippetViewProps) => {
             <Snippet
                 classNames={{
                     base: "relative flex flex-row p-4",
-                    content: "max-h-96 overflow-scroll scrollbar-hide",
-                    pre: "max-h-96 overflow-scroll scrollbar-hide w-full overflow-x-scroll text-foreground",
+                    content: "max-h-[600px] overflow-scroll scrollbar-hide",
+                    pre: "max-h-[600px] overflow-scroll scrollbar-hide w-full overflow-x-scroll text-foreground",
                     copyButton: "absolute top-3 right-3",
                 }}
                 hideSymbol
