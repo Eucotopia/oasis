@@ -4,7 +4,8 @@ import {PageType, ResultResponse} from "@/types";
 import {TagType} from "@/feature/api/tagApi";
 import {CategoryType} from "@/feature/api/categoryApi";
 import {ColumnType} from "@/feature/api/columnApi";
-import {baseUrl} from "@/feature/api/authApi";
+import {baseUrl, UserType} from "@/feature/api/authApi";
+import {build} from "@react-native-community/cli-platform-android/build/commands/buildAndroid";
 
 
 export type PostType = {
@@ -20,6 +21,7 @@ export type PostType = {
     views?: number
     status: boolean
     cover: string
+    user: UserType
     categories: CategoryType[]
     isPrivate: boolean
     createTime?: string
@@ -40,9 +42,9 @@ export const postApi = createApi({
     reducerPath: 'postApi',
     tagTypes: ['Post'],
     keepUnusedDataFor: 30,
-    endpoints: (build) => ({
+    endpoints: (builder) => ({
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        getPost: build.query<PostType, number>({
+        getPost: builder.query<PostType, number>({
             // note: an optional `queryFn` may be used in place of `query`
             query: (id) => ({url: `${id}`}),
             // Pick out data and prevent nested properties in a hook or selector
@@ -57,7 +59,7 @@ export const postApi = createApi({
             ) => response.status,
             providesTags: (result, error, id) => [{type: 'Post', id: String(id)}]
         }),
-        addPost: build.mutation<ResultResponse<String>, PostType>({
+        addPost: builder.mutation<ResultResponse<String>, PostType>({
             query: (post) => ({
                 url: ``,
                 method: 'POST',
@@ -66,26 +68,32 @@ export const postApi = createApi({
             invalidatesTags: [{type: 'Post', id: 'LIST'}],
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        getPostsByPage: build.query<PostType[], PageType>({
+        getPostsByPage: builder.query<PostType[], PageType>({
             query: (page) => `/${page.current}/${page.pageSize}`,
             transformResponse: (response: ResultResponse<PostType[]>) => response.data,
             providesTags: (result, error, arg) =>
-                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)})), {type: "Post", id: "LIST"}] : [{
+                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)})), {
+                    type: "Post",
+                    id: "LIST"
+                }] : [{
                     type: "Post",
                     id: "LIST"
                 }],
         }),
-        getPosts: build.query<PostType[], void>({
+        getPosts: builder.query<PostType[], void>({
             query: () => ``,
             transformResponse: (response: ResultResponse<PostType[]>, meta, arg) => response.data,
             providesTags: (result, error, arg) =>
-                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)})), {type: "Post", id: "LIST"}] : [{
+                result ? [...result.map((post) => ({type: "Post" as const, id: String(post.id)})), {
+                    type: "Post",
+                    id: "LIST"
+                }] : [{
                     type: "Post",
                     id: "LIST"
                 }],
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        updatePost: build.mutation<ResultResponse<String>, PostType>({
+        updatePost: builder.mutation<ResultResponse<String>, PostType>({
             query: (post) => ({
                 url: ``,
                 method: 'PUT',
@@ -96,7 +104,7 @@ export const postApi = createApi({
             }
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        deletePost: build.mutation<ResultResponse<String>, number>({
+        deletePost: builder.mutation<ResultResponse<String>, number>({
             query: (id) => ({
                 url: `/${id}`,
                 method: 'DELETE',
@@ -106,7 +114,7 @@ export const postApi = createApi({
             }
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        getHotPosts: build.query<PostType[], void>({
+        getHotPosts: builder.query<PostType[], void>({
             query: () => ({url: "/hot"}),
             transformResponse: (response: ResultResponse<PostType[]>, meta, arg) => response.data,
             providesTags: (result, error, arg) =>
@@ -115,9 +123,18 @@ export const postApi = createApi({
                     id: "LIST"
                 }],
         }),
-        getPostCount: build.query<number, void>({
+        getPostCount: builder.query<number, void>({
             query: () => ({url: "/count"}),
             transformResponse: (response: ResultResponse<number>, meta, arg) => response.data,
+        }),
+        getRecentPosts: builder.query<PostType[], void>({
+            query: () => ({url: "/recent"}),
+            transformResponse: (response: ResultResponse<PostType[]>, meta, arg) => response.data,
+            providesTags: (result, error, arg) =>
+                result ? [...result?.map((post) => ({type: "Post" as const, id: String(post.id)}))] : [{
+                    type: "Post",
+                    id: "LIST"
+                }],
         })
     }),
 })
@@ -128,6 +145,7 @@ export const {
     useGetPostsByPageQuery,
     useGetPostsQuery,
     useGetHotPostsQuery,
+    useGetRecentPostsQuery,
     useLazyGetHotPostsQuery,
     useUpdatePostMutation,
     useDeletePostMutation

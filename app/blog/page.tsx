@@ -1,6 +1,6 @@
 'use client'
 
-import {useGetHotPostsQuery} from "@/feature/api/postApi";
+import {useGetHotPostsQuery, useGetRecentPostsQuery} from "@/feature/api/postApi";
 import {Icon} from "@iconify/react";
 import {Card, CardBody, Chip, DateInput, Image, Popover, PopoverContent, PopoverTrigger, User} from "@nextui-org/react";
 import {CardFooter} from "@nextui-org/card";
@@ -10,6 +10,7 @@ import ScrollingBanner from "@/components/scrolling/scrolling-banner";
 import {useMediaQuery} from "usehooks-ts";
 import {ChipProps} from "@nextui-org/react";
 import {useRouter} from "next/navigation";
+import {useGetHotCategoriesQuery} from "@/feature/api/categoryApi";
 
 // Define an array of possible colors based on ChipProps['color']
 const colors: ChipProps['color'][] = ["default", "primary", "secondary", "success", "warning", "danger"];
@@ -24,198 +25,183 @@ export default function BlogPage() {
 
     const {data: hotPosts, isLoading: isGetHotPostsLoading} = useGetHotPostsQuery();
 
+    const {data: hotCategories, isLoading: isGetHotCategoriesLoading} = useGetHotCategoriesQuery();
+
+    const {data: recentPosts, isLoading: isGetRecentPostsLoading} = useGetRecentPostsQuery()
+
+    console.log(hotCategories)
     const router = useRouter();
 
     const isMobile = useMediaQuery("(max-width: 768px)");
 
-    if (hotPosts === undefined) return null;
+    if (hotPosts === undefined || hotCategories == undefined || recentPosts == undefined) return null;
 
     return (
         <>
-            <div className={"grid grid-cols-7 gap-14 w-container px-6"}>
-                <div className={"col-span-5"}>
-                    <div className={"flex flex-col gap-2"}>
-                        <div className={"flex flex-row items-center gap-2 font-extrabold"}>
-                            <Icon icon="f7:hourglass-bottomhalf-fill" height={40} width={40}/>
-                            <p className={"text-3xl"}>Today&apos;s top highlights</p>
-                        </div>
-                        <p className={"text-md text-default-500"}>
-                            Latest breaking news, pictures, videos, and special reports
-                        </p>
-                        <div className={"grid grid-cols-2 gap-8 mt-8"}>
-                            {hotPosts.map((post, index) => (
-                                <Card
-                                    shadow="sm"
-                                    isPressable
-                                    onPress={() => router.push(`/blog/${post.id}`)}
-                                    key={index}
-                                >
-                                    <CardBody className="overflow-visible p-0 rounded-b-none relative flex-grow-0 flex-shrink-0">
-                                        <Image
-                                            alt={post.title}
-                                            shadow="sm"
-                                            radius="none"
-                                            width="100%"
-                                            className="w-full object-cover rounded-b-none"
-                                            src={post.cover}
-                                            // fallbackSrc="https://via.placeholder.com/700x600"
-                                        />
-                                        <div className={"absolute top-2 left-2 z-20 flex flex-row gap-2"}>
-                                            {
-                                                post.categories.map((category, index) => (
-                                                    <Chip key={index} radius={"md"} size={"lg"}
-                                                          color={getRandomColor()}>{category.name}</Chip>
-                                                ))
-                                            }
-                                        </div>
-                                    </CardBody>
-                                    <CardFooter className="flex flex-col items-start text-start gap-4">
-                                        <b className={"text-xl"}>{post.title}</b>
-                                        <p className="text-default-500 line-clamp-3">{post.summary}</p>
-                                        <div className={"flex flex-row justify-between gap-4 w-full items-center"}>
-                                            <Popover showArrow placement="bottom">
-                                                <PopoverTrigger>
-                                                    <User
-                                                        as="button"
-                                                        name="Zoe Lang"
-                                                        description="Product Designer"
-                                                        className="transition-transform"
-                                                        avatarProps={{
-                                                            src: "https://i.pravatar.cc/150?u=a04258114e29026702d"
-                                                        }}
-                                                    />
-                                                </PopoverTrigger>
-                                                <PopoverContent className="p-1">
-                                                    <UserTwitterCard/>
-                                                </PopoverContent>
-                                            </Popover>
-                                            <DateInput
-                                                label={null}
-                                                isReadOnly
-                                                className={"max-w-28 border-none bg-inherit"}
-                                                defaultValue={post.createTime ? parseDate(post.createTime.split(" ")[0]) : parseDate("2024-04-04")}
+            <div className={"w-container px-6"}>
+                <div className={"grid grid-cols-7 gap-14 "}>
+                    <div className={"col-span-5"}>
+                        <div className={"flex flex-col gap-2"}>
+                            <div className={"flex flex-row items-center gap-2 font-extrabold"}>
+                                <Icon icon="f7:hourglass-bottomhalf-fill" height={40} width={40}/>
+                                <p className={"text-3xl"}>Today&apos;s top highlights</p>
+                            </div>
+                            <p className={"text-md text-default-500"}>
+                                Latest breaking news, pictures, videos, and special reports
+                            </p>
+                            <div className={"grid grid-cols-2 gap-6 mt-8"}>
+                                {hotPosts.map((post, index) => (
+                                    <Card
+                                        shadow="sm"
+                                        isPressable
+                                        onPress={() => router.push(`/blog/${post.id}`)}
+                                        key={index}
+                                    >
+                                        <CardBody
+                                            className="overflow-visible pt-4  rounded-b-none relative flex-grow-0 flex-shrink-0 ">
+                                            <Image
+                                                alt={post.title}
+                                                shadow="sm"
+                                                radius={"lg"}
+                                                width="100%"
+                                                className="w-full object-cover"
+                                                src={post.cover}
+                                                // fallbackSrc="https://via.placeholder.com/700x600"
                                             />
-                                        </div>
-                                    </CardFooter>
-                                </Card>
-                            ))}
+                                            <div className={"absolute top-2 left-2 z-20 flex flex-row gap-2"}>
+                                                {
+                                                    post.categories.map((category, index) => (
+                                                        <Chip key={index} radius={"sm"} size={"sm"}
+                                                              color={getRandomColor()}>{category.name}</Chip>
+                                                    ))
+                                                }
+                                            </div>
+                                        </CardBody>
+                                        <CardFooter
+                                            className="flex flex-col items-start justify-between text-start gap-4 h-full ">
+                                            <div className={"flex flex-col gap-2"}>
+                                                <b className={"text-2xl"}>{post.title}</b>
+                                                <p className="text-default-500 line-clamp-3">{post.summary}</p>
+                                            </div>
+                                            <div className={"flex flex-row justify-between gap-4 w-full"}>
+                                                <Popover showArrow placement="bottom">
+                                                    <PopoverTrigger>
+                                                        <User
+                                                            as="button"
+                                                            name={post.user.username}
+                                                            description={post.user.motto}
+                                                            className="transition-transform"
+                                                            avatarProps={{
+                                                                src: `${post.user.avatar}`
+                                                            }}
+                                                            classNames={{
+                                                                description: "line-clamp-1"
+                                                            }}
+                                                        />
+                                                    </PopoverTrigger>
+                                                    <PopoverContent className="p-1">
+                                                        <UserTwitterCard/>
+                                                    </PopoverContent>
+                                                </Popover>
+                                                <DateInput
+                                                    label={null}
+                                                    size="sm"
+                                                    isReadOnly
+                                                    className={"max-w-28 border-none bg-inherit"}
+                                                    defaultValue={post.createTime ? parseDate(post.createTime.split(" ")[0]) : parseDate("2024-04-04")}
+                                                />
+                                            </div>
+                                        </CardFooter>
+                                    </Card>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={"col-span-2"}>
+                        <div className={"flex flex-col"}>
+                            <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Trending topics</p>
+                            <div className={"flex flex-col gap-6"}>
+                                {
+                                    hotCategories.map((category, index) => (
+                                        <Image
+                                            key={index}
+                                            alt={""}
+                                            shadow="sm"
+                                            width="100%"
+                                            className="w-full object-cover max-h-20"
+                                            src="https://nextui.org/images/hero-card-complete.jpeg"
+                                        />
+                                    ))
+                                }
+                                <p className={"underline text-center"}>View all categories</p>
+                            </div>
+                        </div>
+                        <div className={"flex flex-col mt-4"}>
+                            <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Recent post</p>
+                            <div className={"flex flex-col gap-6"}>
+                                {
+                                    recentPosts.map((post, index) => (
+                                        <Image
+                                            key={index}
+                                            alt={""}
+                                            shadow="sm"
+                                            width="100%"
+                                            className="w-full object-cover max-h-20"
+                                            src="https://nextui.org/images/hero-card-complete.jpeg"
+                                        />
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className={"col-span-2"}>
-                    <div className={"flex flex-col"}>
-                        <p className={"mt-4 mb-3 text-2xl"}>Trending topics</p>
-                        <div className={"flex flex-col gap-6"}>
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                            <p className={"underline text-center"}>View all categories</p>
+                <div>
+                    <div className={"flex flex-col gap-2 mt-8 "}>
+                        <div className={"flex flex-row items-center gap-2 font-extrabold"}>
+                            <Icon icon="pajamas:bullhorn" height={40} width={40}/>
+                            <p className={"text-3xl"}>Sponsored news</p>
                         </div>
                     </div>
-                    <div className={"flex flex-col mt-4"}>
-                        <p className={"mt-4 mb-3 text-2xl"}>Recent post</p>
-                        <div className={"flex flex-col gap-6"}>
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                            <Image
-                                alt={""}
-                                shadow="sm"
-                                width="100%"
-                                className="w-full object-cover max-h-20"
-                                src="https://nextui.org/images/hero-card-complete.jpeg"
-                            />
-                        </div>
-                    </div>
+                    <ScrollingBanner isVertical={false} duration={isMobile ? 200 : 120} shouldPauseOnHover={false}>
+                        <Image
+                            width={300}
+                            height={200}
+                            alt="NextUI hero Image with delay"
+                            src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                        />
+                        <Image
+                            width={300}
+                            height={200}
+                            alt="NextUI hero Image with delay"
+                            src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                        />
+                        <Image
+                            width={300}
+                            height={200}
+                            alt="NextUI hero Image with delay"
+                            src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                        />
+                        <Image
+                            width={300}
+                            height={200}
+                            alt="NextUI hero Image with delay"
+                            src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                        />
+                        <Image
+                            width={300}
+                            height={200}
+                            alt="NextUI hero Image with delay"
+                            src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                        />
+                        <Image
+                            width={300}
+                            height={200}
+                            alt="NextUI hero Image with delay"
+                            src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                        />
+                    </ScrollingBanner>
                 </div>
             </div>
-            <div className={"flex flex-col gap-2 mt-8"}>
-                <div className={"flex flex-row items-center gap-2 font-extrabold"}>
-                    <Icon icon="pajamas:bullhorn" height={40} width={40}/>
-                    <p className={"text-3xl"}>Sponsored news</p>
-                </div>
-            </div>
-            <ScrollingBanner isVertical={false} duration={isMobile ? 200 : 120} shouldPauseOnHover={false}>
-                <Image
-                    width={300}
-                    height={200}
-                    alt="NextUI hero Image with delay"
-                    src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                />
-                <Image
-                    width={300}
-                    height={200}
-                    alt="NextUI hero Image with delay"
-                    src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                />
-                <Image
-                    width={300}
-                    height={200}
-                    alt="NextUI hero Image with delay"
-                    src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                />
-                <Image
-                    width={300}
-                    height={200}
-                    alt="NextUI hero Image with delay"
-                    src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                />
-                <Image
-                    width={300}
-                    height={200}
-                    alt="NextUI hero Image with delay"
-                    src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                />
-                <Image
-                    width={300}
-                    height={200}
-                    alt="NextUI hero Image with delay"
-                    src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                />
-            </ScrollingBanner>
         </>
     );
 }

@@ -43,8 +43,24 @@ export const categoryApi = createApi({
         getCategoryCount: builder.query<number, void>({
             query: () => ({url: '/count'}),
             transformResponse: (response: ResultResponse<number>) => response.data,
+        }),
+        getHotCategories: builder.query<CategoryType[], void>({
+            query: () => ({url: '/hot'}),
+            transformResponse: (response: ResultResponse<CategoryType[]>) => response.data,
+            transformErrorResponse: (response: { status: string | number }) => response.status,
+            providesTags: (result, error, arg) =>
+                result ? [...result.map((post) => ({type: "Category" as const, id: post.id}))] : [{
+                    type: "Category",
+                    id: "LIST"
+                }],
         })
     }),
 })
 
-export const {useGetCountQuery, useGetCategoriesQuery, useGetRootCategoriesQuery,useGetCategoryCountQuery} = categoryApi
+export const {
+    useGetCountQuery,
+    useGetCategoriesQuery,
+    useGetRootCategoriesQuery,
+    useGetHotCategoriesQuery,
+    useGetCategoryCountQuery
+} = categoryApi
