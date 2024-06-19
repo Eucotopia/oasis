@@ -18,6 +18,9 @@ module.exports = {
             },
         },
         extend: {
+            width: {
+                container: "1280px"
+            },
             animation: {
                 "scrolling-banner": "scrolling-banner var(--duration) linear infinite",
                 "scrolling-banner-vertical": "scrolling-banner-vertical var(--duration) linear infinite",
@@ -84,8 +87,8 @@ module.exports = {
                 themes: {
                     light: {},
                     dark: {
-                        colors:{
-                            test:"#fff"
+                        colors: {
+                            test: "#fff"
                         }
                     },
                     "purple-dark": {

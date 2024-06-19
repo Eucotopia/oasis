@@ -2,7 +2,7 @@ import {Editor, NodeViewContent, NodeViewWrapper} from "@tiptap/react";
 import React from "react";
 import {Icon} from "@iconify/react";
 import {NoteType} from "@/components/tiptap/extensions/MessageNote";
-import {Chip, cn, SnippetProps, Tabs} from "@nextui-org/react";
+import {Chip, cn, Dropdown, SnippetProps, Tabs} from "@nextui-org/react";
 import {Code} from "@nextui-org/code";
 import {Tab} from "@nextui-org/tabs";
 import {Card, CardBody} from "@nextui-org/card";
@@ -47,7 +47,7 @@ export const MessageNoteView = (props: MessageNoteProps) => {
                     <div
                         className={cn("flex flex-row items-center text-2xl gap-2")}>
                         <Icon icon={getIcon()} width={"3rem"} height={"3rem"}/>
-                        <NodeViewContent className={"font-bold w-full line-clamp-1"}/>
+                        <NodeViewContent className={"font-bold w-full line-clamp-1 "}/>
                     </div>
                 </Code>
             </NodeViewWrapper>

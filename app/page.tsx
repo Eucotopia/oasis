@@ -50,7 +50,7 @@ export default function Home() {
     if (!faqs) return null
     return (
         <>
-            {/*<section className="fixed h-svh dark:bg-hero w-screen"/>*/}
+            <section className="fixed h-svh dark:bg-hero w-screen"/>
             <Burst
                 size={900}
                 opacity={0.4}

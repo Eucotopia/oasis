@@ -12,7 +12,7 @@ export type LinkPreviewPanelProps = {
 export const LinkPreviewPanel = ({onClear, onEdit, url}: LinkPreviewPanelProps) => {
     return (
         <>
-            <div className={"flex border rounded-md bg-content1 shadow-md items-center gap-2 p-2 bg-content"}>
+            <div className={"flex bg-content1 rounded-md shadow-md items-center gap-2 p-2"}>
                 <Link
                     href={url} target={"_blank"}
                     rel={"noopener noreferrer"}

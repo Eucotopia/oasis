@@ -51,6 +51,7 @@ import {TableOfContentsNode} from './TableOfContentsNode'
 import {lowlight} from 'lowlight'
 import {useUploadMutation} from "@/feature/api/fileApi";
 import Image from '@tiptap/extension-image'
+import Code from '@tiptap/extension-code'
 
 const UploadImageHandle = async (file: File) => {
     const [uploadImage] = useUploadMutation();
@@ -95,6 +96,11 @@ export const ExtensionKit = () => [
         codeBlock: false,
     }),
     TextStyle,
+    Code.configure({
+        HTMLAttributes: {
+            class: 'bg-content3 text-foreground px-1 py-0.5 rounded-sm font-momo shadow-md caret-foreground ml-[5px]',
+        },
+    }),
     FontSize,
     FontFamily,
     Color,

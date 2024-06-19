@@ -44,7 +44,7 @@ export const LinkEditorPanel = ({onSetLink, initialOpenInNewTab, initialUrl}: Li
 
     return (
         <>
-            <div className={"flex flex-col justify-center items-start border bg-content1 p-2 rounded-md"}>
+            <div className={"flex flex-col justify-center items-start shadow-md bg-content1 p-2 rounded-md"}>
                 <form onSubmit={state.handleSubmit} className="flex flex-row items-center justify-center mb-2 gap-2">
                     <Input
                         placeholder="Enter URL"

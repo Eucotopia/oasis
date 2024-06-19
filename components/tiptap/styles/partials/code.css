@@ -1,15 +1,5 @@
 .ProseMirror {
-    /* target code elements that are not inside pre */
-    & code:not(pre code):not(.no-style) {
-        @apply caret-white text-foreground rounded-sm shadow-md font-mono bg-danger-200/70 px-0.5 py-0.5;
-
-        &::selection {
-            @apply bg-white/30;
-        }
-    }
-
     pre {
-
         code {
             @apply bg-inherit text-inherit p-0 shadow-none;
         }

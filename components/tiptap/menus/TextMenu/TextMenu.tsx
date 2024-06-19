@@ -166,6 +166,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
             </Popover>
 
             <Popover
+                radius={"sm"}
                 placement="top">
                 <PopoverTrigger>
                     <Button

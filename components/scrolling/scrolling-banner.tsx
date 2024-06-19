@@ -74,7 +74,7 @@ const ScrollingBanner = React.forwardRef<HTMLDivElement, ScrollingBannerProps>(
         className={cn(
           "flex",
           {
-            "w-full": !isVertical,
+            "w-container": !isVertical,
             "overflow-y-hidden": isVertical,
             "overflow-x-hidden": !isVertical,
             "max-h-[calc(100vh_-_200px)]": isVertical,

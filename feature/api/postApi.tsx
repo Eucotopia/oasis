@@ -106,7 +106,7 @@ export const postApi = createApi({
             }
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        getHostPosts: build.query<PostType[], void>({
+        getHotPosts: build.query<PostType[], void>({
             query: () => ({url: "/hot"}),
             transformResponse: (response: ResultResponse<PostType[]>, meta, arg) => response.data,
             providesTags: (result, error, arg) =>
@@ -127,7 +127,8 @@ export const {
     useGetPostCountQuery,
     useGetPostsByPageQuery,
     useGetPostsQuery,
-    useGetHostPostsQuery,
+    useGetHotPostsQuery,
+    useLazyGetHotPostsQuery,
     useUpdatePostMutation,
     useDeletePostMutation
 } = postApi
