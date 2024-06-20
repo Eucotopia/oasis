@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@iconify-icons/fa-solid": "^1.2.4",
     "@iconify/react": "^4.1.1",
     "@nextui-org/accordion": "^2.0.35",
     "@nextui-org/autocomplete": "^2.1.2",

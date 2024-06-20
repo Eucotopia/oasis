@@ -3,7 +3,6 @@ import {Autocomplete, AutocompleteItem, Button, CheckboxGroup, cn, ModalHeader, 
 import {Modal, ModalBody, ModalContent, ModalFooter} from "@nextui-org/modal";
 import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
 import {EditorHeader} from "@/components/tiptap/EditorHeader";
-import {Icon} from "@iconify/react";
 import {BlockEditor} from "@/components/tiptap/BlockEditor";
 import {Input, Textarea} from "@nextui-org/input";
 import TagGroupItem from "@/components/custom/TagGroupItem";
@@ -18,6 +17,7 @@ import {useAppDispatch} from "@/hook/store";
 import {useUploadMutation} from "@/feature/api/fileApi";
 import {Image} from "@nextui-org/image";
 import {useFileUpload} from "@/hook/ImageUpload";
+import {Icon} from "@iconify/react";
 
 type UpdatePostProps = {
     postParam: PostType

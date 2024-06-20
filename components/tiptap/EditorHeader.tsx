@@ -1,8 +1,8 @@
 import {Editor} from "@tiptap/react";
 import {Link} from "@nextui-org/link";
 import {cn} from "@nextui-org/react";
-import {Icon} from "@iconify/react";
-import React, {memo} from "react";
+import {Icon} from "@iconify/react/offline";
+import React from "react";
 import {useTextmenuCommands} from "@/components/tiptap/menus/TextMenu/hooks/useTextmenuCommands";
 import {useTextmenuStates} from "@/components/tiptap/menus/TextMenu/hooks/useTextmenuStates";
 
@@ -22,7 +22,8 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4",
                     )}>
-                    <Icon icon={"fa6-solid:text-slash"} width={20} height={20}/>
+                    <Icon icon={Fa6SolidTextSlash}/>
+                    {/*<Icon icon={"fa6-solid:text-slash"} width={20} height={20}/>*/}
                 </Link>
                 <Link
                     color={"foreground"}
