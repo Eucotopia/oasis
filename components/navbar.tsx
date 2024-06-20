@@ -22,7 +22,6 @@ import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org
 import {Avatar} from "@nextui-org/avatar";
 import {Modal, ModalBody, ModalContent, useDisclosure} from "@nextui-org/modal";
 import {Divider} from "@nextui-org/divider";
-import {Icon} from "@iconify/react";
 import {Checkbox} from "@nextui-org/checkbox";
 import {useAppDispatch} from "@/hook/store";
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from "react";
@@ -41,6 +40,7 @@ import {
 } from "@nextui-org/react";
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
 import {isWebKit} from "@react-aria/utils";
+import {Icon} from "@iconify/react";
 
 export const Navbar = () => {
 

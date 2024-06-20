@@ -9,8 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@iconify-icons/fa-solid": "^1.2.4",
-    "@iconify/react": "^4.1.1",
+    "@iconify/react": "^5.0.1",
     "@nextui-org/accordion": "^2.0.35",
     "@nextui-org/autocomplete": "^2.1.2",
     "@nextui-org/avatar": "^2.0.30",
@@ -118,8 +117,5 @@
     "typescript": "5.0.4",
     "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.1"
-  },
-  "devDependencies": {
-    "@types/uuid": "^9.0.8"
   }
 }

@@ -2,6 +2,8 @@ import {useDropZone, useFileUpload, useUploader} from '@/hook/ImageUpload'
 import {ChangeEvent, useCallback} from 'react'
 import {Button, cn, Spinner} from "@nextui-org/react";
 import {Icon} from '@iconify/react';
+import {MageImageFill} from "@/components/icons";
+import {div} from "zrender/lib/core/vector";
 
 export const ImageUploader = ({onUpload}: { onUpload: (url: string) => void }) => {
     const {loading, uploadFile} = useUploader({onUpload})
@@ -35,7 +37,7 @@ export const ImageUploader = ({onUpload}: { onUpload: (url: string) => void }) =
             onDragLeave={onDragLeave}
             contentEditable={false}
         >
-            <Icon icon={"fa6-solid:image"} className="w-12 h-12 mb-4 text-black dark:text-white opacity-20"/>
+            <MageImageFill size={50} className={"text-neutral-400 dark:text-neutral-500"}/>
             <div className="flex flex-col items-center justify-center gap-2">
                 <div className="text-sm font-medium text-center text-neutral-400 dark:text-neutral-500">
                     {draggedInside ? 'Drop image here' : 'Drag and drop or'}

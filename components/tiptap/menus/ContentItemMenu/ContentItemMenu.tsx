@@ -3,11 +3,19 @@ import {Editor} from '@tiptap/react'
 
 import useContentItemActions from './hooks/useContentItemActions'
 import {useData} from './hooks/useData'
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Icon} from "@iconify/react";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react";
 import {Link} from "@nextui-org/link";
 import {useTextmenuStates} from "@/components/tiptap/menus/TextMenu/hooks/useTextmenuStates";
+import {
+    Fa6SolidCopy,
+    Fa6SolidGrip,
+    Fa6SolidPlus,
+    Fa6SolidTextSlash,
+    Fa6SolidTrashCan,
+    SolidDuplicate
+} from "@/components/icons";
 
 export type ContentItemMenuProps = {
     editor: Editor
@@ -38,35 +46,36 @@ export const ContentItemMenu = ({editor}: ContentItemMenuProps) => {
                     zIndex: 99,
                 }}
             >
+
                 <div className="flex items-center space-x-2">
                     <Link onPress={actions.handleAdd} isBlock color="foreground">
-                        <Icon icon="fa6-solid:plus" height={20} width={20}/>
+                        <Fa6SolidPlus size={20}/>
                     </Link>
                     <Dropdown>
                         <DropdownTrigger>
                             <Link color="foreground" isBlock>
-                                <Icon icon="fa6-solid:grip" height={20} width={20}/>
+                                <Fa6SolidGrip size={20}/>
                             </Link>
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Static Actions">
                             <DropdownItem
                                 key="clear formatting"
                                 onPress={actions.resetTextFormatting}
-                                startContent={<Icon icon="fa6-solid:text-slash" width={18} height={18}/>}
+                                startContent={<Fa6SolidTextSlash/>}
                             >
                                 Clear formatting
                             </DropdownItem>
                             <DropdownItem
                                 key="copy to clipboard"
                                 onPress={actions.copyNodeToClipboard}
-                                startContent={<Icon icon="fa6-solid:copy" width={18} height={18}/>}
+                                startContent={<Fa6SolidCopy/>}
                             >
                                 Copy to clipboard
                             </DropdownItem>
                             <DropdownItem
                                 key="duplicate"
                                 onPress={actions.duplicateNode}
-                                startContent={<Icon icon="fa6-solid:copy" width={18} height={18}/>}
+                                startContent={<SolidDuplicate/>}
                             >
                                 Duplicate
                             </DropdownItem>
@@ -75,7 +84,7 @@ export const ContentItemMenu = ({editor}: ContentItemMenuProps) => {
                                 className="text-danger"
                                 color="danger"
                                 onPress={actions.deleteNode}
-                                startContent={<Icon icon="fa6-solid:trash" width={18} height={18}/>}
+                                startContent={<Fa6SolidTrashCan/>}
                             >
                                 Delete
                             </DropdownItem>

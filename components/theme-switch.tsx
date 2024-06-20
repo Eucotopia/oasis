@@ -12,7 +12,7 @@ import {
     VisuallyHidden
 } from "@nextui-org/react";
 import {useTheme} from "next-themes";
-import {Icon} from "@iconify/react";
+import {LineMdMoonFilledAltToSunnyFilledLoopTransition} from "@/components/icons";
 
 type ThemeRadioProps = RadioProps & {
     background: string
@@ -74,21 +74,12 @@ export default function App() {
             setTheme(selected)
         }
     }, [selected, setTheme])
-    const changeThemeIcon = () => {
-        if (theme === "light") {
-            return "line-md:moon-filled-alt-to-sunny-filled-loop-transition"
-        } else if (theme === "dark") {
-            return "line-md:sunny-filled-loop-to-moon-filled-loop-transition"
-        } else {
-            return "mdi:theme"
-        }
-    }
     return (
         <>
             <Popover placement="bottom" showArrow={true}>
                 <PopoverTrigger>
                     <Link className={"cursor-pointer"} aria-label="theme-switch">
-                        <Icon icon={"line-md:moon-filled-alt-to-sunny-filled-loop-transition"} className={"text-default-500"} width={24} height={24}/>
+                        <LineMdMoonFilledAltToSunnyFilledLoopTransition className={"text-default-500"} size={24}/>
                     </Link>
                 </PopoverTrigger>
                 <PopoverContent>

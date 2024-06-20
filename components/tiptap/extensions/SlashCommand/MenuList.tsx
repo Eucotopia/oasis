@@ -139,22 +139,25 @@ export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
                         key={group.title}
                         title={group.title}
                     >
-                        {group.commands.map((command, commandIndex: number) => (
-                            <ListboxItem
-                                key={command.label}
-                                className={cn({
-                                    "bg-default-100/80": selectedGroupIndex === groupIndex && selectedCommandIndex === commandIndex
-                                })}
-                                onClick={createCommandClickHandler(groupIndex, commandIndex)}
-                                startContent={
-                                    <Icon icon={command.iconName} width={20} height={20}/>
-                                }
-                                data-group-index={groupIndex}
-                                data-command-index={commandIndex}
-                            >
-                                {command.label}
-                            </ListboxItem>
-                        ))}
+                        {group.commands.map((command, commandIndex: number) => {
+                            return (
+                                <ListboxItem
+                                    key={command.label}
+                                    className={cn({
+                                        "bg-default-100/80": selectedGroupIndex === groupIndex && selectedCommandIndex === commandIndex
+                                    })}
+                                    onClick={createCommandClickHandler(groupIndex, commandIndex)}
+                                    startContent={
+                                        <command.iconName width={20} height={20}/>
+                                    }
+                                    data-group-index={groupIndex}
+                                    data-command-index={commandIndex}
+                                >
+                                    {command.label}
+                                </ListboxItem>
+                            )
+                        })
+                        }
                     </ListboxSection>
                 ))}
             </Listbox>

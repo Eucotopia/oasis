@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 import {
-    Autocomplete, AutocompleteItem,
+    Autocomplete, AutocompleteItem, Button,
     CheckboxGroup,
     Chip,
     ChipProps,
@@ -18,10 +18,8 @@ import {
 } from "@nextui-org/react";
 import {PostType, useDeletePostMutation} from "@/feature/api/postApi";
 import {Dropdown, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
-import {Button} from "@nextui-org/button";
 import {columns, statusOptions} from "./data";
-import {Icon} from "@iconify/react";
-import {SearchIcon} from "@/components/icons";
+import {Fa6SolidEllipsisVertical, SearchIcon} from "@/components/icons";
 import {ChevronDownIcon} from "@nextui-org/shared-icons";
 import {capitalize} from "@nextui-org/shared-utils";
 import AddPost from "@/components/post/AddPost";
@@ -217,7 +215,7 @@ export default function PostTable({postList}: {
                         <Dropdown>
                             <DropdownTrigger>
                                 <Button isIconOnly size="sm" variant="light">
-                                    <Icon icon={"fa6-solid:ellipsis-vertical"} width={20} height={20}/>
+                                    <Fa6SolidEllipsisVertical size={20}/>
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Table Columns1">

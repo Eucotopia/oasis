@@ -1,3 +1,10 @@
+import {
+    Fa6SolidList,
+    Fa6SolidListCheck,
+    Fa6SolidListOl,
+    Fa6SolidQuoteRight, FaSolidBook, GravityUiLayoutHeaderColumns, MageImageFill,
+    SolarCodeSquareBold, TableFilled
+} from '@/components/icons'
 import {Group} from './types'
 
 export const GROUPS: Group[] = [
@@ -6,49 +13,19 @@ export const GROUPS: Group[] = [
         title: 'Format',
         commands: [
             {
-                name: 'heading1',
-                label: 'Heading 1',
-                iconName: 'mdi:format-heading-1',
-                description: 'High priority section title',
-                aliases: ['h1'],
-                action: editor => {
-                    editor.chain().focus().setHeading({level: 1}).run()
-                },
-            },
-            {
-                name: 'heading2',
-                label: 'Heading 2',
-                iconName: 'mdi:format-heading-2',
-                description: 'Medium priority section title',
-                aliases: ['h2'],
-                action: editor => {
-                    editor.chain().focus().setHeading({level: 2}).run()
-                },
-            },
-            {
-                name: 'heading3',
-                label: 'Heading 3',
-                iconName: 'mdi:format-heading-3',
-                description: 'Low priority section title',
-                aliases: ['h3'],
-                action: editor => {
-                    editor.chain().focus().setHeading({level: 3}).run()
-                },
-            },
-            {
                 name: 'bulletList',
                 label: 'Bullet List',
-                iconName: 'fa6-solid:list',
                 description: 'Unordered list of items',
                 aliases: ['ul'],
                 action: editor => {
                     editor.chain().focus().toggleBulletList().run()
                 },
+                iconName: Fa6SolidList,
             },
             {
                 name: 'numberedList',
                 label: 'Numbered List',
-                iconName: 'fa6-solid:list-ol',
+                iconName: Fa6SolidListOl,
                 description: 'Ordered list of items',
                 aliases: ['ol'],
                 action: editor => {
@@ -58,7 +35,7 @@ export const GROUPS: Group[] = [
             {
                 name: 'taskList',
                 label: 'Task List',
-                iconName: 'fa6-solid:list-check',
+                iconName: Fa6SolidListCheck,
                 description: 'Task list with todo items',
                 aliases: ['todo'],
                 action: editor => {
@@ -68,7 +45,7 @@ export const GROUPS: Group[] = [
             {
                 name: 'blockquote',
                 label: 'Blockquote',
-                iconName: 'fa6-solid:quote-right',
+                iconName: Fa6SolidQuoteRight,
                 description: 'Element for quoting',
                 action: editor => {
                     editor.chain().focus().setBlockquote().run()
@@ -77,7 +54,7 @@ export const GROUPS: Group[] = [
             {
                 name: 'codeBlock',
                 label: 'Code Block',
-                iconName: 'fa6-solid:file-code',
+                iconName: SolarCodeSquareBold,
                 description: 'Code block with syntax highlighting',
                 shouldBeHidden: editor => editor.isActive('columns'),
                 action: editor => {
@@ -93,7 +70,7 @@ export const GROUPS: Group[] = [
             {
                 name: 'infoNote',
                 label: 'Info Note',
-                iconName: 'pajamas:severity-info',
+                iconName: Fa6SolidList,
                 description: '待定',
                 shouldBeHidden: editor => editor.isActive('columns'),
                 action: editor => {
@@ -109,7 +86,7 @@ export const GROUPS: Group[] = [
             {
                 name: 'table',
                 label: 'Table',
-                iconName: 'fa6-solid:table',
+                iconName: TableFilled,
                 description: 'Insert a table',
                 shouldBeHidden: editor => editor.isActive('columns'),
                 action: editor => {
@@ -119,7 +96,7 @@ export const GROUPS: Group[] = [
             {
                 name: 'image',
                 label: 'Image',
-                iconName: 'fa6-solid:image',
+                iconName: MageImageFill,
                 description: 'Insert an image',
                 aliases: ['img'],
                 action: editor => {
@@ -129,7 +106,7 @@ export const GROUPS: Group[] = [
             {
                 name: 'columns',
                 label: 'Columns',
-                iconName: 'fa6-solid:table-columns',
+                iconName: GravityUiLayoutHeaderColumns,
                 description: 'Add two column content',
                 aliases: ['cols'],
                 shouldBeHidden: editor => editor.isActive('columns'),
@@ -143,19 +120,9 @@ export const GROUPS: Group[] = [
                 },
             },
             {
-                name: 'horizontalRule',
-                label: 'Horizontal Rule',
-                iconName: 'fa6-solid:grip-lines',
-                description: 'Insert a horizontal divider',
-                aliases: ['hr'],
-                action: editor => {
-                    editor.chain().focus().setHorizontalRule().run()
-                },
-            },
-            {
                 name: 'toc',
                 label: 'Table of Contents',
-                iconName: 'fa6-solid:book',
+                iconName: FaSolidBook,
                 aliases: ['outline'],
                 description: 'Insert a table of contents',
                 shouldBeHidden: editor => editor.isActive('columns'),

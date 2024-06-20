@@ -1,12 +1,12 @@
 'use client'
 import React, {useState} from "react";
-import {Icon} from "@iconify/react";
 import {
     Button, CardHeader, Chip, cn, Image, ScrollShadow, Snippet
 } from "@nextui-org/react";
 import {useAddFaqMutation, useGetFaqsByAnswerQuery} from "@/feature/api/faqApi";
 import NextLink from "next/link";
 import {
+    Apple,
     Blast,
     Burst,
     Cherry,
@@ -157,7 +157,7 @@ export default function Home() {
                     variant="solid"
                     radius={"sm"}
                     color={"warning"}
-                    startContent={<Icon icon="ic:twotone-apple" height={20}/>}
+                    startContent={<Apple size={20}/>}
                 >
                     Coming in swiftly.
                 </Chip>

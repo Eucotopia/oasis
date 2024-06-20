@@ -6,7 +6,7 @@ import {MenuProps} from '@/components/tiptap/menus/types'
 import {getRenderContainer} from '@/components/tiptap/lib/utils'
 import {ColumnLayout} from '../Columns'
 import {Button, cn} from "@nextui-org/react";
-import {Icon} from "@iconify/react";
+import {Fa6SolidTableColumns, FluentDockLeft48Filled, FluentDockRight16Filled} from "@/components/icons";
 
 export const ColumnsMenu = ({editor, appendTo}: MenuProps) => {
     const getReferenceClientRect = useCallback(() => {
@@ -57,7 +57,7 @@ export const ColumnsMenu = ({editor, appendTo}: MenuProps) => {
                         "bg-content4": editor.isActive('columns', {layout: ColumnLayout.SidebarLeft})
                     })}
                 >
-                    <Icon icon="mdi:dock-left" width={26} height={26}/>
+                    <FluentDockLeft48Filled size={26}/>
                 </Button>
                 <Button
                     isIconOnly
@@ -68,7 +68,7 @@ export const ColumnsMenu = ({editor, appendTo}: MenuProps) => {
                         "bg-content4": editor.isActive('columns', {layout: ColumnLayout.TwoColumn})
                     })}
                 >
-                    <Icon icon="fa6-solid:table-columns" width={20} height={20}/>
+                    <Fa6SolidTableColumns size={20}/>
                 </Button>
                 <Button
                     isIconOnly
@@ -79,7 +79,7 @@ export const ColumnsMenu = ({editor, appendTo}: MenuProps) => {
                         "bg-content4": editor.isActive('columns', {layout: ColumnLayout.SidebarRight})
                     })}
                 >
-                    <Icon icon="mdi:dock-right" width={26} height={26}/>
+                    <FluentDockRight16Filled size={26}/>
                 </Button>
             </div>
         </BaseBubbleMenu>

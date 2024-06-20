@@ -3,13 +3,30 @@ import {useTextmenuStates} from './hooks/useTextmenuStates'
 import {BubbleMenu, Editor} from '@tiptap/react'
 import {useTextmenuContentTypes} from './hooks/useTextmenuContentTypes'
 import {Button, cn, Popover, PopoverContent, PopoverTrigger} from "@nextui-org/react";
-import {Icon} from "@iconify/react";
 import {EditLinkPopover} from "@/components/tiptap/menus/TextMenu/components/EditLinkPopover";
 import {memo} from "react";
 import {ColorPicker} from "@/components/tiptap/panels/Colorpicker";
 import {Divider} from "@nextui-org/divider";
 import {FontSizePicker} from "@/components/tiptap/menus/TextMenu/components/FontSizePicker";
 import {FontFamilyPicker} from "@/components/tiptap/menus/TextMenu/components/FontFamilyPicker";
+import {
+    Code16,
+    Fa6SolidAlignCenter,
+    Fa6SolidAlignJustify,
+    Fa6SolidAlignLeft,
+    Fa6SolidAlignRight,
+    Fa6SolidBold,
+    Fa6SolidCode,
+    Fa6SolidEllipsisVertical,
+    Fa6SolidItalic,
+    Fa6SolidPalette,
+    Fa6SolidStrikethrough,
+    Fa6SolidSubscript,
+    Fa6SolidSuperscript,
+    Fa6SolidUnderline,
+    StreamlinePenDrawSolid
+} from "@/components/icons";
+import {Icon} from "next/dist/lib/metadata/types/metadata-types";
 
 export type TextMenuProps = {
     editor: Editor
@@ -51,7 +68,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                         "bg-content4": states.isBold
                     })}
             >
-                <Icon icon={"fa6-solid:bold"} width={18} height={18}/>
+                <Fa6SolidBold size={18}/>
             </Button>
 
             <Button
@@ -64,7 +81,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                         "bg-content4": states.isItalic
                     })}
             >
-                <Icon icon={"fa6-solid:italic"} width={18} height={18}/>
+                <Fa6SolidItalic size={18}/>
             </Button>
 
             <Button
@@ -77,7 +94,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                         "bg-content4": states.isUnderline
                     })}
             >
-                <Icon icon={"fa6-solid:underline"} width={18} height={18}/>
+                <Fa6SolidUnderline size={18}/>
             </Button>
             <Button
                 isIconOnly
@@ -89,7 +106,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                         "bg-content4": states.isStrike
                     })}
             >
-                <Icon icon={"fa6-solid:strikethrough"} width={18} height={18}/>
+                <Fa6SolidStrikethrough size={18}/>
             </Button>
             <Button
                 isIconOnly
@@ -101,7 +118,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                         "bg-content4": states.isCode
                     })}
             >
-                <Icon icon={"octicon:code-16"} width={18} height={18}/>
+                <Code16 size={18}/>
             </Button>
             <Button
                 isIconOnly
@@ -110,7 +127,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                 onPress={commands.onCodeBlock}
                 className={cn("bg-transparent border-none rounded-md cursor-pointer")}
             >
-                <Icon icon={"fa6-solid:code"} width={18} height={18}/>
+                <Fa6SolidCode size={20}/>
             </Button>
             <EditLinkPopover onSetLink={commands.onLink}/>
             <Popover
@@ -125,7 +142,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": states.currentHighlight
                             })}
                     >
-                        <Icon icon={"fa6-solid:broom"} width={20} height={20}/>
+                        <StreamlinePenDrawSolid size={20}/>
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -151,7 +168,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": !!states.currentColor
                             })}
                     >
-                        <Icon icon={"fa6-solid:palette"} width={20} height={20}/>
+                        <Fa6SolidPalette size={20}/>
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -175,7 +192,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                         variant={"light"}
                         className={cn("bg-transparent border-none rounded-md cursor-pointer")}
                     >
-                        <Icon icon={"fa6-solid:ellipsis-vertical"} width={20} height={20}/>
+                        <Fa6SolidEllipsisVertical size={20}/>
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className={"flex flex-row gap-2"}>
@@ -190,7 +207,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": states.isSubscript
                             })}
                     >
-                        <Icon icon={"fa6-solid:subscript"} width={20} height={20}/>
+                        <Fa6SolidSubscript size={20}/>
                     </Button>
                     <Button
                         isIconOnly
@@ -203,7 +220,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": states.isSuperscript
                             })}
                     >
-                        <Icon icon={"fa6-solid:superscript"} width={20} height={20}/>
+                        <Fa6SolidSuperscript size={20}/>
                     </Button>
                     <div className="flex h-5 items-center self-center  text-small">
                         <Divider orientation="vertical"/>
@@ -219,7 +236,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": states.isAlignLeft
                             })}
                     >
-                        <Icon icon={"fa6-solid:align-left"} width={20} height={20}/>
+                        <Fa6SolidAlignLeft size={20}/>
                     </Button>
                     <Button
                         isIconOnly
@@ -232,7 +249,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": states.isAlignCenter
                             })}
                     >
-                        <Icon icon={"fa6-solid:align-center"} width={20} height={20}/>
+                        <Fa6SolidAlignCenter size={20}/>
                     </Button>
                     <Button
                         isIconOnly
@@ -245,7 +262,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": states.isAlignRight
                             })}
                     >
-                        <Icon icon={"fa6-solid:align-center"} width={20} height={20}/>
+                        <Fa6SolidAlignRight size={20}/>
                     </Button>
                     <Button
                         isIconOnly
@@ -258,7 +275,7 @@ export const TextMenu = ({editor}: TextMenuProps) => {
                                 "bg-content4": states.isAlignJustify
                             })}
                     >
-                        <Icon icon={"fa6-solid:align-justify"} width={20} height={20}/>
+                        <Fa6SolidAlignJustify size={20}/>
                     </Button>
                 </PopoverContent>
             </Popover>

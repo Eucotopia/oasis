@@ -15,7 +15,6 @@ import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
 import {EditorHeader} from "@/components/tiptap/EditorHeader";
 import {ModalBody, ModalFooter} from "@nextui-org/modal";
 import {BlockEditor} from "@/components/tiptap/BlockEditor";
-import {Icon} from "@iconify/react";
 import {Link} from "@nextui-org/link";
 import {Divider} from "@nextui-org/divider";
 import {Input, Textarea} from "@nextui-org/input";
@@ -30,6 +29,8 @@ import {useAppDispatch} from "@/hook/store";
 import {removeLastPostContent} from "@/feature/post/lastPostContentSlice";
 import {useFileUpload} from "@/hook/ImageUpload";
 import {Image} from "@nextui-org/image";
+import {CiCloseSm, EvaCloudUploadFill, MarkdownFill, SolarArrowRightUpLinear} from "@/components/icons";
+import {PlusFilledIcon} from "@nextui-org/shared-icons";
 
 const AddPost = () => {
 
@@ -165,7 +166,7 @@ const AddPost = () => {
                 onPress={onOpen}
                 color={"primary"}
                 endContent={
-                    <Icon icon="fa6-solid:plus"/>
+                    <PlusFilledIcon/>
                 }
             >
                 Add new
@@ -202,7 +203,7 @@ const AddPost = () => {
                                     size="sm"
                                     onPress={() => setIsShow((prev) => !prev)}
                                 >
-                                    {isShow ? <Icon icon="ci:close-sm" width={24}/> : "Apply"}
+                                    {isShow ? <CiCloseSm size={24}/> : "Apply"}
                                 </Button>
                             </ModalHeader>
                             <ModalBody>
@@ -236,9 +237,7 @@ const AddPost = () => {
                                                                            onClick={handleUploadClick}/>
                                                                 ) : (
                                                                     <>
-                                                                        <Icon icon="iconamoon:cloud-upload-fill"
-                                                                              width={50}
-                                                                              height={50}/>
+                                                                        <EvaCloudUploadFill size={50}/>
                                                                         <p className={"text-sm text-default-500"}>Choose
                                                                             file or
                                                                             drag
@@ -419,22 +418,21 @@ const AddPost = () => {
                                                 <p className="text-small text-default-500">{characterCount.characters()}&nbsp;characters</p>
                                             </div>
                                             <div className="mt-1 flex w-full items-center justify-end gap-2 px-1">
-                                                <Icon
+                                                <MarkdownFill
                                                     className="text-default-400 dark:text-default-300 "
-                                                    icon="la:markdown"
-                                                    width={20}
+                                                    size={28}
                                                 />
                                                 <p className="text-tiny text-default-400 dark:text-default-300">
                                                     <Link
-                                                        className="text-tiny text-default-500"
+                                                        className="text-sm text-default-500"
                                                         color="foreground"
                                                         href="https://guides.github.com/features/mastering-markdown/"
                                                         rel="noreferrer"
                                                         target="_blank"
                                                     >
                                                         Markdown
-                                                        <Icon className="[&>path]:stroke-[2px]"
-                                                              icon="solar:arrow-right-up-linear"/>
+                                                        <SolarArrowRightUpLinear className="[&>path]:stroke-[2px]"
+                                                                                 size={15}/>
                                                     </Link>
                                                     &nbsp;supported.
                                                 </p>

@@ -1,7 +1,6 @@
 'use client'
 
 import {useGetHotPostsQuery, useGetRecentPostsQuery} from "@/feature/api/postApi";
-import {Icon} from "@iconify/react";
 import {Card, CardBody, Chip, DateInput, Image, Popover, PopoverContent, PopoverTrigger, User} from "@nextui-org/react";
 import {CardFooter} from "@nextui-org/card";
 import {UserTwitterCard} from "@/components/user/UserTwitterCard";
@@ -11,6 +10,7 @@ import {useMediaQuery} from "usehooks-ts";
 import {ChipProps} from "@nextui-org/react";
 import {useRouter} from "next/navigation";
 import {useGetHotCategoriesQuery} from "@/feature/api/categoryApi";
+import {BullhornOutline, F7HourglassBottomhalfFill} from "@/components/icons";
 
 // Define an array of possible colors based on ChipProps['color']
 const colors: ChipProps['color'][] = ["default", "primary", "secondary", "success", "warning", "danger"];
@@ -33,7 +33,7 @@ export default function BlogPage() {
 
     const isMobile = useMediaQuery("(max-width: 768px)");
 
-    if (hotPosts === undefined ||  recentPosts == undefined) return null;
+    if (hotPosts === undefined || hotCategories == undefined || recentPosts == undefined) return null;
 
     return (
         <>
@@ -42,7 +42,7 @@ export default function BlogPage() {
                     <div className={"col-span-5"}>
                         <div className={"flex flex-col gap-2"}>
                             <div className={"flex flex-row items-center gap-2 font-extrabold"}>
-                                <Icon icon="f7:hourglass-bottomhalf-fill" height={40} width={40}/>
+                                <F7HourglassBottomhalfFill size={40}/>
                                 <p className={"text-3xl"}>Today&apos;s top highlights</p>
                             </div>
                             <p className={"text-md text-default-500"}>
@@ -82,34 +82,36 @@ export default function BlogPage() {
                                                 <b className={"text-2xl"}>{post.title}</b>
                                                 <p className="text-default-500 line-clamp-3">{post.summary}</p>
                                             </div>
-                                            {/*<div className={"flex flex-row justify-between gap-4 w-full"}>*/}
-                                            {/*    <Popover showArrow placement="bottom">*/}
-                                            {/*        <PopoverTrigger>*/}
-                                            {/*            <User*/}
-                                            {/*                as="button"*/}
-                                            {/*                name={post.user.username}*/}
-                                            {/*                description={post.user.motto}*/}
-                                            {/*                className="transition-transform"*/}
-                                            {/*                avatarProps={{*/}
-                                            {/*                    src: `${post.user.avatar}`*/}
-                                            {/*                }}*/}
-                                            {/*                classNames={{*/}
-                                            {/*                    description: "line-clamp-1"*/}
-                                            {/*                }}*/}
-                                            {/*            />*/}
-                                            {/*        </PopoverTrigger>*/}
-                                            {/*        <PopoverContent className="p-1">*/}
-                                            {/*            <UserTwitterCard/>*/}
-                                            {/*        </PopoverContent>*/}
-                                            {/*    </Popover>*/}
-                                            {/*    <DateInput*/}
-                                            {/*        label={null}*/}
-                                            {/*        size="sm"*/}
-                                            {/*        isReadOnly*/}
-                                            {/*        className={"max-w-28 border-none bg-inherit"}*/}
-                                            {/*        defaultValue={post.createTime ? parseDate(post.createTime.split(" ")[0]) : parseDate("2024-04-04")}*/}
-                                            {/*    />*/}
-                                            {/*</div>*/}
+                                            <div className={"flex flex-row justify-between gap-4 w-full"}>
+                                                <Popover showArrow placement="bottom">
+                                                    <PopoverTrigger>
+                                                        <User
+                                                            as="button"
+                                                            name={post.user?.username}
+                                                            description={post.user?.motto ? post.user.motto : "lose"}
+                                                            className="transition-transform"
+                                                            avatarProps={{
+                                                                src: post.user?.avatar ? `${post.user.avatar}` : "https://i.pravatar.cc/150?u=a04258114e29026702d"
+                                                            }}
+                                                            classNames={{
+                                                                wrapper: "max-w-52 line-clamp-1 overflow-x-scroll scrollbar-hide ",
+                                                                name: "max-w-52 line-clamp-1 overflow-x-scroll scrollbar-hide",
+                                                                description: "max-w-52 line-clamp-1 overflow-x-scroll scrollbar-hide"
+                                                            }}
+                                                        />
+                                                    </PopoverTrigger>
+                                                    <PopoverContent className="p-1">
+                                                        <UserTwitterCard/>
+                                                    </PopoverContent>
+                                                </Popover>
+                                                <DateInput
+                                                    label={null}
+                                                    size="sm"
+                                                    isReadOnly
+                                                    className={"max-w-28 border-none bg-inherit "}
+                                                    defaultValue={post.createTime ? parseDate(post.createTime.split(" ")[0]) : parseDate("2024-04-04")}
+                                                />
+                                            </div>
                                         </CardFooter>
                                     </Card>
                                 ))}
@@ -117,37 +119,25 @@ export default function BlogPage() {
                         </div>
                     </div>
                     <div className={"col-span-2"}>
-                        {/*<div className={"flex flex-col"}>*/}
-                        {/*    <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Trending topics</p>*/}
-                        {/*    <div className={"flex flex-col gap-6"}>*/}
-                        {/*        {*/}
-                        {/*            hotCategories.map((category, index) => (*/}
-                        {/*                <Image*/}
-                        {/*                    key={index}*/}
-                        {/*                    alt={""}*/}
-                        {/*                    shadow="sm"*/}
-                        {/*                    width="100%"*/}
-                        {/*                    className="w-full object-cover max-h-20"*/}
-                        {/*                    src="https://nextui.org/images/hero-card-complete.jpeg"*/}
-                        {/*                />*/}
-                        {/*            ))*/}
-                        {/*        }*/}
-                        {/*        <p className={"underline text-center"}>View all categories</p>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                        <div className={"flex flex-col"}>
+                            <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Trending topics</p>
+                            <div className={"flex flex-col gap-6"}>
+                                {
+                                    hotCategories.map((category, index) => (
+                                        <div key={index}>{category.name}</div>
+                                    ))
+                                }
+                                <p className={"underline text-center"}>View all categories</p>
+                            </div>
+                        </div>
                         <div className={"flex flex-col mt-4"}>
                             <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Recent post</p>
                             <div className={"flex flex-col gap-6"}>
                                 {
                                     recentPosts.map((post, index) => (
-                                        <Image
-                                            key={index}
-                                            alt={""}
-                                            shadow="sm"
-                                            width="100%"
-                                            className="w-full object-cover max-h-20"
-                                            src="https://nextui.org/images/hero-card-complete.jpeg"
-                                        />
+                                        <>
+                                            <div>{post.title}</div>
+                                        </>
                                     ))
                                 }
                             </div>
@@ -157,7 +147,7 @@ export default function BlogPage() {
                 <div>
                     <div className={"flex flex-col gap-2 mt-8 "}>
                         <div className={"flex flex-row items-center gap-2 font-extrabold"}>
-                            <Icon icon="pajamas:bullhorn" height={40} width={40}/>
+                            <BullhornOutline size={40}/>
                             <p className={"text-3xl"}>Sponsored news</p>
                         </div>
                     </div>

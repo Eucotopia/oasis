@@ -1,10 +1,10 @@
 'use client'
-import {AcmeIcon} from "@/components/icons";
+import {AcmeIcon, TwitterIcon} from "@/components/icons";
 import {Link} from "@nextui-org/link";
 import {Image} from "@nextui-org/image";
-import {Icon, IconProps} from "@iconify/react";
 import React from "react";
 import {Button, Input} from "@nextui-org/react";
+import {Icon, IconProps} from "@iconify/react";
 
 type SocialIconProps = Omit<IconProps, "icon">;
 
@@ -48,7 +48,7 @@ const footerNavigation = {
         {
             name: "Twitter",
             href: "#",
-            icon: (props: SocialIconProps) => <Icon {...props} icon="fontisto:twitter"/>,
+            icon: (props: SocialIconProps) => <TwitterIcon className="text-default-500"/>,
         },
         {
             name: "GitHub",
@@ -75,7 +75,7 @@ export const Footer = () => {
         ),
         [],
     );
-    return(
+    return (
         <>
             <footer className="flex w-full flex-col">
                 <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">

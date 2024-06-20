@@ -1,4 +1,6 @@
 import {Editor} from '@tiptap/core'
+import {ComponentType, SVGProps} from "react";
+import {IconSvgProps} from "@/types";
 
 export interface Group {
     name: string
@@ -11,7 +13,7 @@ export interface Command {
     label: string
     description: string
     aliases?: string[]
-    iconName: string
+    iconName: ComponentType<IconSvgProps>;
     action: (editor: Editor) => void
     shouldBeHidden?: (editor: Editor) => boolean
 }

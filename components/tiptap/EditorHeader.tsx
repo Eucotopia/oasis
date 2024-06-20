@@ -1,10 +1,17 @@
 import {Editor} from "@tiptap/react";
 import {Link} from "@nextui-org/link";
 import {cn} from "@nextui-org/react";
-import {Icon} from "@iconify/react/offline";
 import React from "react";
 import {useTextmenuCommands} from "@/components/tiptap/menus/TextMenu/hooks/useTextmenuCommands";
 import {useTextmenuStates} from "@/components/tiptap/menus/TextMenu/hooks/useTextmenuStates";
+import {
+    Fa6SolidGripLines,
+    Fa6SolidRulerHorizontal,
+    Fa6SolidTextSlash,
+    Fa6SolidUpload,
+    LucideRedo,
+    LucideUndo
+} from "@/components/icons"
 
 export const EditorHeader = ({editor}: { editor: Editor }) => {
     const [youtubeLink, setYoutubeLink] = React.useState("");
@@ -22,8 +29,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4",
                     )}>
-                    <Icon icon={Fa6SolidTextSlash}/>
-                    {/*<Icon icon={"fa6-solid:text-slash"} width={20} height={20}/>*/}
+                    <Fa6SolidTextSlash/>
                 </Link>
                 <Link
                     color={"foreground"}
@@ -31,7 +37,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4")}
                 >
-                    <Icon icon={"fa6-solid:upload"} width={20} height={20}/>
+                    <Fa6SolidUpload size={20}/>
                 </Link>
                 <Link
                     color={"foreground"}
@@ -39,7 +45,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4",
                     )}>
-                    <Icon icon={"fa6-solid:arrow-rotate-left"} width={20} height={20}/>
+                    <LucideUndo/>
                 </Link>
                 <Link
                     color={"foreground"}
@@ -47,7 +53,7 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4",
                     )}>
-                    <Icon icon={"fa6-solid:arrow-rotate-right"} width={20} height={20}/>
+                    <LucideRedo/>
                 </Link>
                 {/*<PopoverYoutubeLinkWrapper icon="bi:youtube" className={"flex flex-col items-center"}*/}
                 {/*                           editor={editor} title={"Youtube"}>*/}
@@ -73,20 +79,19 @@ export const EditorHeader = ({editor}: { editor: Editor }) => {
                 {/*            Set Link</Button>*/}
                 {/*    </div>*/}
                 {/*</PopoverYoutubeLinkWrapper>*/}
-
                 <Link
                     color={"foreground"}
                     onClick={() => editor.chain().focus().setHardBreak().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4")}>
-                    <Icon icon={"fa6-solid:grip-lines"} width={20} height={20}/>
+                    <Fa6SolidGripLines/>
                 </Link>
                 <Link
                     color={"foreground"}
                     onClick={() => editor.chain().focus().setHorizontalRule().run()}
                     className={cn("bg-transparent border-none rounded-md cursor-pointer mr-1 p-2",
                         "hover:bg-content4")}>
-                    <Icon icon={"fa6-solid:ruler-horizontal"} width={20} height={20}/>
+                    <Fa6SolidRulerHorizontal/>
                 </Link>
             </div>
         </>
