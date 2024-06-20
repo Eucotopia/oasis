@@ -29,12 +29,11 @@ export default function BlogPage() {
 
     const {data: recentPosts, isLoading: isGetRecentPostsLoading} = useGetRecentPostsQuery()
 
-    console.log(hotCategories)
     const router = useRouter();
 
     const isMobile = useMediaQuery("(max-width: 768px)");
 
-    if (hotPosts === undefined || hotCategories == undefined || recentPosts == undefined) return null;
+    if (hotPosts === undefined ||  recentPosts == undefined) return null;
 
     return (
         <>
@@ -83,34 +82,34 @@ export default function BlogPage() {
                                                 <b className={"text-2xl"}>{post.title}</b>
                                                 <p className="text-default-500 line-clamp-3">{post.summary}</p>
                                             </div>
-                                            <div className={"flex flex-row justify-between gap-4 w-full"}>
-                                                <Popover showArrow placement="bottom">
-                                                    <PopoverTrigger>
-                                                        <User
-                                                            as="button"
-                                                            name={post.user.username}
-                                                            description={post.user.motto}
-                                                            className="transition-transform"
-                                                            avatarProps={{
-                                                                src: `${post.user.avatar}`
-                                                            }}
-                                                            classNames={{
-                                                                description: "line-clamp-1"
-                                                            }}
-                                                        />
-                                                    </PopoverTrigger>
-                                                    <PopoverContent className="p-1">
-                                                        <UserTwitterCard/>
-                                                    </PopoverContent>
-                                                </Popover>
-                                                <DateInput
-                                                    label={null}
-                                                    size="sm"
-                                                    isReadOnly
-                                                    className={"max-w-28 border-none bg-inherit"}
-                                                    defaultValue={post.createTime ? parseDate(post.createTime.split(" ")[0]) : parseDate("2024-04-04")}
-                                                />
-                                            </div>
+                                            {/*<div className={"flex flex-row justify-between gap-4 w-full"}>*/}
+                                            {/*    <Popover showArrow placement="bottom">*/}
+                                            {/*        <PopoverTrigger>*/}
+                                            {/*            <User*/}
+                                            {/*                as="button"*/}
+                                            {/*                name={post.user.username}*/}
+                                            {/*                description={post.user.motto}*/}
+                                            {/*                className="transition-transform"*/}
+                                            {/*                avatarProps={{*/}
+                                            {/*                    src: `${post.user.avatar}`*/}
+                                            {/*                }}*/}
+                                            {/*                classNames={{*/}
+                                            {/*                    description: "line-clamp-1"*/}
+                                            {/*                }}*/}
+                                            {/*            />*/}
+                                            {/*        </PopoverTrigger>*/}
+                                            {/*        <PopoverContent className="p-1">*/}
+                                            {/*            <UserTwitterCard/>*/}
+                                            {/*        </PopoverContent>*/}
+                                            {/*    </Popover>*/}
+                                            {/*    <DateInput*/}
+                                            {/*        label={null}*/}
+                                            {/*        size="sm"*/}
+                                            {/*        isReadOnly*/}
+                                            {/*        className={"max-w-28 border-none bg-inherit"}*/}
+                                            {/*        defaultValue={post.createTime ? parseDate(post.createTime.split(" ")[0]) : parseDate("2024-04-04")}*/}
+                                            {/*    />*/}
+                                            {/*</div>*/}
                                         </CardFooter>
                                     </Card>
                                 ))}
@@ -118,24 +117,24 @@ export default function BlogPage() {
                         </div>
                     </div>
                     <div className={"col-span-2"}>
-                        <div className={"flex flex-col"}>
-                            <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Trending topics</p>
-                            <div className={"flex flex-col gap-6"}>
-                                {
-                                    hotCategories.map((category, index) => (
-                                        <Image
-                                            key={index}
-                                            alt={""}
-                                            shadow="sm"
-                                            width="100%"
-                                            className="w-full object-cover max-h-20"
-                                            src="https://nextui.org/images/hero-card-complete.jpeg"
-                                        />
-                                    ))
-                                }
-                                <p className={"underline text-center"}>View all categories</p>
-                            </div>
-                        </div>
+                        {/*<div className={"flex flex-col"}>*/}
+                        {/*    <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Trending topics</p>*/}
+                        {/*    <div className={"flex flex-col gap-6"}>*/}
+                        {/*        {*/}
+                        {/*            hotCategories.map((category, index) => (*/}
+                        {/*                <Image*/}
+                        {/*                    key={index}*/}
+                        {/*                    alt={""}*/}
+                        {/*                    shadow="sm"*/}
+                        {/*                    width="100%"*/}
+                        {/*                    className="w-full object-cover max-h-20"*/}
+                        {/*                    src="https://nextui.org/images/hero-card-complete.jpeg"*/}
+                        {/*                />*/}
+                        {/*            ))*/}
+                        {/*        }*/}
+                        {/*        <p className={"underline text-center"}>View all categories</p>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <div className={"flex flex-col mt-4"}>
                             <p className={"mt-4 mb-3 text-2xl font-extrabold"}>Recent post</p>
                             <div className={"flex flex-col gap-6"}>

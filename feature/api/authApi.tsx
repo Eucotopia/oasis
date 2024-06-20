@@ -3,6 +3,7 @@ import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
 import {currentUserType} from "@/feature/auth/authSlice";
 import {roleType} from "@/feature/api/roleApi";
+import {PostType} from "@/feature/api/postApi";
 
 export type UserLoginType = {
     email: string
@@ -39,6 +40,22 @@ export const authApi = createApi({
         },
     }),
     endpoints: (buildr) => ({
+        // The query accepts a number and returns a ResultResponse<Post> type ✔
+        getUser: buildr.query<UserType, number>({
+            // note: an optional `queryFn` may be used in place of `query`
+            query: (id) => ({url: `${id}`}),
+            // Pick out data and prevent nested properties in a hook or selector
+            transformResponse: (response: ResultResponse<UserType>, meta, arg) => response.data,
+            // Pick out errors and prevent nested properties in a hook or selector
+            transformErrorResponse: (
+                response: {
+                    status: string | number
+                },
+                meta,
+                arg
+            ) => response.status,
+            providesTags: (result, error, id) => [{type: 'Auth', id: String(id)}]
+        }),
         userLogin: buildr.mutation<currentUserType, UserLoginType>({
             query: (credentials) => ({
                 url: '/login',
@@ -119,7 +136,7 @@ export const authApi = createApi({
         getUserCount: buildr.query<number, void>({
             query: () => ({url: '/count'}),
             transformResponse: (response: ResultResponse<number>, meta, arg) => response.data,
-        })
+        }),
     }),
 })
-export const {useUserLoginMutation, useUserRegisterMutation, useGetUsersQuery, useGetUserCountQuery} = authApi
+export const {useUserLoginMutation, useUserRegisterMutation,useGetUserQuery,useLazyGetUserQuery, useGetUsersQuery, useGetUserCountQuery} = authApi

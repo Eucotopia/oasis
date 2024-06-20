@@ -29,6 +29,7 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
     const {handleUploadClick, ref} = useFileUpload()
 
     const [uploadImage] = useUploadMutation();
+
     const uploadFile = useCallback(async (file: File) => {
         try {
             const formData = new FormData();
@@ -128,7 +129,7 @@ const UpdatePost = ({postParam, isEditPostOpen, onEditPostOpenChange}: UpdatePos
                 rating: "1",
                 categories: [],
                 columns: [],
-                status: true
+                status: true,
             })
         }
     }

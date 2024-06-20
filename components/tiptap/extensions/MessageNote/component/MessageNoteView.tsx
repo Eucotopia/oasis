@@ -22,7 +22,7 @@ interface MessageNoteProps {
 
 export const MessageNoteView = (props: MessageNoteProps) => {
 
-    const {node, updateAttributes} = props;
+    const {node, updateAttributes,editor} = props;
 
     const getIcon = () => {
         switch (node.attrs.color) {

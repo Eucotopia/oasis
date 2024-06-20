@@ -21,7 +21,7 @@ export type PostType = {
     views?: number
     status: boolean
     cover: string
-    user: UserType
+    user?: UserType
     categories: CategoryType[]
     isPrivate: boolean
     createTime?: string
