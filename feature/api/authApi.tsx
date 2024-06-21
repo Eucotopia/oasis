@@ -3,7 +3,6 @@ import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
 import {currentUserType} from "@/feature/auth/authSlice";
 import {roleType} from "@/feature/api/roleApi";
-import {PostType} from "@/feature/api/postApi";
 
 export type UserLoginType = {
     email: string

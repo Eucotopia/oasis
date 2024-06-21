@@ -1,7 +1,6 @@
 import {ReactNodeViewRenderer} from "@tiptap/react";
 import SnippetView from "./components/SnippetView";
 import {CodeBlockLowlight} from "@tiptap/extension-code-block-lowlight";
-import {mergeAttributes} from "@tiptap/core";
 import {SnippetProps} from "@nextui-org/react";
 
 declare module '@tiptap/core' {

@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useRef, useState} from 'react'
 
 import {MenuListProps} from './types'
 import {cn, Listbox, ListboxItem, ListboxSection} from '@nextui-org/react'
-import {Icon} from "@iconify/react";
 
 export const MenuList = React.forwardRef((props: MenuListProps, ref) => {
     const scrollContainer = useRef<HTMLDivElement>(null)

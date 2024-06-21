@@ -1,6 +1,6 @@
 import {Button, Input, Switch} from '@nextui-org/react'
 import {useState, useCallback, useMemo} from 'react'
-import {Icon} from "@iconify/react";
+import {Fa6SolidLink} from "@/components/icons";
 
 export type LinkEditorPanelProps = {
     initialUrl?: string
@@ -54,7 +54,7 @@ export const LinkEditorPanel = ({onSetLink, initialOpenInNewTab, initialUrl}: Li
                         value={state.url}
                         onChange={state.onChange}
                         startContent={
-                            <Icon icon={"fa6-solid:link"} width={20} height={20}/>
+                            <Fa6SolidLink size={20}/>
                         }
                         className={"w-full"}/>
                     <Button

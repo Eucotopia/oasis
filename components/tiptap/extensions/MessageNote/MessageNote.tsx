@@ -1,7 +1,6 @@
 import {mergeAttributes, Node} from '@tiptap/core'
 import {ReactNodeViewRenderer} from "@tiptap/react";
 import {MessageNoteView} from "./component/MessageNoteView";
-import {SnippetProps} from "@nextui-org/react";
 import {CodeProps} from "@nextui-org/code";
 
 export type NoteType = 'info' | 'danger' | 'warning';

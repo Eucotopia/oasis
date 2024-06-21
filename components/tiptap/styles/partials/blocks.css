@@ -43,6 +43,6 @@
     }
 
     [data-type='column'] {
-        @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md;
+        @apply bg-success/20 p-4 rounded-md shadow-md;
     }
 }

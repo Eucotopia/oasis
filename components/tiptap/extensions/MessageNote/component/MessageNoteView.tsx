@@ -1,11 +1,8 @@
 import {Editor, NodeViewContent, NodeViewWrapper} from "@tiptap/react";
 import React from "react";
 import {Icon} from "@iconify/react";
-import {NoteType} from "@/components/tiptap/extensions/MessageNote";
-import {Chip, cn, Dropdown, SnippetProps, Tabs} from "@nextui-org/react";
+import {cn, SnippetProps} from "@nextui-org/react";
 import {Code} from "@nextui-org/code";
-import {Tab} from "@nextui-org/tabs";
-import {Card, CardBody} from "@nextui-org/card";
 
 interface MessageNoteProps {
     editor: Editor;

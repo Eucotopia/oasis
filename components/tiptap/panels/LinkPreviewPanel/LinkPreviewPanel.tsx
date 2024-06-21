@@ -1,7 +1,8 @@
 import {Link} from "@nextui-org/link";
 import {Divider} from "@nextui-org/divider";
 import {Button} from "@nextui-org/react";
-import {Icon} from "@iconify/react";
+
+import {Fa6SolidPencil, Fa6SolidTrashCan} from "@/components/icons";
 
 export type LinkPreviewPanelProps = {
     url: string
@@ -23,10 +24,10 @@ export const LinkPreviewPanel = ({onClear, onEdit, url}: LinkPreviewPanelProps) 
                     <Divider orientation="vertical"/>
                 </div>
                 <Button size={"sm"} isIconOnly variant={"light"} onPress={onEdit}>
-                    <Icon icon="fa6-solid:pencil" height={18} width={18}></Icon>
+                    <Fa6SolidPencil size={18}/>
                 </Button>
                 <Button size={"sm"} isIconOnly variant={"light"} onPress={onClear}>
-                    <Icon icon="fa6-solid:trash-can" height={18} width={18}></Icon>
+                    <Fa6SolidTrashCan size={18}/>
                 </Button>
             </div>
         </>

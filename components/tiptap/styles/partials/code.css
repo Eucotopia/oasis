@@ -3,7 +3,6 @@
         code {
             @apply bg-inherit text-inherit p-0 shadow-none;
         }
-
         .hljs-comment,
         .hljs-quote {
             @apply text-neutral-400;

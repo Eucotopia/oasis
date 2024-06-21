@@ -24,10 +24,12 @@ const getRandomColor = () => {
 export default function BlogPage() {
 
     const {data: hotPosts, isLoading: isGetHotPostsLoading} = useGetHotPostsQuery();
-
+    console.log("hotPosts",hotPosts)
     const {data: hotCategories, isLoading: isGetHotCategoriesLoading} = useGetHotCategoriesQuery();
+    console.log("hotCategories",hotCategories)
 
     const {data: recentPosts, isLoading: isGetRecentPostsLoading} = useGetRecentPostsQuery()
+    console.log("recentPosts",recentPosts)
 
     const router = useRouter();
 
