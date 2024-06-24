@@ -4,9 +4,10 @@ import {useBlockEditor} from "@/components/tiptap/useBlockEditor";
 import React from "react";
 import {BlockEditor} from "@/components/tiptap/BlockEditor";
 import {useDisclosure} from "@nextui-org/modal";
-import {Button} from "@nextui-org/react";
+import {Button, Input, Select, SelectItem} from "@nextui-org/react";
 import ModalReview from "@/components/modal/Review";
 import {Fa6SolidPencil} from "@/components/icons";
+import {Icon} from "@iconify/react";
 
 export default function Page({params}: {
     params: {
@@ -28,9 +29,38 @@ export default function Page({params}: {
             <BlockEditor editor={editor}/>
             {/*评论功能*/}
 
-            <Button endContent={<Fa6SolidPencil size={14}/>} variant="bordered" onPress={onOpen}>
-                Write a review
-            </Button>
+
+            <header className="mb-8 flex flex-wrap items-center justify-between gap-4 md:flex-nowrap md:px-2">
+                <Button endContent={<Fa6SolidPencil size={14}/>} variant="bordered" onPress={onOpen}>
+                    Write a review
+                </Button>
+                <div className="flex w-full items-center justify-end gap-4">
+                    <Input
+                        fullWidth
+                        aria-label="Search"
+                        className="w-72"
+                        labelPlacement="outside"
+                        placeholder="Search reviews"
+                        startContent={<Icon icon="solar:magnifer-linear"/>}
+                    />
+                    <Select
+                        aria-label="Sort by"
+                        className="w-40"
+                        defaultSelectedKeys={["most_recent"]}
+                        labelPlacement="outside"
+                    >
+                        <SelectItem key="most_recent" value="most_recent">
+                            Most recent
+                        </SelectItem>
+                        <SelectItem key="most_helpful" value="most_helpful">
+                            Most helpful
+                        </SelectItem>
+                        <SelectItem key="highest_rating" value="highest_rating">
+                            Highest rating
+                        </SelectItem>
+                    </Select>
+                </div>
+            </header>
 
             <ModalReview isOpen={isOpen} onClose={onClose} onOpenChange={onOpenChange} id={String(params.id)}/>
         </>
