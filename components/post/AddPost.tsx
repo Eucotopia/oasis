@@ -140,25 +140,24 @@ const AddPost = () => {
             ...post,
             content: editor.getHTML()
         }
-        console.log(postState)
         const unwrap = await addPost(postState).unwrap();
-        if (unwrap.code === 200) {
-            dispatch(removeLastPostContent())
-            editor.commands.clearContent()
-            setPost({
-                title: "",
-                content: "",
-                tags: [],
-                summary: "",
-                isPrivate: false,
-                isTop: false,
-                cover: "",
-                rating: "1",
-                categories: [],
-                columns: [],
-                status: true
-            })
-        }
+        // if (unwrap.code === 200) {
+        //     dispatch(removeLastPostContent())
+        //     editor.commands.clearContent()
+        //     setPost({
+        //         title: "",
+        //         content: "",
+        //         tags: [],
+        //         summary: "",
+        //         isPrivate: false,
+        //         isTop: false,
+        //         cover: "",
+        //         rating: "1",
+        //         categories: [],
+        //         columns: [],
+        //         status: true
+        //     })
+        // }
     }
     return (
         <>

@@ -6,6 +6,7 @@ import {CategoryType} from "@/feature/api/categoryApi";
 import {ColumnType} from "@/feature/api/columnApi";
 import {baseUrl, UserType} from "@/feature/api/authApi";
 import {build} from "@react-native-community/cli-platform-android/build/commands/buildAndroid";
+import {currentUserType} from "@/feature/auth/authSlice";
 
 
 export type PostType = {
@@ -59,12 +60,37 @@ export const postApi = createApi({
             ) => response.status,
             providesTags: (result, error, id) => [{type: 'Post', id: String(id)}]
         }),
-        addPost: builder.mutation<ResultResponse<String>, PostType>({
+        addPost: builder.mutation<string, PostType>({
             query: (post) => ({
                 url: ``,
                 method: 'POST',
                 body: post
             }),
+            transformResponse: (response: ResultResponse<string>, meta, arg) => {
+                if (response.code === 200) {
+                    alert('add successful')
+                    return response.data;
+                } else {
+                    alert(`add failed: ${response.message}`)
+                    throw new Error(response.message);
+                }
+            },
+            transformErrorResponse: (
+                response: { status: string | number, data?: any },
+                meta,
+                arg
+            ) => {
+                if (response.status === 403) {
+                    // 处理403错误
+                    alert(`${response.data?.message || 'You do not have permission to perform this action.'}`);
+                } else if (response.status === 400) {
+                    alert(`请求错误: ${response.status}`);
+                } else if (response.status === 500) { // 假设 500 表示服务器错误
+                    alert('服务器错误，请稍后再试。');
+                } else {
+                    alert(`未知错误: ${response.status}`);
+                }
+            },
             invalidatesTags: [{type: 'Post', id: 'LIST'}],
         }),
         // The query accepts a number and returns a ResultResponse<Post> type ✔
