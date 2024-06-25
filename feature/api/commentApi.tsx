@@ -1,16 +1,20 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {baseUrl} from "@/feature/api/authApi";
-import {build} from "@react-native-community/cli-platform-android/build/commands/buildAndroid";
 import {ResultResponse} from "@/types";
+import {handleTransformErrorResponse} from "@/util/apiHelpers";
+import {currentUserType} from "@/feature/auth/authSlice";
 
 export type CommentType = {
+    user?: currentUserType,
+    date?: string,
     title: string,
     content: string,
     username: string,
     email: string,
     postId: number,
-    rating: number
+    rating: number,
+    parentId: string
 }
 export const commentApi = createApi({
     reducerPath: 'commentApi',
@@ -26,8 +30,8 @@ export const commentApi = createApi({
             return headers
         },
     }),
-    endpoints: (buildr) => ({
-        addComment: buildr.mutation<string, CommentType>({
+    endpoints: (builder) => ({
+        addComment: builder.mutation<string, CommentType>({
             query: (comment) => ({
                 url: ``,
                 method: 'POST',
@@ -42,8 +46,23 @@ export const commentApi = createApi({
                     throw new Error(response.message);
                 }
             },
-            invalidatesTags: [{type: 'Comment', id: 'LIST'}],
+            transformErrorResponse: handleTransformErrorResponse,
+            invalidatesTags: (result, error, comment) => {
+                return [{type: "Comment", id: comment.postId}]
+            }
+        }),
+        getComments: builder.query<CommentType[], number>({
+            query: (id) => ({url: `${id}`}),
+            transformResponse: (response: ResultResponse<CommentType[]>, meta, arg) => response.data,
+            transformErrorResponse: (
+                response: {
+                    status: string | number
+                },
+                meta,
+                arg
+            ) => response.status,
+            providesTags: (result, error, id) => [{type: 'Comment', id: String(id)}]
         })
     }),
 })
-export const {useAddCommentMutation} = commentApi
+export const {useAddCommentMutation, useGetCommentsQuery} = commentApi

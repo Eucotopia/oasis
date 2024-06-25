@@ -19,15 +19,19 @@ import {CommentType, useAddCommentMutation} from "@/feature/api/commentApi";
 
 const ModalReview = React.forwardRef<HTMLDivElement, Omit<ModalProps, "children">>(
     ({isOpen, onClose, onOpenChange, ...props}, ref) => {
+
         const [addComment] = useAddCommentMutation()
+
         const [comment, setComment] = useState<CommentType>({
             title: "",
             content: "",
             username: "",
             email: "",
             postId: Number(props.id),
-            rating: 5
+            rating: 5,
+            parentId: ""
         });
+
         const handleChange = ({
                                   target: {
                                       name,
@@ -43,6 +47,7 @@ const ModalReview = React.forwardRef<HTMLDivElement, Omit<ModalProps, "children"
                 ...prev,
                 content: value,
             }));
+
         return (
             <>
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange} {...props} ref={ref}>

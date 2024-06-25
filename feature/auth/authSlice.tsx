@@ -5,7 +5,7 @@ export type currentUserType = {
     username: string,
     email: string,
     authorization: string,
-    cover: string,
+    avatar: string,
     isSelectRemember: boolean
 }
 /**

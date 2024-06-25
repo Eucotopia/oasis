@@ -333,7 +333,7 @@ export const Navbar = () => {
                                         className="transition-transform"
                                         name={currentUser.username}
                                         size="sm"
-                                        src={currentUser.cover}
+                                        src={currentUser.avatar}
                                     />
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Profile Actions" variant="flat">
