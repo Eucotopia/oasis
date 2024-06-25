@@ -48,6 +48,7 @@ export const ContentItemMenu = ({editor}: ContentItemMenuProps) => {
             >
 
                 <div className="flex items-center space-x-2">
+                    <p className={"text-gray-400"}>{actions.getHeadingType()}</p>
                     <Link onPress={actions.handleAdd} isBlock color="foreground">
                         <Fa6SolidPlus size={20}/>
                     </Link>

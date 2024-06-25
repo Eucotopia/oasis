@@ -28,12 +28,13 @@ const SnippetView = (props: SnippetViewProps) => {
                     copyButton: "absolute top-3 right-3",
                 }}
                 hideSymbol
+                contentEditable={true}
                 variant={node.attrs.variant}
                 color={node.attrs.color}
                 radius={node.attrs.radius}
                 fullWidth
             >
-                <NodeViewContent/>
+                <NodeViewContent contentEditable={false}/>
             </Snippet>
         </NodeViewWrapper>
     )
