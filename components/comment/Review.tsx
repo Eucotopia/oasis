@@ -16,7 +16,7 @@ const Review = React.forwardRef<HTMLDivElement, ReviewProps>(
                     <User
                         avatarProps={{
                             // src: user.avatar,
-                            src:`${user?.avatar}`
+                            src: `${user?.avatar}`
                         }}
                         classNames={{
                             name: "font-medium",
@@ -33,7 +33,6 @@ const Review = React.forwardRef<HTMLDivElement, ReviewProps>(
                 <div className="flex items-center gap-1">
                     {Array.from({length: 5}, (_, i) => {
                         const isSelected = i + 1 <= rating;
-
                         return (
                             <Icon
                                 key={i}
@@ -47,9 +46,9 @@ const Review = React.forwardRef<HTMLDivElement, ReviewProps>(
                     })}
                 </div>
             </div>
-            <div className="mt-4 w-full">
-                <p className="font-medium text-default-900">{title}</p>
-                <p className="mt-2 text-default-500">{content || children}</p>
+            <div className="mt-4 max-w-full">
+                <p className="font-medium text-default-900 break-words">{title}</p>
+                <p className="mt-2 text-default-500 break-words">{content || children}</p>
             </div>
         </div>
     ),

@@ -16,9 +16,12 @@ import {
 import RatingRadioGroup from "./rating-radio-group";
 import {Fa6SolidPencil, SolarLetterBold, SolarUserBold} from "@/components/icons";
 import {CommentType, useAddCommentMutation} from "@/feature/api/commentApi";
+import {useAuth} from "@/hook/useAuth";
 
 const ModalReview = React.forwardRef<HTMLDivElement, Omit<ModalProps, "children">>(
     ({isOpen, onClose, onOpenChange, ...props}, ref) => {
+
+        const auth = useAuth();
 
         const [addComment] = useAddCommentMutation()
 
@@ -77,17 +80,16 @@ const ModalReview = React.forwardRef<HTMLDivElement, Omit<ModalProps, "children"
                                     label="username"
                                     name={"username"}
                                     placeholder="Enter your username"
-                                    value={comment.username}
+                                    value={auth.currentUser ? auth.currentUser.username : comment.username}
                                     onChange={handleChange}
                                     startContent={<SolarUserBold/>}
                                 />
                                 <Input
                                     label="Email"
                                     name={"email"}
-                                    value={comment.email}
+                                    value={auth.currentUser ? auth.currentUser.email : comment.email}
                                     placeholder="Enter your email"
                                     onChange={handleChange}
-
                                     startContent={<SolarLetterBold/>}
                                 />
                                 <Divider/>
@@ -103,7 +105,6 @@ const ModalReview = React.forwardRef<HTMLDivElement, Omit<ModalProps, "children"
                                     name={"title"}
                                     value={comment.title}
                                     onChange={handleChange}
-
                                     placeholder="Title of your review"
                                     startContent={<Fa6SolidPencil/>}
                                 />

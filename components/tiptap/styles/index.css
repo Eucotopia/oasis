@@ -8,7 +8,7 @@
 @import './partials/typography.css';
 
 .ProseMirror {
-    @apply caret-foreground outline-0 pr-8 pl-6 py-2 z-0 lg:pl-6 lg:pr-6;
+    @apply caret-foreground outline-0  z-0 ;
 
     & > * {
         @apply mt-3 max-w-6xl;

@@ -23,7 +23,7 @@ export const BlockEditor = ({editor}: {
 
     return (
         <>
-            <div ref={menuContainerRef} className={`md:max-w-4xl ${isMobile ? 'max-w-96 p-2' : ''}`}>
+            <div ref={menuContainerRef}>
                 <TextMenu editor={editor} />
                 {editor.isEditable && <ColumnsMenu editor={editor} appendTo={menuContainerRef} />}
                 <TableRowMenu editor={editor} appendTo={menuContainerRef} />
