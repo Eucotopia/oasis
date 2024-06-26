@@ -10,8 +10,6 @@ import {Fa6SolidPencil} from "@/components/icons";
 import {Icon} from "@iconify/react";
 import {useGetCommentsQuery} from "@/feature/api/commentApi";
 import CardReview from "@/components/comment/CardReview";
-import reviews from "@/components/comment/reviews";
-import {scaleInOut} from "@nextui-org/modal/dist/modal-transition";
 
 export default function Page({params}: {
     params: {
@@ -35,7 +33,7 @@ export default function Page({params}: {
             <BlockEditor editor={editor}/>
             {/*评论功能*/}
 
-            <header className="mb-8 flex flex-wrap items-center justify-between gap-4 md:flex-nowrap md:px-2">
+            <header className="mb-8 flex flex-wrap items-center justify-between gap-4 md:flex-nowrap ">
                 <Button endContent={<Fa6SolidPencil size={14}/>} variant="bordered" onPress={onOpen}>
                     Write a review
                 </Button>
@@ -66,18 +64,12 @@ export default function Page({params}: {
                     </Select>
                 </div>
             </header>
-            {/*<div className="flex flex-col gap-4">*/}
-            {/*    {reviews.map((review, index) => (*/}
-            {/*        <CardReview key={index} {...review} />*/}
-            {/*    ))}*/}
-            {/*</div>*/}
             <div className="flex flex-col gap-4">
                 {
                     comments && comments.map((comment, index) => (
                         <CardReview key={index} {...comment} />
                     ))
                 }
-
             </div>
 
             <ModalReview isOpen={isOpen} onClose={onClose} onOpenChange={onOpenChange} id={String(params.id)}/>

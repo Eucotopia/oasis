@@ -48,7 +48,7 @@ export const postApi = createApi({
         // The query accepts a number and returns a ResultResponse<Post> type ✔
         getPost: builder.query<PostType, number>({
             // note: an optional `queryFn` may be used in place of `query`
-            query: (id) => ({url: `${id}`}),
+            query: (id) => ({url: `/${id}`}),
             // Pick out data and prevent nested properties in a hook or selector
             transformResponse: (response: ResultResponse<PostType>, meta, arg) => response.data,
             // Pick out errors and prevent nested properties in a hook or selector

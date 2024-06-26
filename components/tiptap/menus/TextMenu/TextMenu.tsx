@@ -26,7 +26,6 @@ import {
     Fa6SolidUnderline,
     StreamlinePenDrawSolid
 } from "@/components/icons";
-import {Icon} from "next/dist/lib/metadata/types/metadata-types";
 
 export type TextMenuProps = {
     editor: Editor
