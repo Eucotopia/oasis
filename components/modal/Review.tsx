@@ -94,7 +94,7 @@ const ModalReview = React.forwardRef<HTMLDivElement, Omit<ModalProps, "children"
                                 />
                                 <Divider/>
                                 <RatingRadioGroup
-                                    hideStarsText
+                                    // hideStarsText
                                     className="flex-col-reverse items-start"
                                     color="warning"
                                     name={"rating"}

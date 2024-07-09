@@ -731,6 +731,25 @@ const BullhornOutline = ({
               d="M11 9H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h6m0-6v6m0-6l5.419-3.87A1 1 0 0 1 18 5.942v12.114a1 1 0 0 1-1.581.814L11 15m7 0a3 3 0 0 0 0-6M6 15h3v5H6z"></path>
     </svg>
 );
+const ArrowRight = ({
+                           size,
+                           width = "1em",
+                           height = "1em",
+                           ...props
+                       }: IconSvgProps) => (
+    <svg
+        width={size || height}
+        height={size || height}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24" {...props}>
+        <g fill="currentColor">
+            <path d="m12.052 14.829l1.414 1.414L17.71 12l-4.243-4.243l-1.414 1.415L13.88 11H6.343v2h7.537z"></path>
+            <path fillRule="evenodd"
+                  d="M19.778 19.778c4.296-4.296 4.296-11.26 0-15.556c-4.296-4.296-11.26-4.296-15.556 0c-4.296 4.296-4.296 11.26 0 15.556c4.296 4.296 11.26 4.296 15.556 0m-1.414-1.414A9 9 0 1 0 5.636 5.636a9 9 0 0 0 12.728 12.728"
+                  clipRule="evenodd"></path>
+        </g>
+    </svg>
+);
 
 
 const GravityUiLayoutHeaderColumns = ({
@@ -2646,7 +2665,8 @@ export {
     EvaCloudUploadFill,
     Fa6SolidPencil,
     Fa6SolidLink,
-    SolarLetterBold
+    SolarLetterBold,
+    ArrowRight
 };
 
 

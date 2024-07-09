@@ -12,11 +12,16 @@ import {Kbd} from "@nextui-org/kbd";
 import {Link} from "@nextui-org/link";
 
 import {link as linkStyles} from "@nextui-org/theme";
-import {UserLoginType, useUserLoginMutation, useUserRegisterMutation} from "@/feature/api/authApi"
+import {
+    useLazyGetUserByEmailQuery,
+    UserLoginType,
+    useUserLoginMutation,
+    useUserRegisterMutation
+} from "@/feature/api/authApi"
 import {siteConfig} from "@/config/site";
 import NextLink from "next/link";
 
-import {DiscordIcon, GithubIcon, Logo, SearchIcon, TwitterIcon,} from "@/components/icons";
+import {ArrowRight, DiscordIcon, GithubIcon, Logo, SearchIcon, TwitterIcon,} from "@/components/icons";
 import {useAuth} from "@/hook/useAuth";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/dropdown";
 import {Avatar} from "@nextui-org/avatar";
@@ -31,7 +36,7 @@ import ThemeSwitch from "@/components/theme-switch";
 import {
     Button,
     cn,
-    Input,
+    Input, InputProps,
     Listbox,
     ListboxItem,
     ModalHeader,
@@ -41,8 +46,353 @@ import {
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
 import {isWebKit} from "@react-aria/utils";
 import {Icon} from "@iconify/react";
+import {isVisible} from "y-prosemirror";
+import {isInvalid} from "@react-stately/calendar/src/utils";
+import {ArrowRightIcon} from "@nextui-org/shared-icons";
 
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+type FormSubmitEvent = React.FormEvent<HTMLFormElement>;
+
+const formVariants = {
+    visible: {opacity: 1, y: 0},
+    hidden: {opacity: 0, y: 10},
+};
+
+interface PasswordInputProps extends Omit<InputProps, 'type'> {
+    isVisible: boolean;
+    toggleVisibility: () => void;
+}
+
+const PasswordInput: React.FC<PasswordInputProps> = ({isVisible, toggleVisibility, ...props}) => (
+    <Input
+        {...props}
+        type={isVisible ? "text" : "password"}
+        variant="bordered"
+        endContent={
+            <button type="button" onClick={toggleVisibility}>
+                <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon={isVisible ? "solar:eye-closed-linear" : "solar:eye-bold"}
+                />
+            </button>
+        }
+    />
+);
+
+const SocialLoginButtons: React.FC = () => (
+    <div className="flex flex-col gap-2">
+        <Button startContent={<Icon icon="flat-color-icons:google" width={24}/>} variant="bordered">
+            Continue with Google
+        </Button>
+        <Button startContent={<Icon className="text-default-500" icon="fe:github" width={24}/>} variant="bordered">
+            Continue with Github
+        </Button>
+    </div>
+);
+
+interface LoginFormProps {
+    onClose: () => void;
+    setFormState: (state: 'login' | 'register' | 'forgotPassword') => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({
+                                                 onClose,
+                                                 setFormState
+                                             }) => {
+
+    const dispatch = useAppDispatch()
+
+    const [userLogin, {isLoading: isLoginLoading}] = useUserLoginMutation()
+
+    // handle login
+    const userLoginHandle = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        // 登录
+        const auth = await userLogin(userState).unwrap()
+        dispatch(setCredentials({...auth, isSelectRemember: isSelectRemember}))
+        onClose()
+    }
+
+    const [isSelectRemember, setIsSelectRemember] = useState(true)
+
+    const [userState, setUserState] = useState<UserLoginType>({
+        email: "",
+        password: "",
+    })
+
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setUserState(prev => ({...prev, [name]: value}));
+    };
+
+    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
+
+
+    // validate email
+    const isInvalid = useMemo(() => {
+        if (userState.email === "") return false;
+        return !validateEmail(userState.email);
+    }, [userState.email]);
+
+    return (
+        <>
+            <m.form
+                animate="visible"
+                exit="hidden"
+                initial="hidden"
+                variants={formVariants}
+                className="flex flex-col gap-3"
+                onSubmit={userLoginHandle}
+            >
+                <Input
+                    autoFocus
+                    value={userState.email}
+                    onChange={handleChange}
+                    name="email"
+                    label="Email Address"
+                    isInvalid={isInvalid}
+                    errorMessage={isInvalid ? "Please enter a valid email" : ""}
+                    placeholder="Enter your email"
+                    type="email"
+                    variant="bordered"
+                />
+                <PasswordInput
+                    label="Password"
+                    name="password"
+                    value={userState.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    isVisible={isVisible}
+                    toggleVisibility={toggleVisibility}
+                />
+                <div className="flex items-center justify-between px-1 py-2">
+                    <Checkbox
+                        name="remember"
+                        size="sm"
+                        isSelected={isSelectRemember}
+                        onValueChange={setIsSelectRemember}
+                    >
+                        Remember me
+                    </Checkbox>
+                    <Link className="text-default-500" href="#" size="sm"
+                          onPress={() => setFormState("forgotPassword")}
+                    >
+                        Forgot password?
+                    </Link>
+                </div>
+                <Button color="primary" type="submit" isLoading={isLoginLoading}>
+                    Log In
+                </Button>
+            </m.form>
+        </>
+    )
+};
+
+interface RegisterFormProps {
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
+
+    const [isTermsAgreed, setIsTermsAgreed] = React.useState(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setUserState(prev => ({...prev, [name]: value}));
+    };
+
+
+    const [userState, setUserState] = useState<UserLoginType>({
+        email: "",
+        password: "",
+    })
+
+    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
+
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    // validate email
+    const isInvalid = useMemo(() => {
+        if (userState.email === "") return false;
+        return !validateEmail(userState.email);
+    }, [userState.email]);
+
+    const [confirmPassword, setConfirmPassword] = useState<string>()
+
+    const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
+
+
+    const [userRegister, {isLoading: isRegisterLogin}] = useUserRegisterMutation()
+
+
+    const userRegisterHandle = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (!isTermsAgreed) {
+            alert("Please agree to the Terms and Privacy Policy to proceed.")
+            return
+        }
+        if (userState.password !== confirmPassword) {
+            alert("Passwords do not match.")
+            return
+        }
+        if (await userRegister(userState).unwrap() === 2001) {
+            setConfirmPassword("")
+        }
+    }
+
+    return (
+        <m.form
+            animate="visible"
+            exit="hidden"
+            initial="hidden"
+            variants={formVariants}
+            className="flex flex-col gap-3"
+            onSubmit={userRegisterHandle}
+        >
+            <Input
+                placeholder="Enter your email"
+                autoFocus
+                isInvalid={isInvalid}
+                errorMessage={isInvalid ? "Please enter a valid email" : ""}
+                onChange={handleChange}
+                value={userState.email}
+                isRequired
+                label="Email Address"
+                name="email"
+                type="email"
+                variant="bordered"
+            />
+            <PasswordInput
+                isRequired
+                value={userState.password}
+                onChange={handleChange}
+                label="Password"
+                name="password"
+                placeholder="Enter your password"
+                isVisible={isVisible}
+                toggleVisibility={toggleVisibility}
+            />
+            <PasswordInput
+                isRequired
+                errorMessage={userState.password !== confirmPassword ? "Passwords do not match." : ""}
+                onChange={(e: InputChangeEvent) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                label="Confirm Password"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                isVisible={isVisible}
+                toggleVisibility={toggleVisibility}
+            />
+            <Checkbox isRequired className="py-4" size="sm" isSelected={isTermsAgreed} onValueChange={setIsTermsAgreed}>
+                I agree with the <Link href="#" size="sm">Terms</Link> and <Link href="#" size="sm">Privacy
+                Policy</Link>
+            </Checkbox>
+            <Button color="primary" type="submit" isLoading={isRegisterLogin}>
+                Sign Up
+            </Button>
+        </m.form>
+    )
+}
+
+const ForgotPasswordForm = () => {
+    const [getUserByEmail, {data, isLoading}] = useLazyGetUserByEmailQuery()
+    const [passwordReset, setPasswordReset] = React.useState({
+        email: "",
+        verificationCode: "",
+        password: ''
+    })
+
+    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
+
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    // validate email
+    const isInvalid = useMemo(() => {
+        if (passwordReset.email === "") return false;
+        return !validateEmail(passwordReset.email);
+    }, [passwordReset.email]);
+
+    const [showVerificationCode, setShowVerificationCode] = useState(false);
+
+    const handleLoginChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setPasswordReset((prev) => ({
+        ...prev,
+        [name]: value
+    }))
+
+    const findUserByEmail = async () => {
+        const user = await getUserByEmail(passwordReset.email).unwrap()
+        console.log(user)
+    }
+
+    return (
+        <m.form
+            animate="visible"
+            exit="hidden"
+            initial="hidden"
+            variants={formVariants}
+            className="flex flex-col gap-3"
+        >
+            <Input
+                autoFocus
+                name="email"
+                size={"lg"}
+                label="Email Address"
+                labelPlacement={"inside"}
+                type="email"
+                isInvalid={isInvalid}
+                errorMessage={isInvalid ? "Please enter a valid email" : ""}
+                onChange={handleLoginChange}
+                endContent={
+                    !showVerificationCode && passwordReset.email.length > 0 &&
+                    <Link className={"cursor-pointer flex self-center  text-default-500"}
+                          onPress={findUserByEmail}>
+                        <ArrowRight size={30}/>
+                    </Link>
+                }
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault()
+                        findUserByEmail()
+                    }
+                }}
+            />
+            {
+                showVerificationCode &&
+                <Input
+                    name={"verificationCode"}
+                    size={"lg"}
+                    label="Verification Code"
+                    labelPlacement={"inside"}
+                    endContent={
+                        passwordReset.verificationCode.length > 0 &&
+                        <Link className={"cursor-pointer flex self-center text-default-500"}>
+                            <ArrowRight size={30}/>
+                        </Link>
+                    }
+                    type={"text"}
+                    onChange={handleLoginChange}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            alert("进行验证")
+                        }
+                    }}
+                />
+            }
+
+            {/*<Button color="primary" type="submit">*/}
+            {/*    Reset Password*/}
+            {/*</Button>*/}
+        </m.form>
+    )
+}
 export const Navbar = () => {
+
+    const dispatch = useAppDispatch()
+
+    const [formState, setFormState] = useState<'login' | 'register' | 'forgotPassword'>('login');
 
     const searchRef = useRef<HTMLInputElement>(null);
 
@@ -82,35 +432,14 @@ export const Navbar = () => {
         }
     }, [isSearchOpen]);
 
-    const [isLogin, setIsLogin] = useState(true)
 
-
-    const [userLogin, {isLoading: isLoginLoading}] = useUserLoginMutation()
-
-    const [userRegister, {isLoading: isRegisterLogin}] = useUserRegisterMutation()
-
-    const [confirmPassword, setConfirmPassword] = useState<string>()
-
-    const [isTermsAgreed, setIsTermsAgreed] = React.useState(false);
-
-    const toggleState = () => {
-        setIsLogin(!isLogin)
-        setUserState({
-            email: "",
-            password: ""
-        })
-    }
     // get current path
     const pathname = usePathname()
 
-    const toggleVisibility = () => setIsVisible(!isVisible)
-
-    const [isVisible, setIsVisible] = React.useState(false)
 
     // get current user
     const {currentUser} = useAuth()
 
-    const dispatch = useAppDispatch()
 
     const [userState, setUserState] = useState<UserLoginType>({
         email: "",
@@ -119,46 +448,13 @@ export const Navbar = () => {
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure()
 
-    const [isSelectRemember, setIsSelectRemember] = useState(true)
     // const [register] = useRegisterMutation();
 
-    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
-
-    // validate email
-    const isInvalid = useMemo(() => {
-        if (userState.email === "") return false;
-        return !validateEmail(userState.email);
-    }, [userState.email]);
 
     const handleLoginChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setUserState((prev) => ({
         ...prev,
         [name]: value
     }))
-
-    // handle login
-    const userLoginHandle = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        // 登录
-        const auth = await userLogin(userState).unwrap()
-
-        dispatch(setCredentials({...auth, isSelectRemember: isSelectRemember}))
-    }
-
-    const userRegisterHandle = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (!isTermsAgreed) {
-            alert("Please agree to the Terms and Privacy Policy to proceed.")
-            return
-        }
-        if (userState.password !== confirmPassword) {
-            alert("Passwords do not match.")
-            return
-        }
-        if (await userRegister(userState).unwrap() === 200) {
-            setConfirmPassword("")
-            toggleState()
-        }
-    }
 
 
     const searchInput = (
@@ -408,228 +704,42 @@ export const Navbar = () => {
                             <ResizablePanel
                                 className={"flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small"}>
                                 <p className="pb-2 text-xl font-medium">
-                                    {
-                                        isLogin ? "Log In" : "Sign Up"
-                                    }
+                                    {formState === 'login' ? "Log In" : formState === 'register' ? "Sign Up" : "Reset Password"}
                                 </p>
                                 <AnimatePresence initial={false} mode="popLayout">
                                     <LazyMotion features={domAnimation}>
-                                        {
-                                            isLogin ? (
-                                                <>
-                                                    <m.form
-                                                        animate="visible"
-                                                        exit="hidden"
-                                                        initial="hidden"
-                                                        variants={
-                                                            {
-                                                                visible: {opacity: 1, y: 0},
-                                                                hidden: {opacity: 0, y: 10},
-                                                            }
-                                                        }
-                                                        className="flex flex-col gap-3"
-                                                        onSubmit={(e) => userLoginHandle(e)}
-                                                    >
-                                                        <Input
-                                                            autoFocus
-                                                            value={userState.email}
-                                                            onChange={handleLoginChange}
-                                                            name="email"
-                                                            isInvalid={isInvalid}
-                                                            label="Email Address"
-                                                            errorMessage={isInvalid && "Please enter a valid email"}
-                                                            placeholder="Enter your email"
-                                                            type="email"
-                                                            variant="bordered"
-                                                        />
-                                                        <Input
-                                                            endContent={
-                                                                <button type="button"
-                                                                        onClick={toggleVisibility}>
-                                                                    {isVisible ? (
-                                                                        <Icon
-                                                                            className="pointer-events-none text-2xl text-default-400"
-                                                                            icon="solar:eye-closed-linear"
-                                                                        />
-                                                                    ) : (
-                                                                        <Icon
-                                                                            className="pointer-events-none text-2xl text-default-400"
-                                                                            icon="solar:eye-bold"
-                                                                        />
-                                                                    )}
-                                                                </button>
-                                                            }
-                                                            label="Password"
-                                                            name={"password"}
-                                                            value={userState.password}
-                                                            onChange={handleLoginChange}
-                                                            placeholder="Enter your password"
-                                                            type={isVisible ? "text" : "password"}
-                                                            variant="bordered"
-                                                        />
-                                                        <div
-                                                            className="flex items-center justify-between px-1 py-2">
-                                                            <Checkbox
-                                                                name="remember" size="sm"
-                                                                isSelected={isSelectRemember}
-                                                                onValueChange={setIsSelectRemember}
-                                                            >
-                                                                Remember me
-                                                            </Checkbox>
-                                                            <Link className="text-default-500" href="#"
-                                                                  size="sm">
-                                                                Forgot password?
-                                                            </Link>
-                                                        </div>
-                                                        <Button
-                                                            color="primary"
-                                                            type="submit"
-                                                            isLoading={isLoginLoading}
-                                                            onPress={onClose}
-                                                        >
-                                                            Log In
-                                                        </Button>
-                                                    </m.form>
-                                                    <div className="flex items-center gap-4 py-2">
-                                                        <Divider className="flex-1"/>
-                                                        <p className="shrink-0 text-tiny text-default-500">OR</p>
-                                                        <Divider className="flex-1"/>
-                                                    </div>
-                                                    <div className="flex flex-col gap-2">
-                                                        <Button
-                                                            startContent={<Icon icon="flat-color-icons:google"
-                                                                                width={24}/>}
-                                                            variant="bordered"
-                                                        >
-                                                            Continue with Google
-                                                        </Button>
-                                                        <Button
-                                                            startContent={<Icon className="text-default-500"
-                                                                                icon="fe:github"
-                                                                                width={24}/>}
-                                                            variant="bordered"
-                                                        >
-                                                            Continue with Github
-                                                        </Button>
-                                                    </div>
-                                                    <p className="text-center text-small">
-                                                        Need to create an account?&nbsp;
-                                                        <Link href="#" size="sm"
-                                                              onPress={toggleState}>
-                                                            Sign Up
-                                                        </Link>
-                                                    </p>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <m.form
-                                                        animate="visible"
-                                                        exit="hidden"
-                                                        initial="hidden"
-                                                        variants={
-                                                            {
-                                                                visible: {opacity: 1, y: 0},
-                                                                hidden: {opacity: 0, y: 10},
-                                                            }
-                                                        }
-                                                        className="flex flex-col gap-3"
-                                                        onSubmit={(e) => userRegisterHandle(e)}
-                                                    >
-                                                        <Input
-                                                            placeholder="Enter your email"
-                                                            autoFocus
-                                                            isInvalid={isInvalid}
-                                                            errorMessage={isInvalid && "Please enter a valid email"}
-                                                            onChange={handleLoginChange}
-                                                            value={userState.email}
-                                                            isRequired
-                                                            label="Email Address"
-                                                            name="email"
-                                                            type="email"
-                                                            variant="bordered"
-                                                        />
-                                                        <Input
-                                                            isRequired
-                                                            value={userState.password}
-                                                            onChange={handleLoginChange}
-                                                            endContent={
-                                                                <button type="button" onClick={toggleVisibility}>
-                                                                    {isVisible ? (
-                                                                        <Icon
-                                                                            className="pointer-events-none text-2xl text-foreground/50"
-                                                                            icon="solar:eye-closed-linear"
-                                                                        />
-                                                                    ) : (
-                                                                        <Icon
-                                                                            className="pointer-events-none text-2xl text-foreground/50"
-                                                                            icon="solar:eye-bold"
-                                                                        />
-                                                                    )}
-                                                                </button>
-                                                            }
-                                                            label="Password"
-                                                            name="password"
-                                                            placeholder="Enter your password"
-                                                            type={isVisible ? "text" : "password"}
-                                                            variant="bordered"
-                                                        />
-                                                        <Input
-                                                            isRequired
-                                                            endContent={
-                                                                <button type="button" onClick={toggleVisibility}>
-                                                                    {isVisible ? (
-                                                                        <Icon
-                                                                            className="pointer-events-none text-2xl text-foreground/50"
-                                                                            icon="solar:eye-closed-linear"
-                                                                        />
-                                                                    ) : (
-                                                                        <Icon
-                                                                            className="pointer-events-none text-2xl text-foreground/50"
-                                                                            icon="solar:eye-bold"
-                                                                        />
-                                                                    )}
-                                                                </button>
-                                                            }
-                                                            errorMessage={userState.password !== confirmPassword && "Passwords do not match."}
-                                                            onChange={(e) => {
-                                                                setConfirmPassword(e.target.value)
-                                                            }}
-                                                            value={confirmPassword}
-                                                            label="Confirm Password"
-                                                            name="confirmPassword"
-                                                            placeholder="Confirm your password"
-                                                            type={isVisible ? "text" : "password"}
-                                                            variant="bordered"
-                                                        />
-                                                        <Checkbox isRequired className="py-4" size="sm"
-                                                                  isSelected={isTermsAgreed}
-                                                                  onValueChange={setIsTermsAgreed}>
-                                                            I agree with the&nbsp;
-                                                            <Link href="#" size="sm">
-                                                                Terms
-                                                            </Link>
-                                                            &nbsp; and&nbsp;
-                                                            <Link href="#" size="sm">
-                                                                Privacy Policy
-                                                            </Link>
-                                                        </Checkbox>
-
-                                                        <Button color="primary"
-                                                                type="submit"
-                                                                isLoading={isRegisterLogin}>
-                                                            Sign Up
-                                                        </Button>
-                                                    </m.form>
-                                                    <p className="text-center text-small">
-                                                        Already have an account?&nbsp;
-                                                        <Link href="#" size="sm"
-                                                              onPress={toggleState}>
-                                                            Log In
-                                                        </Link>
-                                                    </p>
-                                                </>
-                                            )
-                                        }
+                                        {formState === 'login' && (
+                                            <>
+                                                <LoginForm
+                                                    setFormState={setFormState}
+                                                    onClose={onClose}
+                                                />
+                                                <div className="flex items-center gap-4 py-2">
+                                                    <Divider className="flex-1"/>
+                                                    <p className="shrink-0 text-tiny text-default-500">OR</p>
+                                                    <Divider className="flex-1"/>
+                                                </div>
+                                                <SocialLoginButtons/>
+                                                <p className="text-center text-small">
+                                                    Need to create an account?&nbsp;
+                                                    <Link href="#" size="sm" onPress={() => setFormState("register")}>
+                                                        Sign Up
+                                                    </Link>
+                                                </p>
+                                            </>
+                                        )}
+                                        {formState === 'register' && (
+                                            <>
+                                                <RegisterForm/>
+                                                <p className="text-center text-small">
+                                                    Already have an account?&nbsp;
+                                                    <Link href="#" size="sm" onPress={() => setFormState("login")}>
+                                                        Log In
+                                                    </Link>
+                                                </p>
+                                            </>
+                                        )}
+                                        {formState === 'forgotPassword' && <ForgotPasswordForm/>}
                                     </LazyMotion>
                                 </AnimatePresence>
                             </ResizablePanel>

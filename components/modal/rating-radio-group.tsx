@@ -26,22 +26,24 @@ const RatingRadioGroup = React.forwardRef<HTMLDivElement, RatingRadioGroupProps>
 
         return (
             <div className={cn("flex items-center gap-3", className)}>
-                <RadioGroup
-                    ref={ref}
-                    value={value}
-                    {...props}
-                    defaultValue="1"
-                    orientation="horizontal"
-                    onValueChange={setValue}
-                >
-                    <RatingRadioItem value="1" />
-                    <RatingRadioItem value="2" />
-                    <RatingRadioItem value="3" />
-                    <RatingRadioItem value="4" />
-                    <RatingRadioItem value="5" />
-                </RadioGroup>
+                <div className={"flex flex-row w-full justify-between"}>
+                    <RadioGroup
+                        ref={ref}
+                        value={value}
+                        {...props}
+                        defaultValue="1"
+                        orientation="horizontal"
+                        onValueChange={setValue}
+                    >
+                        <RatingRadioItem value="1"/>
+                        <RatingRadioItem value="2"/>
+                        <RatingRadioItem value="3"/>
+                        <RatingRadioItem value="4"/>
+                        <RatingRadioItem value="5"/>
+                    </RadioGroup>
+                    {!hideStarsText && <p className="text-medium text-default-400">{starsText}</p>}
+                </div>
                 {label ? label : null}
-                {!hideStarsText && <p className="text-medium text-default-400">{starsText}</p>}
             </div>
         );
     },

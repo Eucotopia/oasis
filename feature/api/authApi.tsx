@@ -23,7 +23,6 @@ export type UserType = {
     status: number
 }
 export const baseUrl = 'http://localhost:8080';
-export const baseUrl1 = 'http://47.119.161.226/api';
 export const authApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['Auth'],
@@ -62,8 +61,7 @@ export const authApi = createApi({
                 body: credentials,
             }),
             transformResponse: (response: ResultResponse<currentUserType>, meta, arg) => {
-                if (response.code === 200) {
-                    alert('Login successful')
+                if (response.code === 2002) {
                     return response.data;
                 } else {
                     alert(`Login failed: ${response.message}`)
@@ -94,7 +92,7 @@ export const authApi = createApi({
                 body: credentials,
             }),
             transformResponse: (response: ResultResponse<null>, meta, arg) => {
-                if (response.code === 200) {
+                if (response.code === 2001) {
                     alert(response.message)
                     return response.code;
                 } else {
@@ -136,6 +134,30 @@ export const authApi = createApi({
             query: () => ({url: '/count'}),
             transformResponse: (response: ResultResponse<number>, meta, arg) => response.data,
         }),
+        getUserByEmail: buildr.query<UserType, string>({
+            query: (email) => ({
+                url: `/verification-code/${email}`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ResultResponse<UserType>, meta, arg) => response.data,
+            transformErrorResponse: (
+                response: {
+                    status: string | number,
+                },
+                meta,
+                arg
+            ) => {
+                response.status
+            },
+        })
     }),
 })
-export const {useUserLoginMutation, useUserRegisterMutation,useGetUserQuery,useLazyGetUserQuery, useGetUsersQuery, useGetUserCountQuery} = authApi
+export const {
+    useUserLoginMutation,
+    useUserRegisterMutation,
+    useGetUserQuery,
+    useLazyGetUserQuery,
+    useGetUsersQuery,
+    useLazyGetUserByEmailQuery,
+    useGetUserByEmailQuery
+} = authApi
