@@ -11,9 +11,9 @@ import {
 import {Kbd} from "@nextui-org/kbd";
 import {Link} from "@nextui-org/link";
 
-import {link as linkStyles} from "@nextui-org/theme";
+import {link as linkStyles, user} from "@nextui-org/theme";
 import {
-    useLazyGetUserByEmailQuery,
+    useLazyGetVerifyCodeByEmailQuery, useLazyVerifyCodeQuery,
     UserLoginType,
     useUserLoginMutation,
     useUserRegisterMutation
@@ -36,7 +36,8 @@ import ThemeSwitch from "@/components/theme-switch";
 import {
     Button,
     cn,
-    Input, InputProps,
+    Input,
+    InputProps,
     Listbox,
     ListboxItem,
     ModalHeader,
@@ -46,9 +47,6 @@ import {
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
 import {isWebKit} from "@react-aria/utils";
 import {Icon} from "@iconify/react";
-import {isVisible} from "y-prosemirror";
-import {isInvalid} from "@react-stately/calendar/src/utils";
-import {ArrowRightIcon} from "@nextui-org/shared-icons";
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 type FormSubmitEvent = React.FormEvent<HTMLFormElement>;
@@ -212,7 +210,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
 
     const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
 
-    const [isVisible, setIsVisible] = React.useState(false)
+
 
     // validate email
     const isInvalid = useMemo(() => {
@@ -221,6 +219,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
     }, [userState.email]);
 
     const [confirmPassword, setConfirmPassword] = useState<string>()
+
+    const [isVisible, setIsVisible] = React.useState(false)
 
     const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
 
@@ -298,35 +298,46 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
 }
 
 const ForgotPasswordForm = () => {
-    const [getUserByEmail, {data, isLoading}] = useLazyGetUserByEmailQuery()
-    const [passwordReset, setPasswordReset] = React.useState({
+
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
+
+    const [verifyCode, {data: isResetPassword, isLoading: isVerifyCodeLoading}] = useLazyVerifyCodeQuery()
+
+    const [getVerifyCodeByEmail, {data, isLoading}] = useLazyGetVerifyCodeByEmailQuery()
+
+    const [passwordReset, setPasswordReset] = React.useState<UserLoginType>({
         email: "",
-        verificationCode: "",
+        verifyCode: "",
         password: ''
     })
 
     const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
 
-    const [isVisible, setIsVisible] = React.useState(false)
 
     // validate email
     const isInvalid = useMemo(() => {
         if (passwordReset.email === "") return false;
         return !validateEmail(passwordReset.email);
-    }, [passwordReset.email]);
+    }, [passwordReset.email])
 
-    const [showVerificationCode, setShowVerificationCode] = useState(false);
+    const [stage, setStage] = useState<'getVerifyCode' | 'verifyCode' | 'resetPassword'>("getVerifyCode")
 
-    const handleLoginChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setPasswordReset((prev) => ({
+    const [confirmPassword, setConfirmPassword] = useState<string>()
+
+    const handleChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setPasswordReset((prev) => ({
         ...prev,
         [name]: value
     }))
-
-    const findUserByEmail = async () => {
-        const user = await getUserByEmail(passwordReset.email).unwrap()
-        console.log(user)
+    const getVerifyCode = async () => {
+        const result = await getVerifyCodeByEmail(passwordReset.email).unwrap()
+        if (result.code == 200) {
+            setStage('verifyCode')
+        } else {
+            alert(result.message)
+        }
     }
-
     return (
         <m.form
             animate="visible"
@@ -343,48 +354,83 @@ const ForgotPasswordForm = () => {
                 labelPlacement={"inside"}
                 type="email"
                 isInvalid={isInvalid}
+                value={passwordReset.email}
                 errorMessage={isInvalid ? "Please enter a valid email" : ""}
-                onChange={handleLoginChange}
+                onChange={handleChange}
                 endContent={
-                    !showVerificationCode && passwordReset.email.length > 0 &&
-                    <Link className={"cursor-pointer flex self-center  text-default-500"}
-                          onPress={findUserByEmail}>
+                    stage === "getVerifyCode" && passwordReset.email.length > 0 &&
+                    <Link
+                        className={"cursor-pointer flex self-center  text-default-500"}
+                        onPress={getVerifyCode}
+                    >
                         <ArrowRight size={30}/>
                     </Link>
                 }
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {
                         e.preventDefault()
-                        findUserByEmail()
+                        getVerifyCode()
                     }
                 }}
             />
             {
-                showVerificationCode &&
+                stage === "verifyCode" &&
                 <Input
-                    name={"verificationCode"}
+                    name={"verifyCode"}
                     size={"lg"}
                     label="Verification Code"
                     labelPlacement={"inside"}
+                    value={passwordReset.verifyCode}
                     endContent={
-                        passwordReset.verificationCode.length > 0 &&
+                        passwordReset.verifyCode && passwordReset.verifyCode.length > 0 &&
                         <Link className={"cursor-pointer flex self-center text-default-500"}>
                             <ArrowRight size={30}/>
                         </Link>
                     }
                     type={"text"}
-                    onChange={handleLoginChange}
-                    onKeyDown={(e) => {
+                    onChange={handleChange}
+                    onKeyDown={async (e) => {
                         if (e.key === "Enter") {
-                            alert("进行验证")
+                            e.preventDefault()
+                            // 验证码争取
+                            if (await verifyCode(passwordReset).unwrap()) {
+                                // 可以设置密码
+                                setStage("resetPassword")
+                            }
+
                         }
                     }}
                 />
             }
-
-            {/*<Button color="primary" type="submit">*/}
-            {/*    Reset Password*/}
-            {/*</Button>*/}
+            {
+                stage === "resetPassword" &&
+                <>
+                    <PasswordInput
+                        isRequired
+                        value={passwordReset.password}
+                        onChange={handleChange}
+                        label="Password"
+                        name="password"
+                        placeholder="Enter your password"
+                        isVisible={isVisible}
+                        toggleVisibility={toggleVisibility}
+                    />
+                    <PasswordInput
+                        isRequired
+                        errorMessage={passwordReset.password !== confirmPassword ? "Passwords do not match." : ""}
+                        onChange={(e: InputChangeEvent) => setConfirmPassword(e.target.value)}
+                        value={confirmPassword}
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        isVisible={isVisible}
+                        toggleVisibility={toggleVisibility}
+                    />
+                </>
+            }
+            <Button color="primary" type="submit">
+                Reset Password
+            </Button>
         </m.form>
     )
 }

@@ -7,6 +7,7 @@ import {roleType} from "@/feature/api/roleApi";
 export type UserLoginType = {
     email: string
     password: string
+    verifyCode?: string
 }
 export type UserType = {
     id: number,
@@ -134,12 +135,28 @@ export const authApi = createApi({
             query: () => ({url: '/count'}),
             transformResponse: (response: ResultResponse<number>, meta, arg) => response.data,
         }),
-        getUserByEmail: buildr.query<UserType, string>({
+        getVerifyCodeByEmail: buildr.query<ResultResponse<string>, string>({
             query: (email) => ({
-                url: `/verification-code/${email}`,
+                url: `/getVerifyCode/${email}`,
                 method: 'POST',
             }),
-            transformResponse: (response: ResultResponse<UserType>, meta, arg) => response.data,
+            transformErrorResponse: (
+                response: {
+                    status: string | number,
+                },
+                meta,
+                arg
+            ) => {
+                response.status
+            },
+        }),
+        verifyCode: buildr.query<boolean, UserLoginType>({
+            query: (credentials) => ({
+                url: '/verifyCode',
+                method: 'POST',
+                body: credentials,
+            }),
+            transformResponse: (response: ResultResponse<boolean>, meta, arg) => response.data,
             transformErrorResponse: (
                 response: {
                     status: string | number,
@@ -155,9 +172,7 @@ export const authApi = createApi({
 export const {
     useUserLoginMutation,
     useUserRegisterMutation,
-    useGetUserQuery,
-    useLazyGetUserQuery,
+    useLazyVerifyCodeQuery,
     useGetUsersQuery,
-    useLazyGetUserByEmailQuery,
-    useGetUserByEmailQuery
+    useLazyGetVerifyCodeByEmailQuery
 } = authApi
