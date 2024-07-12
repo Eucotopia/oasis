@@ -413,7 +413,10 @@ const ForgotPasswordForm: React.FC<FormProps> = ({
                     </Button>
                 </>
             }
-
+            <div className={"flex flex-row justify-between mt-2 gap-4"}>
+                <Button variant={"flat"} fullWidth onPress={() => setFormState("login")}>Log In</Button>
+                <Button variant={"flat"} fullWidth onPress={() => setFormState("register")}>Sign Up</Button>
+            </div>
         </m.form>
     )
 }
@@ -813,7 +816,8 @@ export const Navbar = () => {
                                                 resetForm={resetForm}
                                                 toggleVisibility={toggleVisibility}
                                                 userState={userState}
-                                            />}
+                                            />
+                                        }
                                     </LazyMotion>
                                 </AnimatePresence>
                             </ResizablePanel>
