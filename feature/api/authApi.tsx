@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import {RootState} from "@/app/store";
 import {ResultResponse} from "@/types";
-import {currentUserType} from "@/feature/auth/authSlice";
+import {currentUserType, setCredentials} from "@/feature/auth/authSlice";
 import {roleType} from "@/feature/api/roleApi";
 
 export type UserLoginType = {
@@ -78,12 +78,23 @@ export const authApi = createApi({
             ) => {
                 if (response.status === 400) {
                     alert(`请求错误: ${response.status}`)
-                } else if (response.status === 500) { // 假设 500 表示服务器错误
+                } else if (response.status === 500) {
                     alert('服务器错误，请稍后再试。');
                 } else {
                     alert(`未知错误: ${response.status}`);
                 }
                 // return response.status;
+            },
+            async onQueryStarted(arg, {queryFulfilled, dispatch}) {
+                try {
+                    // 请求发出前的操作，可以做一些更新 UI 的操作
+                    // ......
+                    // 等待查询结果
+                    const {data} = await queryFulfilled;
+                    dispatch(setCredentials({...data, isSelectRemember: true}));
+                } catch (error) {
+
+                }
             },
         }),
         userRegister: buildr.mutation<number, UserLoginType>({
@@ -166,6 +177,22 @@ export const authApi = createApi({
             ) => {
                 response.status
             },
+        }),
+        resetPassword: buildr.query<ResultResponse<string>,UserLoginType>({
+            query: (credentials) => ({
+                url: '/resetPassword',
+                method: 'POST',
+                body: credentials,
+            }),
+            transformErrorResponse: (
+                response: {
+                    status: string | number,
+                },
+                meta,
+                arg
+            ) => {
+                response.status
+            },
         })
     }),
 })
@@ -174,5 +201,6 @@ export const {
     useUserRegisterMutation,
     useLazyVerifyCodeQuery,
     useGetUsersQuery,
-    useLazyGetVerifyCodeByEmailQuery
+    useLazyGetVerifyCodeByEmailQuery,
+    useLazyResetPasswordQuery
 } = authApi

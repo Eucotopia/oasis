@@ -20,7 +20,7 @@ const persistConfig = {
     key: "root",
     storage: storage,
     // don't persist this state
-    blacklist: []
+    blacklist: ['auth']
 }
 
 const middleware = [thunk, postApi.middleware, commentApi.middleware, faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware, blogRollApi.middleware]

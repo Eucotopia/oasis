@@ -11,9 +11,11 @@ import {
 import {Kbd} from "@nextui-org/kbd";
 import {Link} from "@nextui-org/link";
 
-import {link as linkStyles, user} from "@nextui-org/theme";
+import {link as linkStyles} from "@nextui-org/theme";
 import {
-    useLazyGetVerifyCodeByEmailQuery, useLazyVerifyCodeQuery,
+    useLazyGetVerifyCodeByEmailQuery,
+    useLazyResetPasswordQuery,
+    useLazyVerifyCodeQuery,
     UserLoginType,
     useUserLoginMutation,
     useUserRegisterMutation
@@ -30,7 +32,7 @@ import {Divider} from "@nextui-org/divider";
 import {Checkbox} from "@nextui-org/checkbox";
 import {useAppDispatch} from "@/hook/store";
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} from "react";
-import {removeCredentials, setCredentials} from "@/feature/auth/authSlice";
+import {removeCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
 import ThemeSwitch from "@/components/theme-switch";
 import {
@@ -47,9 +49,9 @@ import {
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
 import {isWebKit} from "@react-aria/utils";
 import {Icon} from "@iconify/react";
+import {AppDispatch} from "@/app/store";
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
-type FormSubmitEvent = React.FormEvent<HTMLFormElement>;
 
 const formVariants = {
     visible: {opacity: 1, y: 0},
@@ -60,6 +62,17 @@ interface PasswordInputProps extends Omit<InputProps, 'type'> {
     isVisible: boolean;
     toggleVisibility: () => void;
 }
+
+interface FormProps extends PasswordInputProps {
+    onClose?: () => void
+    setFormState: (state: 'login' | 'register' | 'forgotPassword') => void
+    userState: UserLoginType
+    dispatch?: AppDispatch
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    isInvalid: boolean
+    resetForm: () => void
+}
+
 
 const PasswordInput: React.FC<PasswordInputProps> = ({isVisible, toggleVisibility, ...props}) => (
     <Input
@@ -88,53 +101,37 @@ const SocialLoginButtons: React.FC = () => (
     </div>
 );
 
-interface LoginFormProps {
-    onClose: () => void;
-    setFormState: (state: 'login' | 'register' | 'forgotPassword') => void;
-}
 
-const LoginForm: React.FC<LoginFormProps> = ({
-                                                 onClose,
-                                                 setFormState
-                                             }) => {
-
-    const dispatch = useAppDispatch()
+const LoginForm: React.FC<FormProps> = ({
+                                            onClose,
+                                            setFormState,
+                                            userState,
+                                            dispatch,
+                                            handleChange,
+                                            resetForm,
+                                            isInvalid,
+                                            isVisible,
+                                            toggleVisibility
+                                        }) => {
 
     const [userLogin, {isLoading: isLoginLoading}] = useUserLoginMutation()
 
-    // handle login
     const userLoginHandle = async (e: React.FormEvent<HTMLFormElement>) => {
+
         e.preventDefault()
-        // 登录
         const auth = await userLogin(userState).unwrap()
-        dispatch(setCredentials({...auth, isSelectRemember: isSelectRemember}))
-        onClose()
+
+        if (dispatch) {
+            // dispatch(setCredentials({...auth, isSelectRemember: isSelectRemember}))
+            resetForm()
+        }
+        if (onClose) {
+            onClose()
+        }
     }
 
     const [isSelectRemember, setIsSelectRemember] = useState(true)
 
-    const [userState, setUserState] = useState<UserLoginType>({
-        email: "",
-        password: "",
-    })
-
-    const [isVisible, setIsVisible] = React.useState(false)
-
-    const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setUserState(prev => ({...prev, [name]: value}));
-    };
-
-    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
-
-
-    // validate email
-    const isInvalid = useMemo(() => {
-        if (userState.email === "") return false;
-        return !validateEmail(userState.email);
-    }, [userState.email]);
 
     return (
         <>
@@ -177,7 +174,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
                         Remember me
                     </Checkbox>
                     <Link className="text-default-500" href="#" size="sm"
-                          onPress={() => setFormState("forgotPassword")}
+                          onPress={() => {
+                              setFormState("forgotPassword")
+                              resetForm()
+                          }}
                     >
                         Forgot password?
                     </Link>
@@ -190,43 +190,22 @@ const LoginForm: React.FC<LoginFormProps> = ({
     )
 };
 
-interface RegisterFormProps {
-}
 
-const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
+const RegisterForm: React.FC<FormProps> = ({
+                                               userState,
+                                               handleChange,
+                                               setFormState,
+                                               resetForm,
+                                               isInvalid,
+                                               isVisible,
+                                               toggleVisibility
+                                           }) => {
 
     const [isTermsAgreed, setIsTermsAgreed] = React.useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setUserState(prev => ({...prev, [name]: value}));
-    };
-
-
-    const [userState, setUserState] = useState<UserLoginType>({
-        email: "",
-        password: "",
-    })
-
-    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
-
-
-
-    // validate email
-    const isInvalid = useMemo(() => {
-        if (userState.email === "") return false;
-        return !validateEmail(userState.email);
-    }, [userState.email]);
-
     const [confirmPassword, setConfirmPassword] = useState<string>()
 
-    const [isVisible, setIsVisible] = React.useState(false)
-
-    const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
-
-
     const [userRegister, {isLoading: isRegisterLogin}] = useUserRegisterMutation()
-
 
     const userRegisterHandle = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -240,6 +219,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
         }
         if (await userRegister(userState).unwrap() === 2001) {
             setConfirmPassword("")
+            resetForm()
+            setFormState("login")
         }
     }
 
@@ -297,47 +278,47 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
     )
 }
 
-const ForgotPasswordForm = () => {
+const ForgotPasswordForm: React.FC<FormProps> = ({
+                                                     setFormState,
+                                                     isInvalid,
+                                                     isVisible,
+                                                     resetForm,
+                                                     toggleVisibility,
+                                                     userState,
+                                                     handleChange,
+                                                 }) => {
 
-    const [isVisible, setIsVisible] = React.useState(false)
-
-    const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
 
     const [verifyCode, {data: isResetPassword, isLoading: isVerifyCodeLoading}] = useLazyVerifyCodeQuery()
 
     const [getVerifyCodeByEmail, {data, isLoading}] = useLazyGetVerifyCodeByEmailQuery()
 
-    const [passwordReset, setPasswordReset] = React.useState<UserLoginType>({
-        email: "",
-        verifyCode: "",
-        password: ''
-    })
+    const [resetPassword] = useLazyResetPasswordQuery()
 
-    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i)
-
-
-    // validate email
-    const isInvalid = useMemo(() => {
-        if (passwordReset.email === "") return false;
-        return !validateEmail(passwordReset.email);
-    }, [passwordReset.email])
 
     const [stage, setStage] = useState<'getVerifyCode' | 'verifyCode' | 'resetPassword'>("getVerifyCode")
 
     const [confirmPassword, setConfirmPassword] = useState<string>()
 
-    const handleChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setPasswordReset((prev) => ({
-        ...prev,
-        [name]: value
-    }))
+
     const getVerifyCode = async () => {
-        const result = await getVerifyCodeByEmail(passwordReset.email).unwrap()
+        const result = await getVerifyCodeByEmail(userState.email).unwrap()
         if (result.code == 200) {
             setStage('verifyCode')
         } else {
             alert(result.message)
         }
     }
+
+    const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const result = await resetPassword(userState).unwrap()
+        if (result.code == 200) {
+            setFormState("login")
+            resetForm()
+        }
+    }
+
     return (
         <m.form
             animate="visible"
@@ -345,6 +326,7 @@ const ForgotPasswordForm = () => {
             initial="hidden"
             variants={formVariants}
             className="flex flex-col gap-3"
+            onSubmit={handleResetPassword}
         >
             <Input
                 autoFocus
@@ -354,11 +336,11 @@ const ForgotPasswordForm = () => {
                 labelPlacement={"inside"}
                 type="email"
                 isInvalid={isInvalid}
-                value={passwordReset.email}
+                value={userState.email}
                 errorMessage={isInvalid ? "Please enter a valid email" : ""}
                 onChange={handleChange}
                 endContent={
-                    stage === "getVerifyCode" && passwordReset.email.length > 0 &&
+                    stage === "getVerifyCode" && userState.email.length > 0 &&
                     <Link
                         className={"cursor-pointer flex self-center  text-default-500"}
                         onPress={getVerifyCode}
@@ -380,9 +362,9 @@ const ForgotPasswordForm = () => {
                     size={"lg"}
                     label="Verification Code"
                     labelPlacement={"inside"}
-                    value={passwordReset.verifyCode}
+                    value={userState.verifyCode}
                     endContent={
-                        passwordReset.verifyCode && passwordReset.verifyCode.length > 0 &&
+                        userState.verifyCode && userState.verifyCode.length > 0 &&
                         <Link className={"cursor-pointer flex self-center text-default-500"}>
                             <ArrowRight size={30}/>
                         </Link>
@@ -393,7 +375,7 @@ const ForgotPasswordForm = () => {
                         if (e.key === "Enter") {
                             e.preventDefault()
                             // 验证码争取
-                            if (await verifyCode(passwordReset).unwrap()) {
+                            if (await verifyCode(userState).unwrap()) {
                                 // 可以设置密码
                                 setStage("resetPassword")
                             }
@@ -407,7 +389,7 @@ const ForgotPasswordForm = () => {
                 <>
                     <PasswordInput
                         isRequired
-                        value={passwordReset.password}
+                        value={userState.password}
                         onChange={handleChange}
                         label="Password"
                         name="password"
@@ -417,7 +399,7 @@ const ForgotPasswordForm = () => {
                     />
                     <PasswordInput
                         isRequired
-                        errorMessage={passwordReset.password !== confirmPassword ? "Passwords do not match." : ""}
+                        errorMessage={userState.password !== confirmPassword ? "Passwords do not match." : ""}
                         onChange={(e: InputChangeEvent) => setConfirmPassword(e.target.value)}
                         value={confirmPassword}
                         label="Confirm Password"
@@ -426,15 +408,37 @@ const ForgotPasswordForm = () => {
                         isVisible={isVisible}
                         toggleVisibility={toggleVisibility}
                     />
+                    <Button color="primary" type="submit">
+                        Reset Password
+                    </Button>
                 </>
             }
-            <Button color="primary" type="submit">
-                Reset Password
-            </Button>
+
         </m.form>
     )
 }
 export const Navbar = () => {
+
+    // get current path
+    const pathname = usePathname()
+
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    const toggleVisibility = useCallback(() => setIsVisible(prev => !prev), []);
+
+    const [userState, setUserState] = React.useState<UserLoginType>({
+        email: "",
+        verifyCode: "",
+        password: ''
+    })
+
+    const validateEmail = (value: string) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+
+    const isInvalid = useMemo(() => {
+        if (userState.email === "") return false;
+        return !validateEmail(userState.email);
+    }, [userState.email]);
+
 
     const dispatch = useAppDispatch()
 
@@ -461,6 +465,11 @@ export const Navbar = () => {
         }
     };
 
+    const handleChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setUserState((prev) => ({
+        ...prev,
+        [name]: value
+    }))
+
     // Adding event listener on component mount and removing on unmount
     useEffect(() => {
         document.addEventListener('keydown', handleKeyPress);
@@ -478,30 +487,19 @@ export const Navbar = () => {
         }
     }, [isSearchOpen]);
 
-
-    // get current path
-    const pathname = usePathname()
-
-
     // get current user
     const {currentUser} = useAuth()
 
-
-    const [userState, setUserState] = useState<UserLoginType>({
-        email: "",
-        password: "",
-    })
-
     const {isOpen, onOpen, onOpenChange} = useDisclosure()
 
-    // const [register] = useRegisterMutation();
-
-
-    const handleLoginChange = ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => setUserState((prev) => ({
-        ...prev,
-        [name]: value
-    }))
-
+    const resetForm = () => {
+        setUserState({
+            email: "",
+            verifyCode: "",
+            password: ''
+        })
+        setIsVisible(false)
+    }
 
     const searchInput = (
         <Button
@@ -757,6 +755,13 @@ export const Navbar = () => {
                                         {formState === 'login' && (
                                             <>
                                                 <LoginForm
+                                                    isVisible={isVisible}
+                                                    toggleVisibility={toggleVisibility}
+                                                    isInvalid={isInvalid}
+                                                    handleChange={handleChange}
+                                                    dispatch={dispatch}
+                                                    userState={userState}
+                                                    resetForm={resetForm}
                                                     setFormState={setFormState}
                                                     onClose={onClose}
                                                 />
@@ -768,7 +773,10 @@ export const Navbar = () => {
                                                 <SocialLoginButtons/>
                                                 <p className="text-center text-small">
                                                     Need to create an account?&nbsp;
-                                                    <Link href="#" size="sm" onPress={() => setFormState("register")}>
+                                                    <Link href="#" size="sm" onPress={() => {
+                                                        setFormState("register")
+                                                        resetForm()
+                                                    }}>
                                                         Sign Up
                                                     </Link>
                                                 </p>
@@ -776,16 +784,36 @@ export const Navbar = () => {
                                         )}
                                         {formState === 'register' && (
                                             <>
-                                                <RegisterForm/>
+                                                <RegisterForm
+                                                    handleChange={handleChange}
+                                                    isVisible={isVisible}
+                                                    isInvalid={isInvalid}
+                                                    setFormState={setFormState}
+                                                    resetForm={resetForm}
+                                                    toggleVisibility={toggleVisibility}
+                                                    userState={userState}
+                                                />
                                                 <p className="text-center text-small">
                                                     Already have an account?&nbsp;
-                                                    <Link href="#" size="sm" onPress={() => setFormState("login")}>
+                                                    <Link href="#" size="sm" onPress={() => {
+                                                        setFormState("login")
+                                                        resetForm()
+                                                    }}>
                                                         Log In
                                                     </Link>
                                                 </p>
                                             </>
                                         )}
-                                        {formState === 'forgotPassword' && <ForgotPasswordForm/>}
+                                        {formState === 'forgotPassword' &&
+                                            <ForgotPasswordForm
+                                                handleChange={handleChange}
+                                                isVisible={isVisible}
+                                                isInvalid={isInvalid}
+                                                setFormState={setFormState}
+                                                resetForm={resetForm}
+                                                toggleVisibility={toggleVisibility}
+                                                userState={userState}
+                                            />}
                                     </LazyMotion>
                                 </AnimatePresence>
                             </ResizablePanel>
