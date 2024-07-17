@@ -30,8 +30,9 @@ export default function Home() {
     const {data: messages, isLoading, isError} = useGetMessagesQuery(messageType, {
         skip: messageType.from === undefined || messageType.from.length == 0
     });
+    console.log(messages);
 
-    console.log(messages)
+
     // const [question, setQuestion] = useState<string>();
     //
     // const router = useRouter();
@@ -51,6 +52,7 @@ export default function Home() {
     // }
     //
     // if (!faqs) return null
+    if (messages === undefined) return null;
     return (
         <>
             {/*<Tabs key={"solid"}*/}

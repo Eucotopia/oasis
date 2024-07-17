@@ -3,6 +3,7 @@ import {RootState} from "@/app/store";
 import {baseUrl} from "@/feature/api/authApi";
 import {createEntityAdapter} from "@reduxjs/toolkit";
 import type {EntityState} from '@reduxjs/toolkit'
+import {ResultResponse} from "@/types";
 
 export type Channel = 'redux' | 'general' | 'admin_notification'
 
@@ -33,14 +34,14 @@ export const socketApi = createApi({
     endpoints: (build) => ({
         getMessages: build.query<EntityState<MessageType>, MessageType>({
             query: (message) => ({
-                url: 'socket/userRegisterInformation',
+                url: 'socket/getUnapprovedUsers',
                 method: 'POST',
                 body: message,
             }),
-            transformResponse(response: MessageType[]) {
+            transformResponse(response: ResultResponse<MessageType[]>) {
                 return messagesAdapter.addMany(
                     messagesAdapter.getInitialState(),
-                    response
+                    response.data
                 )
             },
             async onCacheEntryAdded(
@@ -50,7 +51,7 @@ export const socketApi = createApi({
                 // 相当于说，将 socket 拿到的数据放到 messagesAdapter
                 // create a websocket connection when the cache subscription starts
                 const ws = new WebSocket(`ws://localhost:8080/websocket/${arg.from}`)
-
+                console.log(arg.from)
                 try {
                     // wait for the initial query to resolve before proceeding
                     await cacheDataLoaded
@@ -58,10 +59,13 @@ export const socketApi = createApi({
                     // if it is a message and for the appropriate channel,
                     // update our query result with the received message
                     const listener = (event: MessageEvent) => {
+                        console.log(event.data)
                         const data = JSON.parse(event.data)
                         // 待定
                         // if (!isMessage(data) || data.channel !== arg) return
-                        console.log("data",data)
+
+                        console.log("data", data)
+
                         updateCachedData((draft) => {
                             messagesAdapter.upsertOne(draft, data)
                         })
@@ -81,7 +85,23 @@ export const socketApi = createApi({
                 await cacheEntryRemoved
                 // perform cleanup steps once the `cacheEntryRemoved` promise resolves
                 ws.close()
-            }
+            },
+            transformErrorResponse: (
+                response: {
+                    status: string | number,
+                },
+                meta,
+                arg
+            ) => {
+                if (response.status === 400) {
+                    alert(`请求错误: ${response.status}`)
+                } else if (response.status === 500) { // 假设 500 表示服务器错误
+                    alert('服务器错误，请稍后再试。');
+                } else {
+                    alert(`未知错误: ${response.status}`);
+                }
+                // return response.status;
+            },
         })
     })
 })

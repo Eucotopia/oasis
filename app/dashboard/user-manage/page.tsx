@@ -6,7 +6,6 @@ import UserTable from "@/components/table/user-table/UserTable";
 
 export default function App() {
     const {data: userList} = useGetUsersQuery();
-    console.log(userList)
     if (userList === undefined) return null
     return <UserTable userList={userList}/>
 }
