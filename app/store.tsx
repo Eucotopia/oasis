@@ -12,6 +12,7 @@ import {fileApi} from "@/feature/api/fileApi";
 import {columnApi} from "@/feature/api/columnApi";
 import {categoryApi} from "@/feature/api/categoryApi";
 import {commentApi} from "@/feature/api/commentApi";
+import {socketApi} from "@/feature/api/socketApi";
 import {blogRollApi} from "@/feature/api/blogRoll";
 import {setupListeners} from "@reduxjs/toolkit/query";
 
@@ -20,10 +21,10 @@ const persistConfig = {
     key: "root",
     storage: storage,
     // don't persist this state
-    blacklist: ['auth']
+    blacklist: ['']
 }
 
-const middleware = [thunk, postApi.middleware, commentApi.middleware, faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware, blogRollApi.middleware]
+const middleware = [thunk, postApi.middleware, commentApi.middleware, faqApi.middleware, authApi.middleware, tagApi.middleware, categoryApi.middleware, columnApi.middleware, fileApi.middleware, blogRollApi.middleware, socketApi.middleware]
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
     [categoryApi.reducerPath]: categoryApi.reducer,
     [blogRollApi.reducerPath]: blogRollApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,
+    [socketApi.reducerPath]: socketApi.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

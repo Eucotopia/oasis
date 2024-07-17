@@ -2,10 +2,11 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 import {createSlice} from '@reduxjs/toolkit'
 
 export type currentUserType = {
-    username: string,
-    email: string,
-    authorization: string,
-    avatar: string,
+    uid: string
+    username: string
+    email: string
+    authorization: string
+    avatar: string
     isSelectRemember: boolean
 }
 /**
