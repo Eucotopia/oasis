@@ -11,8 +11,8 @@ import {handleTransformErrorResponse} from "@/util/apiHelpers";
 
 
 export type PostType = {
-    id?: number
-    userId?: number
+    id?: string
+    authorId?: string
     title: string
     content: string
     tags?: TagType[]

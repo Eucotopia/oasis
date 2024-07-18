@@ -1,22 +1,63 @@
-// import {useGetPostsQuery} from "@/feature/api/postApi";
-// import {PageType} from "@/types";
-//
-// export const PostDetail = ({id, page}: { id: number, page: PageType }) => {
-//     const {post} = useGetPostsQuery(page, {
-//         selectFromResult: ({data}) => ({
-//             post: data?.data.find((post) => post.id === id)
-//         })
-//     })
-//
-//     // if (isLoading) return <div>Loading...</div>
-//     // if (!post) return <div>Missing post!</div>
-//     return (
-//         <ul>
-//             <li>{post?.title}</li>
-//             <li>{post?.content}</li>
-//             <li>{post?.summary}</li>
-//             <li>{post?.tags[0]?.name}</li>
-//             <li>{post?.cover}</li>
-//         </ul>
-//     )
-// }
+import {PostType} from "@/feature/api/postApi";
+import React from "react";
+import {useGetUserQuery} from "@/feature/api/authApi";
+import {Card, CardBody, CardHeader, Popover, PopoverContent, PopoverTrigger, User} from "@nextui-org/react";
+import {CardFooter} from "@nextui-org/card";
+import {UserTwitterCard} from "@/components/user/UserTwitterCard";
+import {useRouter} from "next/navigation";
+
+export const PostDetail: React.FC<PostType> = ({authorId, title, summary, id}) => {
+
+    const router = useRouter();
+
+    const {data: user, isLoading} = useGetUserQuery(authorId ?? '', {skip: !authorId});
+
+    return (
+        <>
+            <Card
+                isPressable
+                onPress={() => router.push(`/blog/${id}`)}
+                classNames={{
+                    base: "",
+                    header: "pb-0 ",
+                    body: "text-default-400 text-sm pb-0",
+                    footer: "",
+                }}>
+                <CardHeader>
+                    <p className={"line-clamp-1 "}>{title}</p>
+
+                </CardHeader>
+                <CardBody>
+                    <p className={"line-clamp-3 "}>
+                        {summary}
+                    </p>
+                </CardBody>
+                <CardFooter>
+                    <Popover showArrow placement="bottom">
+                        <PopoverTrigger>
+                            <User
+                                classNames={{
+                                    base: "",
+                                    wrapper: "",
+                                    name: "text-tiny",
+                                    description: "text-[10px]",
+                                }}
+                                isFocusable
+                                as="button"
+                                name={user?.username}
+                                description={user?.motto}
+                                avatarProps={{
+                                    size: "sm",
+                                    src: `${user?.avatar}`
+                                }}
+                            />
+                        </PopoverTrigger>
+                        <PopoverContent className="p-1 ">
+                            <UserTwitterCard/>
+                        </PopoverContent>
+                    </Popover>
+                </CardFooter>
+            </Card>
+        </>
+    )
+}

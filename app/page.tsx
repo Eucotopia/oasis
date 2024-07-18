@@ -1,12 +1,15 @@
 'use client'
-import React, {useEffect, useState} from "react";
-import {Card, CardBody, CardHeader, Tabs} from "@nextui-org/react";
+import React from "react";
+import {Card, CardBody, Tabs} from "@nextui-org/react";
 import {Tab} from "@nextui-org/tabs";
 import {useGetRecentPostsQuery} from "@/feature/api/postApi";
-import {CardFooter} from "@nextui-org/card";
+import {PostDetail} from "@/components/post/PostDetail";
 
 export default function Home() {
+
     const {data: recentPosts, isLoading: isRecentPostLoading} = useGetRecentPostsQuery()
+
+    console.log(recentPosts)
     return (
         <>
             <Tabs key={"solid"}
@@ -17,36 +20,16 @@ export default function Home() {
                       tabList: "mb-4",
                       tab: "max-w-full sm:max-w-fit",
                       tabContent: "w-full",
-                      panel: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6  gap-4",
+                      panel: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-4",
                   }}
                   variant={"solid"}
                   aria-label="toggle home">
                 <Tab key="The Buzz Feed" title="The Buzz Feed">
                     {
                         recentPosts?.map((post, index) => (
-                            <Card
-                                key={index}
-                                classNames={{
-                                    base: "",
-                                    header: " ",
-                                    body: " text-default-400 text-tiny ",
-                                    footer: "",
-                                }}>
-                                <CardHeader>
-                                    <p className={"line-clamp-1 "}>{post.title}</p>
-                                </CardHeader>
-                                <CardBody>
-                                    <p className={"line-clamp-3 "}>
-                                        {post.summary}
-                                    </p>
-                                </CardBody>
-                                <CardFooter>
-                                    {post.createdAt}
-                                </CardFooter>
-                            </Card>
+                            <PostDetail key={index} {...post} />
                         ))
                     }
-
                 </Tab>
                 <Tab key="music" title="查看朋友们">
                     <Card>

@@ -40,7 +40,7 @@ export const authApi = createApi({
     }),
     endpoints: (buildr) => ({
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        getUser: buildr.query<UserType, number>({
+        getUser: buildr.query<UserType, string>({
             // note: an optional `queryFn` may be used in place of `query`
             query: (id) => ({url: `${id}`}),
             // Pick out data and prevent nested properties in a hook or selector
@@ -178,7 +178,7 @@ export const authApi = createApi({
                 response.status
             },
         }),
-        resetPassword: buildr.query<ResultResponse<string>,UserLoginType>({
+        resetPassword: buildr.query<ResultResponse<string>, UserLoginType>({
             query: (credentials) => ({
                 url: '/resetPassword',
                 method: 'POST',
@@ -202,5 +202,7 @@ export const {
     useLazyVerifyCodeQuery,
     useGetUsersQuery,
     useLazyGetVerifyCodeByEmailQuery,
-    useLazyResetPasswordQuery
+    useLazyResetPasswordQuery,
+    useGetUserQuery,
+    useLazyGetUserQuery
 } = authApi
