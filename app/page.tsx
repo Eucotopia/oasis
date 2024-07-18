@@ -1,103 +1,63 @@
 'use client'
 import React, {useEffect, useState} from "react";
-import {useMediaQuery} from "usehooks-ts";
-import {MessageType, useGetMessagesQuery} from "@/feature/api/socketApi";
-import {useAuth} from "@/hook/useAuth";
+import {Card, CardBody, CardHeader, Tabs} from "@nextui-org/react";
+import {Tab} from "@nextui-org/tabs";
+import {useGetRecentPostsQuery} from "@/feature/api/postApi";
+import {CardFooter} from "@nextui-org/card";
 
 export default function Home() {
-
-    const isMobile = useMediaQuery("(max-width: 768px)");
-    // const {data: recentPosts, isLoading: isRecentPostsLoading} = useGetRecentPostsQuery()
-    const [isOpen, setIsOpen] = React.useState(false);
-
-    const auth = useAuth();
-
-    const [messageType, setMessageType] = useState<MessageType>({
-        from: auth.currentUser?.uid,
-        to: "all",
-        content: "1",
-        type: "1",
-        channel: "admin_notification"
-    })
-
-    useEffect(() => {
-        setMessageType((prevMessageType) => ({
-            ...prevMessageType,
-            from: auth.currentUser?.uid
-        }));
-    }, [auth.currentUser?.uid]);
-
-    const {data: messages, isLoading, isError} = useGetMessagesQuery(messageType, {
-        skip: messageType.from === undefined || messageType.from.length == 0
-    });
-    console.log(messages);
-
-
-    // const [question, setQuestion] = useState<string>();
-    //
-    // const router = useRouter();
-    //
-    //
-    // const {data: faqs} = useGetFaqsByAnswerQuery()
-    //
-    // const [addFaq] = useAddFaqMutation();
-    //
-    // const addFaqHandler = () => {
-    //     if (question != null && question.length > 0) {
-    //         addFaq({question: question, answer: ""})
-    //         setIsOpen(false)
-    //     } else {
-    //         setIsOpen(true);
-    //     }
-    // }
-    //
-    // if (!faqs) return null
-    if (messages === undefined) return null;
+    const {data: recentPosts, isLoading: isRecentPostLoading} = useGetRecentPostsQuery()
     return (
         <>
-            {/*<Tabs key={"solid"}*/}
-            {/*      color={"warning"}*/}
-            {/*      radius={"full"}*/}
-            {/*      classNames={{*/}
-            {/*          base: "flex flex-col sm:flex-row justify-center",*/}
-            {/*          tabList: "mb-4",*/}
-            {/*          tab: "max-w-full sm:max-w-fit",*/}
-            {/*          tabContent: "w-full",*/}
-            {/*          panel: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6  gap-4",*/}
-            {/*      }}*/}
-            {/*      variant={"solid"}*/}
-            {/*      aria-label="toggle home">*/}
-            {/*    <Tab key="The Buzz Feed" title="The Buzz Feed">*/}
-            {/*        {*/}
-            {/*            recentPosts?.map((post, index) => (*/}
-            {/*                <Card*/}
-            {/*                    key={index}*/}
-            {/*                    classNames={{*/}
-            {/*                        base: "base-classes",*/}
-            {/*                        header: "",  //tw*/}
-            {/*                        body: "content-classes",*/}
-            {/*                        footer: "avatar-classes",*/}
-            {/*                    }}>*/}
-            {/*                    <CardHeader className={"overflow-hidden w-full "}>asdfasdfasdfsdfsdfasdfsdf</CardHeader>*/}
-            {/*                    <CardBody className={"text-default-400"}>*/}
-            {/*                        {post.summary}*/}
-            {/*                    </CardBody>*/}
-            {/*                </Card>*/}
-            {/*            ))*/}
-            {/*        }*/}
+            <Tabs key={"solid"}
+                  color={"warning"}
+                  radius={"full"}
+                  classNames={{
+                      base: "flex flex-col sm:flex-row justify-center",
+                      tabList: "mb-4",
+                      tab: "max-w-full sm:max-w-fit",
+                      tabContent: "w-full",
+                      panel: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6  gap-4",
+                  }}
+                  variant={"solid"}
+                  aria-label="toggle home">
+                <Tab key="The Buzz Feed" title="The Buzz Feed">
+                    {
+                        recentPosts?.map((post, index) => (
+                            <Card
+                                key={index}
+                                classNames={{
+                                    base: "",
+                                    header: " ",
+                                    body: " text-default-400 text-tiny ",
+                                    footer: "",
+                                }}>
+                                <CardHeader>
+                                    <p className={"line-clamp-1 "}>{post.title}</p>
+                                </CardHeader>
+                                <CardBody>
+                                    <p className={"line-clamp-3 "}>
+                                        {post.summary}
+                                    </p>
+                                </CardBody>
+                                <CardFooter>
+                                    {post.createdAt}
+                                </CardFooter>
+                            </Card>
+                        ))
+                    }
 
-            {/*    </Tab>*/}
-            {/*    <Tab key="music" title="查看朋友们">*/}
-            {/*        <Card>*/}
-            {/*            <CardBody>*/}
-            {/*                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut*/}
-            {/*                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco*/}
-            {/*                laboris nisi ut aliquip ex ea commodo consequat.*/}
-            {/*            </CardBody>*/}
-            {/*        </Card>*/}
-            {/*    </Tab>*/}
-            {/*</Tabs>*/}
-
+                </Tab>
+                <Tab key="music" title="查看朋友们">
+                    <Card>
+                        <CardBody>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat.
+                        </CardBody>
+                    </Card>
+                </Tab>
+            </Tabs>
             {/*<section className="fixed h-svh dark:bg-hero w-screen"/>*/}
             {/*<Burst*/}
             {/*    size={900}*/}

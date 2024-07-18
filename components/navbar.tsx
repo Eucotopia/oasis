@@ -35,7 +35,6 @@ import React, {ChangeEvent, useCallback, useEffect, useMemo, useRef, useState} f
 import {removeCredentials} from "@/feature/auth/authSlice";
 import {usePathname} from "next/navigation";
 import ThemeSwitch from "@/components/theme-switch";
-import NotificationItem from "./notification-item";
 import {
     Button, Card, CardBody, CardHeader, Chip,
     cn,
@@ -43,17 +42,17 @@ import {
     InputProps,
     Listbox,
     ListboxItem, ModalFooter,
-    ModalHeader, Popover, PopoverContent, PopoverTrigger,
+    ModalHeader,
     ResizablePanel, ScrollShadow, Tabs,
     Tooltip,
 } from "@nextui-org/react";
 import {AnimatePresence, domAnimation, LazyMotion, m} from "framer-motion";
 import {isWebKit} from "@react-aria/utils";
 import {Icon} from "@iconify/react";
-import {AppDispatch} from "@/app/store";
-import {Badge} from "@nextui-org/badge";
+import {AppDispatch, RootState} from "@/app/store";
 import {Tab} from "@nextui-org/tabs";
-import {CardFooter} from "@nextui-org/card";
+import {MessageType, useGetMessagesQuery} from "@/feature/api/socketApi";
+import {useSelector} from "react-redux";
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
@@ -524,6 +523,7 @@ const ForgotPasswordForm: React.FC<FormProps> = ({
     )
 }
 export const Navbar = () => {
+
     const [activeTab, setActiveTab] = React.useState<NotificationTabs>(NotificationTabs.All);
 
     const activeNotifications = notifications[activeTab];
@@ -605,6 +605,27 @@ export const Navbar = () => {
     // get current user
     const {currentUser} = useAuth()
 
+    const [messageType, setMessageType] = useState<MessageType>({
+        from: currentUser?.uid,
+        to: "all",
+        content: "1",
+        type: "1",
+        channel: "admin_notification"
+    });
+
+    useEffect(() => {
+        setMessageType((prevMessageType) => ({
+            ...prevMessageType,
+            from: currentUser?.uid
+        }));
+    }, [currentUser?.uid]);
+
+    const {data: messagesState, isLoading, isError} = useGetMessagesQuery(messageType);
+
+    const messages = useSelector((state: RootState) =>
+        messagesState ? Object.values(messagesState.entities) : []
+    );
+
     const {isOpen, onOpen, onOpenChange} = useDisclosure()
 
     const resetForm = () => {
@@ -672,7 +693,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <NextUINavbar maxWidth="xl" position="sticky">
+            <NextUINavbar maxWidth="2xl" position="sticky">
                 <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
                     <NavbarBrand as="li" className="gap-3 max-w-fit">
                         <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -996,8 +1017,6 @@ export const Navbar = () => {
                 onClose={onNotificationClose}
                 onOpenChange={onNotificationOpenChange}
                 hideCloseButton
-                classNames={{
-                }}
             >
                 <ModalContent>
                     {(onClose) => (
@@ -1054,22 +1073,42 @@ export const Navbar = () => {
                                     <Tab key="archive" title="Archive"/>
                                 </Tabs>
                             </ModalHeader>
-                            <ModalBody >
-                                <ScrollShadow className="h-[500px] w-full" hideScrollBar>
-                                    {activeNotifications?.length > 0 ? (
-                                        activeNotifications.map((notification) => (
-                                            <NotificationItem
-                                                key={notification.id} {...notification} />
-                                        ))
-                                    ) : (
-                                        <div
-                                            className="flex h-full w-full flex-col items-center justify-center gap-2">
-                                            <Icon className="text-default-400"
-                                                  icon="solar:bell-off-linear" width={40}/>
-                                            <p className="text-small text-default-400">No
-                                                notifications yet.</p>
-                                        </div>
-                                    )}
+                            <ModalBody>
+                                <ScrollShadow className="w-full" hideScrollBar>
+                                    {
+                                        messages.length > 0 ? (
+                                            messages.map((message, index) => (
+                                                <div key={index}>
+                                                    <p>Type: {message?.type}</p>
+                                                    <p>Content: {JSON.stringify(message?.content)}</p>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <>
+                                                <div
+                                                    className="flex h-full w-full flex-col items-center justify-center gap-2">
+                                                    <Icon className="text-default-400"
+                                                          icon="solar:bell-off-linear" width={40}/>
+                                                    <p className="text-small text-default-400">No
+                                                        notifications yet.</p>
+                                                </div>
+                                            </>
+                                        )
+                                    }
+                                    {/*{activeNotifications?.length > 0 ? (*/}
+                                    {/*    activeNotifications.map((notification) => (*/}
+                                    {/*        <NotificationItem*/}
+                                    {/*            key={notification.id} {...notification} />*/}
+                                    {/*    ))*/}
+                                    {/*) : (*/}
+                                    {/*    <div*/}
+                                    {/*        className="flex h-full w-full flex-col items-center justify-center gap-2">*/}
+                                    {/*        <Icon className="text-default-400"*/}
+                                    {/*              icon="solar:bell-off-linear" width={40}/>*/}
+                                    {/*        <p className="text-small text-default-400">No*/}
+                                    {/*            notifications yet.</p>*/}
+                                    {/*    </div>*/}
+                                    {/*)}*/}
                                 </ScrollShadow>
                             </ModalBody>
                             <ModalFooter>

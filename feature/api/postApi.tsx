@@ -26,7 +26,7 @@ export type PostType = {
     user?: UserType
     categories: CategoryType[]
     isPrivate: boolean
-    createTime?: string
+    createdAt?: string
     columns?: ColumnType[]
 }
 export const postApi = createApi({
@@ -46,7 +46,7 @@ export const postApi = createApi({
     keepUnusedDataFor: 30,
     endpoints: (builder) => ({
         // The query accepts a number and returns a ResultResponse<Post> type ✔
-        getPost: builder.query<PostType, number>({
+        getPost: builder.query<PostType, string>({
             // note: an optional `queryFn` may be used in place of `query`
             query: (id) => ({url: `/${id}`}),
             // Pick out data and prevent nested properties in a hook or selector

@@ -9,13 +9,15 @@ export type Channel = 'redux' | 'general' | 'admin_notification'
 
 export interface MessageType {
     type?: string
-    content?: string
+    content: any
     from?: string
     to?: string
     channel?: Channel
 }
 
-const messagesAdapter = createEntityAdapter<MessageType>()
+const messagesAdapter = createEntityAdapter<MessageType>({
+    selectId: (message) => message.content.id
+});
 
 export const socketApi = createApi({
     reducerPath: 'socketApi',
@@ -41,7 +43,10 @@ export const socketApi = createApi({
             transformResponse(response: ResultResponse<MessageType[]>) {
                 return messagesAdapter.addMany(
                     messagesAdapter.getInitialState(),
-                    response.data
+                    response.data.map(message => ({
+                        ...message,
+                        content: JSON.parse(message.content)  // 确保 content 是对象
+                    }))
                 )
             },
             async onCacheEntryAdded(
@@ -60,15 +65,18 @@ export const socketApi = createApi({
                     // update our query result with the received message
                     const listener = (event: MessageEvent) => {
                         console.log(event.data)
-                        const data = JSON.parse(event.data)
+                        const data: MessageType[] = JSON.parse(event.data)
                         // 待定
                         // if (!isMessage(data) || data.channel !== arg) return
 
                         console.log("data", data)
 
                         updateCachedData((draft) => {
-                            messagesAdapter.upsertOne(draft, data)
-                        })
+                            messagesAdapter.upsertMany(draft, data.map(message => ({
+                                ...message,
+                                content: JSON.parse(message.content)
+                            })))
+                        });
                     }
 
                     ws.addEventListener('message', listener)
