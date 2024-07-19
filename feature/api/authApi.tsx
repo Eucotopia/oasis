@@ -10,7 +10,7 @@ export type UserLoginType = {
     verifyCode?: string
 }
 export type UserType = {
-    id: number,
+    id: string,
     username: string,
     email: string,
     password: string,

@@ -9,18 +9,10 @@ module.exports = {
         './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
     ],
     theme: {
-        backgroundImage: {
-            hero: "radial-gradient(128.17% 50% at 50% 50%, #fb845920 0, transparent 100%)"
-        },
         light: {
-            backgroundImage: {
-                index: "linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, transparent 75%, transparent)"
-            },
+            backgroundImage: {}
         },
         extend: {
-            width: {
-                container: "1280px"
-            },
             animation: {
                 "scrolling-banner": "scrolling-banner var(--duration) linear infinite",
                 "scrolling-banner-vertical": "scrolling-banner-vertical var(--duration) linear infinite",
@@ -86,11 +78,7 @@ module.exports = {
         nextui({
                 themes: {
                     light: {},
-                    dark: {
-                        colors: {
-                            test: "#fff"
-                        }
-                    },
+                    dark: {},
                     "purple-dark": {
                         extend: "dark", // <- inherit default values from dark theme
                         colors: {
