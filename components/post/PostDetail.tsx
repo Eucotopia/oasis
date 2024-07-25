@@ -18,14 +18,13 @@ export const PostDetail: React.FC<PostType> = ({authorId, title, summary, id}) =
                 isPressable
                 onPress={() => router.push(`/blog/${id}`)}
                 classNames={{
-                    base: "bg-gradient-to-tl from-content1 via-45% to-background",
+                    // base: "bg-gradient-to-tl from-content1 via-45% to-background",
                     header: "pb-0 ",
                     body: "text-default-400 text-sm pb-0",
                     footer: "",
                 }}>
                 <CardHeader>
                     <p className={"line-clamp-1 "}>{title}</p>
-
                 </CardHeader>
                 <CardBody>
                     <p className={"line-clamp-3 "}>

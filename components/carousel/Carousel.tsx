@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Button, cn} from "@nextui-org/react";
 import {motion} from "framer-motion";
 import {ArrowLeftIcon, ArrowRightIcon} from "@/components/icons";
-import { CarouselContext } from "../card/AnimatedCard";
+import {CarouselContext} from "../card/AnimatedCard";
 
 interface CarouselProps {
     items: JSX.Element[];
